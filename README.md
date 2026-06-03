@@ -8,6 +8,15 @@ This repository contains the standard onboarding documentation for all QTrust en
 
 ---
 
+## 🗺 Complete Team Workflow
+
+![QTrust Complete Team Workflow](assets/qtrust-team-workflow.png)
+
+> 9 teams · 9 phases · from Product Discovery to Production Deployment.  
+> Source file: [`assets/qtrust-team-workflow.svg`](assets/qtrust-team-workflow.svg)
+
+---
+
 ## 🚀 Starting a New Project?
 
 **Read this first:** [`new-project-setup-guide.md`](new-project-setup-guide.md)
@@ -109,8 +118,11 @@ Key handoffs:
 
 ```
 ONBOARDING/
-├── README.md                      ← You are here
-├── new-project-setup-guide.md     ← Start here for new projects
+├── README.md                          ← You are here
+├── new-project-setup-guide.md         ← Start here for new projects
+├── assets/
+│   ├── qtrust-team-workflow.png       ← Workflow diagram (1856×1120 px)
+│   └── qtrust-team-workflow.svg       ← Workflow diagram source (vector)
 ├── teams/
 │   ├── product-development.md
 │   ├── uix-designer.md

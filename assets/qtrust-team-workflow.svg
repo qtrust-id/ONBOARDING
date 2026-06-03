@@ -1,0 +1,259 @@
+<svg viewBox="0 0 928 560" xmlns="http://www.w3.org/2000/svg" role="img" font-family="system-ui,-apple-system,sans-serif">
+<title>QTrust Complete Team Workflow — 9 Teams from Discovery to Production</title>
+<desc>End-to-end workflow showing all 9 QTrust teams</desc>
+
+<!-- BG -->
+<rect width="928" height="560" fill="#f8f9fa" rx="10"/>
+
+<!-- TITLE BAR -->
+<rect x="0" y="0" width="928" height="46" rx="10" fill="#1E40AF"/>
+<rect x="0" y="36" width="928" height="10" fill="#1E40AF"/>
+<text x="464" y="18" text-anchor="middle" font-size="13" font-weight="700" fill="white">Complete Team Workflow — QTrust Engineering</text>
+<text x="464" y="34" text-anchor="middle" font-size="9" fill="#93C5FD">9 Teams · Product Discovery → Production Deployment</text>
+
+<!-- LANE BACKGROUNDS col_w=96, gap=4, starts x=16 -->
+<rect x="16"  y="48" width="96" height="338" rx="6" fill="#EEF2FF" opacity=".65"/>
+<rect x="116" y="48" width="96" height="338" rx="6" fill="#F5F3FF" opacity=".65"/>
+<rect x="216" y="48" width="96" height="338" rx="6" fill="#FFF7ED" opacity=".65"/>
+<rect x="316" y="48" width="96" height="338" rx="6" fill="#EDE9FE" opacity=".65"/>
+<rect x="416" y="48" width="96" height="338" rx="6" fill="#DCFCE7" opacity=".65"/>
+<rect x="516" y="48" width="96" height="338" rx="6" fill="#F0FDF4" opacity=".65"/>
+<rect x="616" y="48" width="96" height="338" rx="6" fill="#F0FDFA" opacity=".65"/>
+<rect x="716" y="48" width="96" height="338" rx="6" fill="#FEF2F2" opacity=".65"/>
+<rect x="816" y="48" width="96" height="338" rx="6" fill="#EFF6FF" opacity=".65"/>
+
+<!-- LANE HEADERS -->
+<rect x="16"  y="50" width="96" height="42" rx="5" fill="#4F46E5"/>
+<text x="64"  y="67" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Product Dev</text>
+<text x="64"  y="80" text-anchor="middle" font-size="7.5" fill="#C7D2FE">Requirements</text>
+
+<rect x="116" y="50" width="96" height="42" rx="5" fill="#7C3AED"/>
+<text x="164" y="67" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">UIX Designer</text>
+<text x="164" y="80" text-anchor="middle" font-size="7.5" fill="#DDD6FE">Figma</text>
+
+<rect x="216" y="50" width="96" height="42" rx="5" fill="#EA580C"/>
+<text x="264" y="67" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Project Manager</text>
+<text x="264" y="80" text-anchor="middle" font-size="7.5" fill="#FED7AA">GitHub Issues</text>
+
+<rect x="316" y="50" width="96" height="42" rx="5" fill="#6D28D9"/>
+<text x="364" y="63" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Image Vision</text>
+<text x="364" y="74" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Engineer</text>
+<text x="364" y="86" text-anchor="middle" font-size="7.5" fill="#DDD6FE">PyTorch · MLflow</text>
+
+<rect x="416" y="50" width="96" height="42" rx="5" fill="#15803D"/>
+<text x="464" y="67" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Backend Eng</text>
+<text x="464" y="80" text-anchor="middle" font-size="7.5" fill="#BBF7D0">[Framework] API</text>
+
+<rect x="516" y="50" width="96" height="42" rx="5" fill="#16A34A"/>
+<text x="564" y="67" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Frontend Eng</text>
+<text x="564" y="80" text-anchor="middle" font-size="7.5" fill="#BBF7D0">Web UI</text>
+
+<rect x="616" y="50" width="96" height="42" rx="5" fill="#0D9488"/>
+<text x="664" y="67" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Mobile Eng</text>
+<text x="664" y="80" text-anchor="middle" font-size="7.5" fill="#99F6E4">Flutter / Native</text>
+
+<rect x="716" y="50" width="96" height="42" rx="5" fill="#DC2626"/>
+<text x="764" y="67" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">QA / QC</text>
+<text x="764" y="80" text-anchor="middle" font-size="7.5" fill="#FECACA">Testing</text>
+
+<rect x="816" y="50" width="96" height="42" rx="5" fill="#2563EB"/>
+<text x="864" y="67" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">DevOps</text>
+<text x="864" y="80" text-anchor="middle" font-size="7.5" fill="#BFDBFE">GCP Cloud Run</text>
+
+<!-- CARDS ROW 1 (y=98) -->
+<rect x="22"  y="98" width="84" height="52" rx="4" fill="white" stroke="#4F46E5" stroke-width="1.2"/>
+<text x="64"  y="114" text-anchor="middle" font-size="8" font-weight="600" fill="#4338CA">1. PRD &amp; Stories</text>
+<text x="64"  y="127" text-anchor="middle" font-size="7.5" fill="#6B7280">Claude + Drive</text>
+<text x="64"  y="140" text-anchor="middle" font-size="7.5" fill="#6B7280">Acceptance criteria</text>
+
+<rect x="122" y="98" width="84" height="52" rx="4" fill="white" stroke="#7C3AED" stroke-width="1.2"/>
+<text x="164" y="114" text-anchor="middle" font-size="8" font-weight="600" fill="#6D28D9">2. Wireframes</text>
+<text x="164" y="127" text-anchor="middle" font-size="7.5" fill="#6B7280">Claude + Figma MCP</text>
+<text x="164" y="140" text-anchor="middle" font-size="7.5" fill="#6B7280">Low-fi user flows</text>
+
+<rect x="222" y="98" width="84" height="52" rx="4" fill="white" stroke="#EA580C" stroke-width="1.2"/>
+<text x="264" y="114" text-anchor="middle" font-size="8" font-weight="600" fill="#C2410C">3. GitHub Issues</text>
+<text x="264" y="127" text-anchor="middle" font-size="7.5" fill="#6B7280">Labels + Milestones</text>
+<text x="264" y="140" text-anchor="middle" font-size="7.5" fill="#6B7280">Sprint planning</text>
+
+<rect x="322" y="98" width="84" height="52" rx="4" fill="white" stroke="#6D28D9" stroke-width="1.2"/>
+<text x="364" y="114" text-anchor="middle" font-size="8" font-weight="600" fill="#5B21B6">4. Model Spec</text>
+<text x="364" y="127" text-anchor="middle" font-size="7.5" fill="#6B7280">Task type + targets</text>
+<text x="364" y="140" text-anchor="middle" font-size="7.5" fill="#6B7280">Dataset preparation</text>
+
+<rect x="422" y="98" width="84" height="52" rx="4" fill="white" stroke="#15803D" stroke-width="1.2"/>
+<text x="464" y="114" text-anchor="middle" font-size="8" font-weight="600" fill="#166534">5. DB &amp; Models</text>
+<text x="464" y="127" text-anchor="middle" font-size="7.5" fill="#6B7280">Migrations + ORM</text>
+<text x="464" y="140" text-anchor="middle" font-size="7.5" fill="#6B7280">Factories + seeders</text>
+
+<rect x="522" y="98" width="84" height="52" rx="4" fill="white" stroke="#16A34A" stroke-width="1.2"/>
+<text x="564" y="114" text-anchor="middle" font-size="8" font-weight="600" fill="#15803D">6. Scaffold UI</text>
+<text x="564" y="127" text-anchor="middle" font-size="7.5" fill="#6B7280">Layout + components</text>
+<text x="564" y="140" text-anchor="middle" font-size="7.5" fill="#6B7280">Design tokens</text>
+
+<rect x="622" y="98" width="84" height="52" rx="4" fill="white" stroke="#0D9488" stroke-width="1.2"/>
+<text x="664" y="114" text-anchor="middle" font-size="8" font-weight="600" fill="#0F766E">7. App Setup</text>
+<text x="664" y="127" text-anchor="middle" font-size="7.5" fill="#6B7280">Project init + deps</text>
+<text x="664" y="140" text-anchor="middle" font-size="7.5" fill="#6B7280">API client + auth</text>
+
+<rect x="722" y="98" width="84" height="52" rx="4" fill="white" stroke="#DC2626" stroke-width="1.2"/>
+<text x="764" y="114" text-anchor="middle" font-size="8" font-weight="600" fill="#B91C1C">8. Test Plans</text>
+<text x="764" y="127" text-anchor="middle" font-size="7.5" fill="#6B7280">From acceptance crit.</text>
+<text x="764" y="140" text-anchor="middle" font-size="7.5" fill="#6B7280">Coverage targets</text>
+
+<rect x="822" y="98" width="84" height="52" rx="4" fill="white" stroke="#2563EB" stroke-width="1.2"/>
+<text x="864" y="114" text-anchor="middle" font-size="8" font-weight="600" fill="#1D4ED8">9. Dockerfile</text>
+<text x="864" y="127" text-anchor="middle" font-size="7.5" fill="#6B7280">Multi-stage build</text>
+<text x="864" y="140" text-anchor="middle" font-size="7.5" fill="#6B7280">Cloud Run ready</text>
+
+<!-- CARDS ROW 2 (y=158) -->
+<rect x="22"  y="158" width="84" height="52" rx="4" fill="white" stroke="#4F46E5" stroke-width="1.2"/>
+<text x="64"  y="174" text-anchor="middle" font-size="8" font-weight="600" fill="#4338CA">API Contract</text>
+<text x="64"  y="187" text-anchor="middle" font-size="7.5" fill="#6B7280">OpenAPI spec</text>
+<text x="64"  y="200" text-anchor="middle" font-size="7.5" fill="#6B7280">Endpoint design</text>
+
+<rect x="122" y="158" width="84" height="52" rx="4" fill="white" stroke="#7C3AED" stroke-width="1.2"/>
+<text x="164" y="174" text-anchor="middle" font-size="8" font-weight="600" fill="#6D28D9">Design System</text>
+<text x="164" y="187" text-anchor="middle" font-size="7.5" fill="#6B7280">Tokens + components</text>
+<text x="164" y="200" text-anchor="middle" font-size="7.5" fill="#6B7280">Figma library</text>
+
+<rect x="222" y="158" width="84" height="52" rx="4" fill="white" stroke="#EA580C" stroke-width="1.2"/>
+<text x="264" y="174" text-anchor="middle" font-size="8" font-weight="600" fill="#C2410C">Sprint Tracking</text>
+<text x="264" y="187" text-anchor="middle" font-size="7.5" fill="#6B7280">Kanban + blockers</text>
+<text x="264" y="200" text-anchor="middle" font-size="7.5" fill="#6B7280">Daily standup</text>
+
+<rect x="322" y="158" width="84" height="52" rx="4" fill="white" stroke="#6D28D9" stroke-width="1.2"/>
+<text x="364" y="174" text-anchor="middle" font-size="8" font-weight="600" fill="#5B21B6">Train &amp; Evaluate</text>
+<text x="364" y="187" text-anchor="middle" font-size="7.5" fill="#6B7280">PyTorch + MLflow</text>
+<text x="364" y="200" text-anchor="middle" font-size="7.5" fill="#6B7280">Model card</text>
+
+<rect x="422" y="158" width="84" height="52" rx="4" fill="white" stroke="#15803D" stroke-width="1.2"/>
+<text x="464" y="174" text-anchor="middle" font-size="8" font-weight="600" fill="#166534">REST API</text>
+<text x="464" y="187" text-anchor="middle" font-size="7.5" fill="#6B7280">Controllers + auth</text>
+<text x="464" y="200" text-anchor="middle" font-size="7.5" fill="#6B7280">Form requests</text>
+
+<rect x="522" y="158" width="84" height="52" rx="4" fill="white" stroke="#16A34A" stroke-width="1.2"/>
+<text x="564" y="174" text-anchor="middle" font-size="8" font-weight="600" fill="#15803D">Feature Views</text>
+<text x="564" y="187" text-anchor="middle" font-size="7.5" fill="#6B7280">Figma → Blade/JSX</text>
+<text x="564" y="200" text-anchor="middle" font-size="7.5" fill="#6B7280">API integration</text>
+
+<rect x="622" y="158" width="84" height="52" rx="4" fill="white" stroke="#0D9488" stroke-width="1.2"/>
+<text x="664" y="174" text-anchor="middle" font-size="8" font-weight="600" fill="#0F766E">Screens</text>
+<text x="664" y="187" text-anchor="middle" font-size="7.5" fill="#6B7280">Figma → code</text>
+<text x="664" y="200" text-anchor="middle" font-size="7.5" fill="#6B7280">Camera + GPS</text>
+
+<rect x="722" y="158" width="84" height="52" rx="4" fill="white" stroke="#DC2626" stroke-width="1.2"/>
+<text x="764" y="174" text-anchor="middle" font-size="8" font-weight="600" fill="#B91C1C">Automated Tests</text>
+<text x="764" y="187" text-anchor="middle" font-size="7.5" fill="#6B7280">Unit + Feature</text>
+<text x="764" y="200" text-anchor="middle" font-size="7.5" fill="#6B7280">API + browser</text>
+
+<rect x="822" y="158" width="84" height="52" rx="4" fill="white" stroke="#2563EB" stroke-width="1.2"/>
+<text x="864" y="174" text-anchor="middle" font-size="8" font-weight="600" fill="#1D4ED8">CI/CD Pipeline</text>
+<text x="864" y="187" text-anchor="middle" font-size="7.5" fill="#6B7280">GitHub Actions</text>
+<text x="864" y="200" text-anchor="middle" font-size="7.5" fill="#6B7280">Test → build → push</text>
+
+<!-- CARDS ROW 3 (y=218) -->
+<rect x="22"  y="218" width="84" height="52" rx="4" fill="white" stroke="#4F46E5" stroke-width="1.2"/>
+<text x="64"  y="234" text-anchor="middle" font-size="8" font-weight="600" fill="#4338CA">UAT Sign-off</text>
+<text x="64"  y="247" text-anchor="middle" font-size="7.5" fill="#6B7280">Validate vs PRD</text>
+<text x="64"  y="260" text-anchor="middle" font-size="7.5" fill="#6B7280">Changelog update</text>
+
+<rect x="122" y="218" width="84" height="52" rx="4" fill="white" stroke="#7C3AED" stroke-width="1.2"/>
+<text x="164" y="234" text-anchor="middle" font-size="8" font-weight="600" fill="#6D28D9">Hi-Fi Mockups</text>
+<text x="164" y="247" text-anchor="middle" font-size="7.5" fill="#6B7280">All states designed</text>
+<text x="164" y="260" text-anchor="middle" font-size="7.5" fill="#6B7280">Handoff notes</text>
+
+<rect x="222" y="218" width="84" height="52" rx="4" fill="white" stroke="#EA580C" stroke-width="1.2"/>
+<text x="264" y="234" text-anchor="middle" font-size="8" font-weight="600" fill="#C2410C">Retrospective</text>
+<text x="264" y="247" text-anchor="middle" font-size="7.5" fill="#6B7280">Sprint report</text>
+<text x="264" y="260" text-anchor="middle" font-size="7.5" fill="#6B7280">Next sprint plan</text>
+
+<rect x="322" y="218" width="84" height="52" rx="4" fill="white" stroke="#6D28D9" stroke-width="1.2"/>
+<text x="364" y="234" text-anchor="middle" font-size="8" font-weight="600" fill="#5B21B6">Model API</text>
+<text x="364" y="247" text-anchor="middle" font-size="7.5" fill="#6B7280">FastAPI /predict</text>
+<text x="364" y="260" text-anchor="middle" font-size="7.5" fill="#6B7280">ONNX + Docker</text>
+
+<rect x="422" y="218" width="84" height="52" rx="4" fill="white" stroke="#15803D" stroke-width="1.2"/>
+<text x="464" y="234" text-anchor="middle" font-size="8" font-weight="600" fill="#166534">Model Integ.</text>
+<text x="464" y="247" text-anchor="middle" font-size="7.5" fill="#6B7280">/predict endpoint</text>
+<text x="464" y="260" text-anchor="middle" font-size="7.5" fill="#6B7280">AI in main app</text>
+
+<rect x="522" y="218" width="84" height="52" rx="4" fill="white" stroke="#16A34A" stroke-width="1.2"/>
+<text x="564" y="234" text-anchor="middle" font-size="8" font-weight="600" fill="#15803D">Polish &amp; Test</text>
+<text x="564" y="247" text-anchor="middle" font-size="7.5" fill="#6B7280">Visual QA vs Figma</text>
+<text x="564" y="260" text-anchor="middle" font-size="7.5" fill="#6B7280">Ready for QA</text>
+
+<rect x="622" y="218" width="84" height="52" rx="4" fill="white" stroke="#0D9488" stroke-width="1.2"/>
+<text x="664" y="234" text-anchor="middle" font-size="8" font-weight="600" fill="#0F766E">Push Notifications</text>
+<text x="664" y="247" text-anchor="middle" font-size="7.5" fill="#6B7280">FCM / APNs</text>
+<text x="664" y="260" text-anchor="middle" font-size="7.5" fill="#6B7280">Offline support</text>
+
+<rect x="722" y="218" width="84" height="52" rx="4" fill="white" stroke="#DC2626" stroke-width="1.2"/>
+<text x="764" y="234" text-anchor="middle" font-size="8" font-weight="600" fill="#B91C1C">Bug Reports</text>
+<text x="764" y="247" text-anchor="middle" font-size="7.5" fill="#6B7280">GitHub Issues</text>
+<text x="764" y="260" text-anchor="middle" font-size="7.5" fill="#6B7280">QA sign-off</text>
+
+<rect x="822" y="218" width="84" height="52" rx="4" fill="white" stroke="#2563EB" stroke-width="1.2"/>
+<text x="864" y="234" text-anchor="middle" font-size="8" font-weight="600" fill="#1D4ED8">Deploy</text>
+<text x="864" y="247" text-anchor="middle" font-size="7.5" fill="#6B7280">Cloud Run + SQL</text>
+<text x="864" y="260" text-anchor="middle" font-size="7.5" fill="#6B7280">Monitor + alert</text>
+
+<!-- KEY HANDOFF ARROWS -->
+<line x1="106" y1="130" x2="118" y2="130" stroke="#7C3AED" stroke-width="1.5" stroke-dasharray="3,2"/>
+<polygon points="116,126 124,130 116,134" fill="#7C3AED"/>
+<line x1="206" y1="247" x2="218" y2="247" stroke="#EA580C" stroke-width="1.5" stroke-dasharray="3,2"/>
+<polygon points="216,243 224,247 216,251" fill="#EA580C"/>
+<line x1="406" y1="247" x2="418" y2="247" stroke="#15803D" stroke-width="1.5" stroke-dasharray="3,2"/>
+<polygon points="416,243 424,247 416,251" fill="#15803D"/>
+<line x1="506" y1="187" x2="518" y2="187" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="3,2"/>
+<polygon points="516,183 524,187 516,191" fill="#16A34A"/>
+<line x1="506" y1="200" x2="618" y2="200" stroke="#0D9488" stroke-width="1.2" stroke-dasharray="3,2" opacity=".6"/>
+<line x1="706" y1="247" x2="718" y2="247" stroke="#DC2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+<polygon points="716,243 724,247 716,251" fill="#DC2626"/>
+<line x1="806" y1="247" x2="818" y2="247" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="3,2"/>
+<polygon points="816,243 824,247 816,251" fill="#2563EB"/>
+<line x1="606" y1="247" x2="718" y2="247" stroke="#DC2626" stroke-width="1.2" stroke-dasharray="3,2" opacity=".6"/>
+
+<!-- PHASE LABELS -->
+<rect x="8"   y="388" width="100" height="14" rx="3" fill="#EEF2FF"/>
+<text x="58"  y="399" text-anchor="middle" font-size="7" fill="#4338CA" font-weight="600">Phase 1: Discovery</text>
+<rect x="114" y="388" width="100" height="14" rx="3" fill="#F5F3FF"/>
+<text x="164" y="399" text-anchor="middle" font-size="7" fill="#6D28D9" font-weight="600">Phase 2: Design</text>
+<rect x="220" y="388" width="100" height="14" rx="3" fill="#FFF7ED"/>
+<text x="270" y="399" text-anchor="middle" font-size="7" fill="#C2410C" font-weight="600">Phase 3: Planning</text>
+<rect x="326" y="388" width="196" height="14" rx="3" fill="#EDE9FE"/>
+<text x="424" y="399" text-anchor="middle" font-size="7" fill="#5B21B6" font-weight="600">Phase 4-5: AI Model + Backend</text>
+<rect x="528" y="388" width="196" height="14" rx="3" fill="#DCFCE7"/>
+<text x="626" y="399" text-anchor="middle" font-size="7" fill="#15803D" font-weight="600">Phase 6-7: Frontend + Mobile</text>
+<rect x="730" y="388" width="192" height="14" rx="3" fill="#FEF2F2"/>
+<text x="826" y="399" text-anchor="middle" font-size="7" fill="#B91C1C" font-weight="600">Phase 8-9: QA + Deployment</text>
+
+<!-- TOOLS ROW -->
+<rect x="8" y="404" width="912" height="62" rx="6" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+<text x="20" y="420" font-size="8.5" font-weight="700" fill="#111827">Integrations in Claude Desktop</text>
+<rect x="20"  y="428" width="96" height="20" rx="10" fill="#4F46E5"/>
+<text x="68"  y="442" text-anchor="middle" font-size="7.5" font-weight="600" fill="white">GitHub MCP</text>
+<rect x="124" y="428" width="96" height="20" rx="10" fill="#7C3AED"/>
+<text x="172" y="442" text-anchor="middle" font-size="7.5" font-weight="600" fill="white">Figma MCP</text>
+<rect x="228" y="428" width="96" height="20" rx="10" fill="#EA580C"/>
+<text x="276" y="442" text-anchor="middle" font-size="7.5" font-weight="600" fill="white">Google Drive</text>
+<rect x="332" y="428" width="96" height="20" rx="10" fill="#6D28D9"/>
+<text x="380" y="442" text-anchor="middle" font-size="7.5" font-weight="600" fill="white">MLflow / Vertex AI</text>
+<rect x="436" y="428" width="96" height="20" rx="10" fill="#15803D"/>
+<text x="484" y="442" text-anchor="middle" font-size="7.5" font-weight="600" fill="white">[Backend FW]</text>
+<rect x="540" y="428" width="96" height="20" rx="10" fill="#16A34A"/>
+<text x="588" y="442" text-anchor="middle" font-size="7.5" font-weight="600" fill="white">Vite + Tailwind</text>
+<rect x="644" y="428" width="96" height="20" rx="10" fill="#0D9488"/>
+<text x="692" y="442" text-anchor="middle" font-size="7.5" font-weight="600" fill="white">Flutter / Native</text>
+<rect x="748" y="428" width="96" height="20" rx="10" fill="#DC2626"/>
+<text x="796" y="442" text-anchor="middle" font-size="7.5" font-weight="600" fill="white">Pest + Dusk</text>
+<rect x="852" y="428" width="68" height="20" rx="10" fill="#2563EB"/>
+<text x="886" y="442" text-anchor="middle" font-size="7.5" font-weight="600" fill="white">GCP / CI/CD</text>
+
+<!-- BOTTOM BAR -->
+<rect x="8" y="474" width="912" height="76" rx="6" fill="#1E293B"/>
+<text x="464" y="494" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Deliverables per Phase</text>
+<text x="464" y="510" text-anchor="middle" font-size="7.5" fill="#94A3B8">Product Dev: PRD · OpenAPI  ·  UIX: Figma files · Design System  ·  PM: GitHub Issues · Sprint Plans  ·  Vision: Model + /predict API</text>
+<text x="464" y="524" text-anchor="middle" font-size="7.5" fill="#94A3B8">Backend: Models · Controllers · API  ·  Frontend: Views · Components  ·  Mobile: Screens · Push notifs  ·  QA: Test reports  ·  DevOps: Dockerfile · YAML</text>
+<text x="464" y="544" text-anchor="middle" font-size="7" fill="#475569">All documentation in English · Markdown format · GitHub  ·  Code on GitHub  ·  Claude Desktop is co-pilot for every team  ·  qtrust-id/ONBOARDING</text>
+</svg>
