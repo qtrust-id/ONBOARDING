@@ -1,13 +1,13 @@
 # Onboarding Guide — QA / QC Engineer
 
 **Team:** Quality Assurance & Quality Control  
-**Role in HRIS:** Ensure that every feature shipped to users is correct, secure, accessible, and matches both the product requirements and the visual design. You are the last line of defense before code reaches production.
+**Role Overview:** Ensure that every feature shipped to users is correct, secure, accessible, and matches both the product requirements and the visual design. You are the last line of defense before code reaches production.
 
 ---
 
 ## 1. Welcome
 
-Quality is not a phase at the end of development — it is a mindset woven into every sprint. As a QA/QC Engineer, you work across the entire delivery cycle: reviewing acceptance criteria before development begins, testing during development, and validating before release. Your findings directly protect the users of the HRIS system — HR administrators, managers, and employees who rely on this software to manage their careers and compensation.
+Quality is not a phase at the end of development — it is a mindset woven into every sprint. As a QA/QC Engineer, you work across the entire delivery cycle: reviewing acceptance criteria before development begins, testing during development, and validating before release. Your findings directly protect its users.
 
 You will write automated tests, conduct manual exploratory testing, manage bug reports, and coordinate User Acceptance Testing (UAT). Claude Desktop accelerates test writing and documentation.
 
@@ -21,8 +21,8 @@ You will write automated tests, conduct manual exploratory testing, manage bug r
 - Identify and document edge cases that the development team may have overlooked
 
 **Automated Testing**
-- Write and maintain Pest PHP unit and feature tests for backend logic and API endpoints
-- Write Laravel Dusk browser tests for critical user flows (login, attendance submission, leave request, payslip download)
+- Write and maintain unit and feature tests for backend logic and API endpoints
+- Write browser tests for critical user flows (login, [workflow name], [workflow name], and key downloads)
 - Integrate tests into the CI/CD pipeline — no code ships if tests fail
 
 **Manual Testing**
@@ -50,8 +50,8 @@ You will write automated tests, conduct manual exploratory testing, manage bug r
 You need the application running locally to conduct API and browser-level testing.
 
 ```bash
-git clone https://github.com/qtrust/hris-app.git
-cd hris-app
+git clone [REPO_URL]  # from Project Config Sheet
+cd [project-folder]
 cp .env.example .env.testing    # separate env for tests
 php artisan key:generate --env=testing
 docker compose up -d
@@ -64,11 +64,11 @@ php artisan serve
 ### 3.2 Test Environment Variables (`.env.testing`)
 ```env
 APP_ENV=testing
-DB_DATABASE=hris_test           # separate database for tests
+DB_DATABASE=[project-code]_test    # separate database for tests
 CACHE_DRIVER=array
 SESSION_DRIVER=array
-QUEUE_CONNECTION=sync           # run jobs synchronously in tests
-MAIL_MAILER=array               # capture emails, don't send
+QUEUE_CONNECTION=sync              # run jobs synchronously in tests
+MAIL_MAILER=array                  # capture emails, don't send
 ```
 
 Create the test database:
@@ -83,11 +83,11 @@ php artisan migrate --env=testing --seed
 
 ### 3.4 Claude Desktop
 - Install Claude Desktop and sign in with your QTrust premium account
-- Connect your local `QTrust/HRIS/` folder as the workspace
-- Use Claude to generate test cases from acceptance criteria, write Pest tests, and draft bug reports
+- Connect your local `[PROJECT_CODE]/` folder as the workspace
+- Use Claude to generate test cases from acceptance criteria, write tests, and draft bug reports
 
 ### 3.5 Figma (View Access)
-- Request view access to all HRIS Figma files (links in `by-team/uix/figma-links.md`)
+- Request view access to all project Figma files (links in `by-team/uix/figma-links.md`)
 - You will use Figma as the reference for visual QA
 
 ### 3.6 GitHub
@@ -113,7 +113,6 @@ Level 2 — Feature / Integration Tests (automated)
 
 Level 3 — Browser / E2E Tests (automated, selective)
   ↓ Test critical UI flows end-to-end in a real browser
-  ↓ Uses Laravel Dusk
   ↓ Written by: QA Engineers
   ↓ Located in: tests/Browser/
 
@@ -130,7 +129,9 @@ Level 5 — UAT (User Acceptance Testing)
 
 ---
 
-## 5. Writing Pest Tests
+## 5. Writing Tests
+
+> **Note:** The examples below use **Pest PHP** and **Laravel Dusk** (Laravel testing tools). Substitute with your project's test framework (Jest, Pytest, Playwright, Cypress, etc. — see Project Config Sheet).
 
 ### Unit Test Example (Service Logic)
 ```php
@@ -157,53 +158,54 @@ it('calculates overtime at 2x for weekend overtime hours', function () {
 
 ### Feature / API Test Example
 ```php
-// tests/Feature/Api/V1/AttendanceTest.php
-it('records a check-in with GPS coordinates', function () {
-    $employee = User::factory()->employee()->create();
+// tests/Feature/Api/V1/ExampleTest.php
+it('records a submission with the required fields', function () {
+    $user = User::factory()->create();
 
-    $response = $this->actingAs($employee)
-        ->postJson('/api/v1/attendance/check-in', [
-            'latitude'  => -6.2088,
-            'longitude' => 106.8456,
-            'photo'     => UploadedFile::fake()->image('selfie.jpg'),
+    $response = $this->actingAs($user)
+        ->postJson('/api/v1/[endpoint]', [
+            'field_one'  => 'value',
+            'field_two'  => 'value',
+            'attachment' => UploadedFile::fake()->image('example.jpg'),
         ]);
 
     $response->assertCreated()
-        ->assertJsonPath('data.status', 'checked_in');
+        ->assertJsonPath('data.status', 'submitted');
 
-    $this->assertDatabaseHas('attendances', [
-        'employee_id' => $employee->id,
-        'status'      => 'checked_in',
+    $this->assertDatabaseHas('[table]', [
+        'user_id' => $user->id,
+        'status'  => 'submitted',
     ]);
 });
 
-it('rejects check-in if employee has already checked in today', function () {
-    $employee = User::factory()->employee()->create();
-    Attendance::factory()->checkedIn()->for($employee)->today()->create();
+it('rejects a duplicate submission', function () {
+    $user = User::factory()->create();
+    // Create existing record to trigger duplicate logic
+    SomeModel::factory()->for($user)->create();
 
-    $this->actingAs($employee)
-        ->postJson('/api/v1/attendance/check-in', [...])
+    $this->actingAs($user)
+        ->postJson('/api/v1/[endpoint]', [...])
         ->assertUnprocessable()
-        ->assertJsonValidationErrors(['attendance']);
+        ->assertJsonValidationErrors(['field']);
 });
 ```
 
-### Laravel Dusk Browser Test Example
+### Browser / E2E Test Example (Laravel Dusk)
 ```php
-// tests/Browser/LeaveRequestTest.php
-it('an employee can submit a leave request from the web UI', function () {
+// tests/Browser/WorkflowTest.php
+it('a user can complete the [workflow name] flow from the web UI', function () {
     $this->browse(function (Browser $browser) {
-        $employee = User::factory()->employee()->create();
+        $user = User::factory()->create();
 
-        $browser->loginAs($employee)
-            ->visit('/leaves/create')
-            ->select('leave_type_id', '1')
+        $browser->loginAs($user)
+            ->visit('/[workflow-path]/create')
+            ->select('type_id', '1')
             ->type('start_date', '2026-07-01')
             ->type('end_date', '2026-07-03')
-            ->type('reason', 'Family vacation')
-            ->press('Submit Request')
-            ->assertSee('Leave request submitted successfully')
-            ->assertUrlIs('/leaves');
+            ->type('reason', 'Example reason')
+            ->press('Submit')
+            ->assertSee('[workflow name] submitted successfully')
+            ->assertUrlIs('/[workflow-path]');
     });
 });
 ```
@@ -266,16 +268,18 @@ Every bug filed in GitHub Issues must be detailed enough for any engineer to rep
 
 | Layer | Target | Tool |
 |---|---|---|
-| Service classes (business logic) | ≥ 85% | Pest + PHPUnit coverage |
-| API endpoints (happy path) | 100% | Pest Feature tests |
-| API endpoints (error paths) | Key errors covered | Pest Feature tests |
-| Critical UI flows | Covered | Laravel Dusk |
+| Service classes (business logic) | ≥ 85% | Unit tests |
+| API endpoints (happy path) | 100% | Feature tests |
+| API endpoints (error paths) | Key errors covered | Feature tests |
+| Critical UI flows | Covered | Browser / E2E tests |
 | Manual regression suite | All modules before release | Manual + checklist |
 
 Run coverage report:
 ```bash
-php artisan test --coverage --min=80
+[test command] --coverage  # exact command varies by framework; minimum 80% recommended
 ```
+
+> **Note:** `php artisan test --coverage --min=80` is the Laravel/Pest equivalent. Substitute with your project's test runner.
 
 ---
 
@@ -293,7 +297,7 @@ During sprint:
 
 End of sprint:
   ↓ Execute manual regression test for all completed features
-  ↓ Run full automated test suite: php artisan test
+  ↓ Run full automated test suite: [test command] runs successfully
   ↓ Close verified issues; re-open with new bug report if broken
   ↓ Write sprint QA report in reports/qa/sprint-[n]-qa-report.md
 ```
@@ -303,13 +307,13 @@ End of sprint:
 ## 9. Working with Claude Desktop
 
 **Generate test cases from acceptance criteria:**
-> "Convert these acceptance criteria into a comprehensive Pest PHP test suite. Cover happy paths, validation errors, authorization failures, and edge cases. Acceptance criteria: [paste from GitHub Issue]"
+> "Convert these acceptance criteria into a comprehensive [test framework] test suite. Cover happy paths, validation errors, authorization failures, and edge cases. Acceptance criteria: [paste from GitHub Issue]"
 
 **Draft a test plan:**
-> "Write a test plan for the Payroll module of an HRIS system. Cover: salary calculation, overtime, BPJS deductions, PPh 21, payslip generation, and bulk processing. For each area, list test cases with expected inputs and outputs."
+> "Write a QA test plan for the [Module] module of [application type]. Cover: [list the functional areas relevant to your module]. For each area, list test cases with expected inputs and outputs."
 
-**Write a Dusk browser test:**
-> "Write a Laravel Dusk browser test for the full attendance flow: login as an employee, navigate to the check-in page, submit the check-in form, and verify the status changes to 'Checked In' on the dashboard."
+**Write a browser/E2E test:**
+> "Write a browser/E2E test for the [workflow name] flow. Steps: [describe the flow]."
 
 **Write a bug report:**
 > "Write a professional GitHub bug report for this issue: [describe the problem]. Include steps to reproduce, expected vs actual behavior, and severity assessment."
@@ -319,7 +323,7 @@ End of sprint:
 ## 10. First Week Checklist
 
 - [ ] Repository cloned, test database created and seeded
-- [ ] `php artisan test` runs successfully (all existing tests pass)
+- [ ] [test command] runs successfully (all existing tests pass)
 - [ ] Postman collection imported from `docs/api/postman/`
 - [ ] Figma view access confirmed — all design files accessible
 - [ ] Claude Desktop installed and workspace connected
@@ -342,6 +346,6 @@ End of sprint:
 | API Specification | `docs/api/openapi.yaml` |
 | Figma Designs | `by-team/uix/figma-links.md` |
 | All PRDs | `docs/product/` |
-| Pest PHP Docs | [pestphp.com/docs](https://pestphp.com/docs) |
-| Laravel Dusk Docs | [laravel.com/docs/13.x/dusk](https://laravel.com/docs/13.x/dusk) |
+| Pest PHP Docs | [pestphp.com/docs](https://pestphp.com/docs) *(Laravel projects)* |
+| Laravel Dusk Docs | [laravel.com/docs/13.x/dusk](https://laravel.com/docs/13.x/dusk) *(Laravel projects)* |
 | Postman Docs | [learning.postman.com](https://learning.postman.com) |

@@ -1,13 +1,13 @@
 # Onboarding Guide — UIX Designer
 
 **Team:** UIX Designer  
-**Role in HRIS:** Translate product requirements into intuitive, visually consistent, and accessible user experiences across web and mobile platforms.
+**Role Overview:** Translate product requirements into intuitive, visually consistent, and accessible user experiences across web and mobile platforms.
 
 ---
 
 ## 1. Welcome
 
-You are responsible for the look, feel, and usability of the entire HRIS application. Your designs are the direct interface between the system and its users — HR admins, managers, and employees who will use this product every day. Good design reduces training time, prevents errors, and makes people's working lives easier.
+You are responsible for the look, feel, and usability of the entire application. Your designs are the direct interface between the system and its users — who will use this product every day. Good design reduces training time, prevents errors, and makes people's working lives easier.
 
 On this project, you work primarily in **Figma** and collaborate closely with Product Development (for requirements) and Frontend/Mobile Engineers (for implementation). Claude Desktop with the Figma MCP integration will significantly accelerate your workflow.
 
@@ -16,12 +16,12 @@ On this project, you work primarily in **Figma** and collaborate closely with Pr
 ## 2. Your Responsibilities
 
 **Research & Strategy**
-- Conduct or review user research to understand how HR staff and employees currently work
+- Conduct or review user research to understand how users currently work
 - Define user flows and information architecture before creating any visual designs
 - Document design decisions and their rationale in `by-team/uix/design-decisions.md`
 
 **Visual Design**
-- Build and maintain the HRIS Design System (colors, typography, spacing, components)
+- Build and maintain the project Design System (colors, typography, spacing, components)
 - Create low-fidelity wireframes for all screens before moving to high-fidelity
 - Produce high-fidelity mockups for all modules: web and mobile
 - Ensure designs are responsive (desktop-first web, native patterns for mobile)
@@ -45,7 +45,7 @@ On this project, you work primarily in **Figma** and collaborate closely with Pr
 - You need a **Figma Editor** seat. Request this from your team lead.
 - Sign in with your `@qtrust.id` Google Workspace account
 - You will be added to the QTrust Figma workspace
-- Create your working files under the `HRIS` project in the shared workspace
+- Create your working files under the `[PROJECT_NAME]` project in the shared workspace
 - Update `by-team/uix/figma-links.md` whenever you create a new Figma file
 
 ### 3.2 Claude Desktop + Figma MCP
@@ -53,21 +53,21 @@ On this project, you work primarily in **Figma** and collaborate closely with Pr
 - The Figma MCP is already integrated — you can push and read Figma designs directly from Claude
 - Connect your Google Drive workspace folder in Claude Desktop settings
 - **How to use Claude with Figma:**
-  - *"Create a new Figma file for the HRIS design system"*
-  - *"Add a wireframe for the attendance check-in screen to the HRIS wireframes file"*
-  - *"Read the current design from [Figma URL] and generate the Blade component"*
+  - *"Create a new Figma file for the [PROJECT_NAME] design system"*
+  - *"Add a wireframe for the [feature] screen to the [PROJECT_NAME] wireframes file"*
+  - *"Read the current design from [Figma URL] and generate the UI component"*
 
 ### 3.3 Google Drive
-- Request access to the shared HRIS Google Drive folder
+- Request access to the shared project Google Drive folder
 - Your primary output folders:
-  - `HRIS/designs/wireframes/` — low-fidelity exports
-  - `HRIS/designs/mockups/` — high-fidelity exports (PNG 2x, PDF)
-  - `HRIS/designs/assets/` — icons, images, logos
-  - `HRIS/designs/design-system/` — design system documentation
-  - `HRIS/by-team/uix/` — working notes and design decisions
+  - `[PROJECT_CODE]/designs/wireframes/` — low-fidelity exports
+  - `[PROJECT_CODE]/designs/mockups/` — high-fidelity exports (PNG 2x, PDF)
+  - `[PROJECT_CODE]/designs/assets/` — icons, images, logos
+  - `[PROJECT_CODE]/designs/design-system/` — design system documentation
+  - `[PROJECT_CODE]/by-team/uix/` — working notes and design decisions
 
 ### 3.4 GitHub
-- Request read access to `github.com/qtrust/hris-app`
+- Request read access to the repository (URL in Project Configuration Sheet)
 - You will primarily read issues tagged `team:uix` and leave design feedback comments
 - Optionally: use GitHub Issues to track design tasks in parallel with the PM's workflow
 
@@ -79,7 +79,7 @@ The design system is the single most important foundation you will build. Everyt
 
 ### Figma File Structure
 ```
-[File] HRIS — Design System
+[File] [PROJECT_NAME] — Design System
   ├── Page: Cover
   ├── Page: Foundations
   │   ├── Color Palette (tokens)
@@ -99,21 +99,21 @@ The design system is the single most important foundation you will build. Everyt
       ├── Tables with Filters
       └── Approval Flows
 
-[File] HRIS — Wireframes
+[File] [PROJECT_NAME] — Wireframes
   ├── Page: Auth (Login, Forgot Password)
   ├── Page: Dashboard
-  ├── Page: Employee Management
-  ├── Page: Attendance
-  ├── Page: Leave Management
-  ├── Page: Payroll
-  ├── Page: Performance
-  ├── Page: Recruitment
+  ├── Page: [MODULE_NAME]
+  ├── Page: [MODULE_NAME]
+  ├── Page: [MODULE_NAME]
+  ├── Page: [MODULE_NAME]
+  ├── Page: [MODULE_NAME]
+  ├── Page: [MODULE_NAME]
   └── Page: Settings
 
-[File] HRIS — Hi-Fi Mockups (Web)
+[File] [PROJECT_NAME] — Hi-Fi Mockups (Web)
   └── [Mirror of wireframe pages, high fidelity]
 
-[File] HRIS — Mobile (iOS + Android)
+[File] [PROJECT_NAME] — Mobile (iOS + Android)
   ├── Page: Android — [screen name]
   └── Page: iOS — [screen name]
 ```
@@ -184,10 +184,10 @@ The design system is the single most important foundation you will build. Everyt
 ### Figma Naming Conventions
 | Element | Convention | Example |
 |---|---|---|
-| Files | `HRIS — [Category]` | `HRIS — Hi-Fi Mockups` |
-| Pages | `[Module] — [Status]` | `Attendance — WIP` |
+| Files | `[PROJECT_NAME] — [Category]` | `[PROJECT_NAME] — Hi-Fi Mockups` |
+| Pages | `[Module] — [Status]` | `[MODULE_NAME] — WIP` |
 | Frames | `[Screen]/[State]` | `CheckIn/Default`, `CheckIn/Loading` |
-| Components | `PascalCase` | `AttendanceBadge`, `LeaveCard` |
+| Components | `PascalCase` | `StatusBadge`, `RequestCard` |
 | Layers | `kebab-case` | `header-nav`, `form-input-email` |
 | Variants | Property=Value | `State=Hover`, `Size=Large` |
 
@@ -210,7 +210,7 @@ The design system is the single most important foundation you will build. Everyt
 
 ## 7. Mobile Design Guidelines
 
-Mobile screens live in the `HRIS — Mobile` Figma file. Follow platform conventions strictly.
+Mobile screens live in the `[PROJECT_NAME] — Mobile` Figma file. Follow platform conventions strictly.
 
 | Aspect | Android (Material 3) | iOS (Human Interface) |
 |---|---|---|
@@ -242,16 +242,16 @@ Mobile screens live in the `HRIS — Mobile` Figma file. Follow platform convent
 ## 9. Working with Claude Desktop
 
 **Generate initial wireframes via Figma MCP:**
-> "Create a wireframe in Figma for the Leave Management module of an HRIS app. Include screens for: leave balance overview, submit leave request form, leave history list, and manager approval inbox. Use a clean, corporate style."
+> "Create a wireframe in Figma for the [Module] of [application type]. Include screens for: overview, submission form, history list, and approval inbox. Use a clean, corporate style."
 
 **Generate a design system component:**
-> "Add a Status Badge component to the HRIS design system Figma file. It should have variants for: Approved (green), Pending (yellow), Rejected (red), and Cancelled (grey)."
+> "Add a Status Badge component to the project design system Figma file. It should have variants for: Approved (green), Pending (yellow), Rejected (red), and Cancelled (grey)."
 
 **Read Figma designs for handoff:**
 > "Read the Figma frame at [URL] and describe the layout, components, and spacing in detail so I can write handoff notes."
 
 **Generate icon SVGs:**
-> "Create SVG icons for: clock-in, clock-out, leave calendar, payslip document, and org chart. Use a 24×24 outline style consistent with Heroicons."
+> "Create SVG icons for: [list of icons relevant to the project]. Use a 24×24 outline style consistent with Heroicons."
 
 ---
 

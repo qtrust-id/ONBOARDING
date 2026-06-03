@@ -1,13 +1,13 @@
 # Onboarding Guide — Project Manager
 
 **Team:** Project Management  
-**Role in HRIS:** Keep the project on track — on time, within scope, and with every team member unblocked and aligned.
+**Role Overview:** Keep the project on track — on time, within scope, and with every team member unblocked and aligned.
 
 ---
 
 ## 1. Welcome
 
-You are the connective tissue of the HRIS project. While other teams focus on their specific disciplines, you maintain the whole picture: what needs to be done, who is doing it, when it is due, and what is in the way. Your success is measured not by what you personally produce, but by how well the entire team delivers.
+You are the connective tissue of this project. While other teams focus on their specific disciplines, you maintain the whole picture: what needs to be done, who is doing it, when it is due, and what is in the way. Your success is measured not by what you personally produce, but by how well the entire team delivers.
 
 This guide covers your tools, processes, sprint cadence, and how to use Claude Desktop to run a highly organized, low-friction project.
 
@@ -46,24 +46,24 @@ This guide covers your tools, processes, sprint cadence, and how to use Claude D
 ### 3.1 GitHub
 - Create or log in to your GitHub account using your `@qtrust.id` email
 - Request **Maintainer** role in the `qtrust` organization — you need permission to create and manage Issues, Milestones, and Labels
-- Bookmark the repository: `github.com/qtrust/hris-app`
+- Bookmark the project repository (URL from Project Config Sheet)
 - Familiarize yourself with the Issues board, the Projects tab (Kanban), and the Milestones section
 
 ### 3.2 Claude Desktop
 - Install Claude Desktop and sign in with your QTrust premium account
-- Connect your local `QTrust/HRIS/` Google Drive folder as the workspace
+- Connect your local `[PROJECT_CODE]/` Google Drive folder as the workspace
 - Claude will help you break down PRDs into issues, draft sprint plans, write risk assessments, and generate meeting notes
 - Key workflow: paste a PRD into Claude and ask it to generate a full set of GitHub Issues with titles, descriptions, labels, and story point estimates
 
 ### 3.3 Google Drive
-- Confirm access to the shared HRIS Google Drive folder
+- Confirm access to the shared project Google Drive folder
 - Your primary folders:
   - `by-team/pm/` — sprint plans, roadmap, risk register, stakeholder map
   - `docs/meetings/` — all meeting notes
   - `reports/sprint/` — retrospectives and velocity reports
 
 ### 3.4 Figma (View Only)
-- Request view access to the HRIS Figma workspace
+- Request view access to the project Figma workspace
 - You use Figma to understand design progress and verify that designs are available before frontend sprints begin
 
 ---
@@ -75,15 +75,8 @@ You are responsible for the full GitHub project management setup. Complete this 
 ### 4.1 Labels to Create
 Create the following labels in the repository:
 
-**Module labels** (color: purple shades)
-- `module:employee`
-- `module:attendance`
-- `module:leave`
-- `module:payroll`
-- `module:performance`
-- `module:recruitment`
-- `module:org-chart`
-- `module:mobile`
+**Module labels** (color: purple shades)  
+Create one label per module defined in the Project Config Sheet (e.g., `module:[module-name]`).
 
 **Type labels** (color: green/red/grey)
 - `type:feature`
@@ -116,15 +109,15 @@ Create the following labels in the repository:
 
 ### 4.2 Milestones to Create
 
+Define milestones based on the modules listed in the Project Config Sheet. The example below is a template — replace sprint names and descriptions with your project's actual modules and schedule.
+
 | Milestone | Description | Due Date |
 |---|---|---|
 | Sprint 0 — Setup | Project scaffolding, design system, env setup | Week 1 |
-| Sprint 1 — Employee | Employee Management module complete | Week 3 |
-| Sprint 2 — Attendance | Attendance module complete | Week 5 |
-| Sprint 3 — Leave | Leave Management module complete | Week 7 |
-| Sprint 4 — Payroll | Payroll module complete | Week 9 |
-| Sprint 5 — Performance & Recruitment | Both modules complete | Week 11 |
-| Sprint 6 — UAT & Deploy | Bug fixing, UAT, production deployment | Week 12 |
+| Sprint 1 — [Module A] | [Module A] complete | Week 3 |
+| Sprint 2 — [Module B] | [Module B] complete | Week 5 |
+| Sprint 3 — [Module C] | [Module C] complete | Week 7 |
+| Sprint N — UAT & Deploy | Bug fixing, UAT, production deployment | Week N+1 |
 
 ### 4.3 GitHub Projects (Kanban Board)
 Create a GitHub Project with the following columns:
@@ -237,7 +230,7 @@ A story is **Done** when all of the following are true:
 **Weekly Status Report** — sent every Friday to relevant stakeholders. Format:
 
 ```
-Subject: HRIS Weekly Update — [Week N] — [Date]
+Subject: [PROJECT_NAME] Weekly Update — [Week N] — [Date]
 
 Summary: [1-2 sentences on overall health — on track / at risk / blocked]
 

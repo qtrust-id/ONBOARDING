@@ -1,7 +1,7 @@
 # Onboarding Guide — Image Vision Engineer
 
 **Team:** Image Vision Engineering  
-**Role in HRIS:** Design, train, evaluate, and deploy the AI and computer vision models that power QTrust's intelligent product features.
+**Role Overview:** Design, train, evaluate, and deploy the AI and computer vision models that power QTrust's intelligent product features.
 
 ---
 

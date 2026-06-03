@@ -1,25 +1,25 @@
 # Onboarding Guide — Mobile Apps Engineer
 
 **Team:** Mobile Apps Engineering  
-**Role in HRIS:** Build native and cross-platform mobile applications that give employees and managers on-the-go access to attendance, leave, payslips, and approvals.
+**Role Overview:** Build native and cross-platform mobile applications that give users and managers on-the-go access to the application's core features and approvals.
 
 ---
 
 ## 1. Welcome
 
-You are building the mobile face of the HRIS system — the app that employees reach for every morning to check in to work, submit leave requests, and check their salary. Mobile is often the primary touch point for non-desk workers, making reliability and responsiveness non-negotiable.
+You are building the mobile face of the application — the app that users interact with daily to access [project features]. Mobile is often the primary touch point for non-desk workers, making reliability and responsiveness non-negotiable.
 
 The team supports four development approaches: **Android Native (Kotlin)**, **iOS Native (Swift)**, **Flutter**, and **React Native**. Which approach is used for a given feature or release is determined by the team lead based on project priorities, timelines, and team composition. This guide covers all four, with environment setup instructions for each.
 
-All mobile apps consume the same **Laravel REST API** used by the web frontend. The mobile team does not maintain a separate backend.
+All mobile apps consume the same **REST API** as the web application. The API base URL and auth method are in the Project Configuration Sheet. The mobile team does not maintain a separate backend.
 
 ---
 
 ## 2. Your Responsibilities
 
 - Implement mobile screens based on approved Figma designs from the UIX Designer
-- Integrate with the HRIS REST API (`/api/v1/`) using bearer token authentication
-- Implement offline-first data caching for frequently accessed features (attendance history, employee directory)
+- Integrate with the project's REST API (base URL from Project Config Sheet) using bearer token authentication
+- Implement offline-first data caching for frequently accessed features ([feature] data defined in the Project Config Sheet)
 - Handle push notifications (FCM for Android, APNs for iOS) for approvals and reminders
 - Implement device features: camera (selfie check-in), GPS (location capture), biometric authentication
 - Write unit and UI tests for implemented features
@@ -51,15 +51,15 @@ Before starting any feature, confirm with your team lead which approach to use.
 **Clone the mobile repository:**
 ```bash
 # Mobile app lives in a separate repository
-git clone https://github.com/qtrust/hris-mobile.git
-cd hris-mobile
+git clone [MOBILE_REPO_URL]  # URL from Project Config Sheet
+cd [project-code]-mobile
 ```
 
 **API base URLs:**
 ```
-Development : https://hris-dev-[hash]-uc.a.run.app/api/v1
-Staging     : https://hris-staging-[hash]-uc.a.run.app/api/v1
-Production  : https://hris.qtrust.id/api/v1
+Development : https://[project-code]-dev-[hash]-uc.a.run.app/api/v1
+Staging     : https://[project-code]-staging-[hash]-uc.a.run.app/api/v1
+Production  : https://[project-code].qtrust.id/api/v1
 ```
 
 Store these in your environment configuration — never hardcode URLs.
@@ -75,7 +75,7 @@ Store these in your environment configuration — never hardcode URLs.
 
 **Project setup:**
 ```bash
-# Android Studio → Open → select hris-mobile/android/
+# Android Studio → Open → select [project-code]-mobile/android/
 ```
 
 **Key dependencies (app/build.gradle.kts):**
@@ -124,7 +124,7 @@ dependencies {
 
 **Project setup:**
 ```bash
-# Xcode → Open → select hris-mobile/ios/HRIS.xcworkspace
+# Xcode → Open → select [project-code]-mobile/ios/[PROJECT_NAME].xcworkspace
 ```
 
 **Package dependencies (Swift Package Manager):**
@@ -153,7 +153,7 @@ flutter doctor   # verify all requirements are met
 
 **Setup:**
 ```bash
-cd hris-mobile/flutter
+cd [project-code]-mobile/flutter
 flutter pub get
 flutter run      # runs on connected device or emulator
 ```
@@ -193,7 +193,7 @@ dependencies:
 
   # UI utilities
   cached_network_image: ^3.4.0
-  intl: ^0.19.0                        # date/number formatting (Indonesian locale)
+  intl: ^0.19.0                        # date/number formatting
   shimmer: ^3.0.0                      # loading skeleton screens
 ```
 
@@ -213,12 +213,11 @@ lib/
 │   └── storage/
 │       └── local_storage.dart    ← Hive wrappers
 ├── features/
-│   ├── attendance/
+│   ├── [feature-a]/
 │   │   ├── data/                 ← Repository, API calls, models
 │   │   ├── domain/               ← Use cases
 │   │   └── presentation/         ← Screens, widgets, providers
-│   ├── leave/
-│   ├── payroll/
+│   ├── [feature-b]/
 │   └── ...
 └── shared/
     ├── widgets/                  ← Reusable UI components
@@ -238,7 +237,7 @@ npm install -g @react-native-community/cli
 
 **Setup:**
 ```bash
-cd hris-mobile/react-native
+cd [project-code]-mobile/react-native
 npm install
 cd ios && pod install && cd ..
 npx react-native run-android
@@ -271,7 +270,7 @@ npx react-native run-ios
 
 ## 5. API Integration
 
-All mobile apps authenticate with the backend using **Laravel Sanctum bearer tokens**.
+All mobile apps authenticate using **bearer tokens**. Auth method is defined in the Project Config Sheet (e.g., Laravel Sanctum, JWT, OAuth2).
 
 ### Authentication Flow
 ```
@@ -312,7 +311,7 @@ Before implementing any feature that requires a new or modified API endpoint, do
 ## 6. Push Notifications
 
 ### Setup (Firebase Cloud Messaging)
-1. Create a Firebase project for HRIS in [Firebase Console](https://console.firebase.google.com)
+1. Create a Firebase project for [PROJECT_NAME] in [Firebase Console](https://console.firebase.google.com)
 2. Add Android and iOS apps to the Firebase project
 3. Download `google-services.json` (Android) and `GoogleService-Info.plist` (iOS)
 4. **Do not commit these files to GitHub** — store them in GCP Secret Manager and inject during CI/CD build
@@ -320,17 +319,17 @@ Before implementing any feature that requires a new or modified API endpoint, do
 ### Notification Categories
 | Category | Trigger | Recipients |
 |---|---|---|
-| `approval_request` | Employee submits leave/overtime | Manager |
-| `approval_result` | Manager approves/rejects | Employee |
-| `payslip_ready` | Payroll is processed | All employees |
-| `attendance_reminder` | 09:00 if not checked in | Employee |
+| `approval_request` | User submits a request | Approver |
+| `approval_result` | Approver approves/rejects | Requester |
+| `[feature]_ready` | A batch process completes | Relevant users |
+| `[feature]_reminder` | Scheduled reminder trigger | Relevant users |
 | `announcement` | Admin broadcasts message | All users |
 
 ---
 
 ## 7. Offline Support
 
-The attendance history, employee directory, and user profile must be available offline. Implement a cache-first strategy:
+Features requiring offline support are defined in the Project Config Sheet. Common examples: [frequently accessed data], user profile. Implement a cache-first strategy:
 
 1. On first load: fetch from API → store in local database (Room/CoreData/Hive/MMKV)
 2. On subsequent loads: show cached data immediately → refresh from API in background
@@ -356,7 +355,7 @@ Always explain why you need a permission before requesting it. If the user denie
 
 ## 9. Git Workflow
 
-Mobile code lives in a separate repository (`hris-mobile`), not in the main Laravel repository.
+Mobile code lives in a separate repository (`[project-code]-mobile`), not in the main application repository.
 
 ```bash
 git checkout develop
@@ -364,7 +363,7 @@ git pull origin develop
 git checkout -b feature/[platform]-[module]-[description]
 
 # Examples:
-# feature/flutter-attendance-check-in
+# feature/flutter-[module]-[description]
 # feature/android-leave-request-form
 # fix/ios-push-notification-token
 ```
@@ -376,10 +375,10 @@ PRs target `develop`. Require 1 reviewer. CI must build successfully for the rel
 ## 10. Working with Claude Desktop
 
 **Generate a Flutter screen from Figma:**
-> "Read the Figma design at [URL] and generate a Flutter screen for the Attendance Check-In page. It should use a CameraPreview widget, display the current time and date, show a GPS status indicator, and have a circular 'Check In' button. Use Riverpod for state management."
+> "Read the Figma design at [URL] and generate a Flutter screen for the [Feature] page. It should use a CameraPreview widget, display the current time and date, show a GPS status indicator, and have a circular action button. Use Riverpod for state management."
 
 **Generate an API service class (Flutter):**
-> "Write a Flutter Dart class using Dio to handle all attendance-related API calls. Methods: checkIn(photo, latitude, longitude), checkOut(), getTodayStatus(), getHistory(page). Include error handling that distinguishes between network errors, 401 (auth), and 422 (validation)."
+> "Write a Flutter Dart class using Dio to handle all [feature] API calls. Methods: [list relevant methods]. Include error handling that distinguishes between network errors, 401 (auth), and 422 (validation)."
 
 **Generate a Kotlin ViewModel:**
 > "Write a Kotlin ViewModel using Hilt and Jetpack Compose for the Leave Request screen. It should expose: form state (leave type, start/end dates, reason), a submit function that calls the API, and a UI state sealed class with Loading, Success, and Error states."
@@ -411,7 +410,7 @@ Store signing certificates and provisioning profiles in GitHub Actions Secrets, 
 - [ ] `by-team/mobile/ux-notes.md` and `by-team/mobile/api-contracts.md` read thoroughly
 - [ ] `docs/api/openapi.yaml` reviewed — understand all available endpoints
 - [ ] Claude Desktop installed and workspace folder connected
-- [ ] First GitHub Issue assigned in `hris-mobile` repository
+- [ ] First GitHub Issue assigned in `[project-code]-mobile` repository
 - [ ] Attended sprint planning
 - [ ] Introduced yourself to Backend team — align on API contract priorities
 

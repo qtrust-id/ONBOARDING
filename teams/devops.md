@@ -1,7 +1,7 @@
 # Onboarding Guide — DevOps Engineer
 
 **Team:** DevOps  
-**Role in HRIS:** Build and maintain the infrastructure, containerization, CI/CD pipeline, and production environment that keeps the HRIS application running reliably on Google Cloud Platform.
+**Role Overview:** Build and maintain the infrastructure, containerization, CI/CD pipeline, and production environment that keeps the application running reliably on the target cloud platform.
 
 ---
 
@@ -9,14 +9,14 @@
 
 You are responsible for everything between code and the end user. Your work enables the rest of the team to ship confidently — knowing that their code will be automatically tested, containerized, deployed, and monitored without manual intervention. You own the reliability, performance, and security of the production environment.
 
-The HRIS application runs on **GCP Cloud Run** — serverless containers that scale automatically. You will work with **Docker**, **GitHub Actions**, **Terraform** (for infrastructure as code), and the full suite of GCP services. Claude Desktop is your infrastructure advisor and automation assistant.
+The application runs on **[DEPLOYMENT_TARGET]** (see Project Config Sheet). The examples below use **GCP Cloud Run** as a reference. You will work with **Docker**, **GitHub Actions**, **Terraform** (for infrastructure as code), and the full suite of cloud services for your target platform. Claude Desktop is your infrastructure advisor and automation assistant.
 
 ---
 
 ## 2. Your Responsibilities
 
 **Containerization**
-- Author and maintain the `Dockerfile` for the Laravel application
+- Author and maintain the `Dockerfile` for the application
 - Optimize Docker images for fast build times and minimal image size
 - Ensure containers start correctly, handle signals properly, and run as non-root users
 
@@ -60,7 +60,7 @@ The HRIS application runs on **GCP Cloud Run** — serverless containers that sc
                           ▼
 ┌─────────────────────────────────────────────────────────────┐
 │  GCP Artifact Registry                                       │
-│  us-central1-docker.pkg.dev/qtrust-hris/hris-app/hris:tag   │
+│  [REGION]-docker.pkg.dev/[GCP_PROJECT]/[project-code]/[project-code]:tag │
 └─────────────────────────┬───────────────────────────────────┘
                           │
                           ▼
@@ -93,13 +93,13 @@ The HRIS application runs on **GCP Cloud Run** — serverless containers that sc
 
 | Service | Purpose | Notes |
 |---|---|---|
-| **Cloud Run** | Host the Laravel Docker container | Stateless; sessions/cache go to Redis |
+| **Cloud Run** | Host the application Docker container | Stateless; sessions/cache go to Redis |
 | **Cloud SQL (PostgreSQL 16)** | Primary database | Private IP only; no public access |
 | **Memorystore (Redis 7)** | Cache, session, queue | Private IP only |
 | **Artifact Registry** | Docker image registry | Replace Container Registry (deprecated) |
 | **Secret Manager** | Store all env secrets | Mount as volume or env at runtime |
-| **Cloud Storage** | File uploads (avatars, payslips, reports) | CORS configured for app domain |
-| **Cloud Logging** | Structured log aggregation | Use JSON logging in Laravel |
+| **Cloud Storage** | File uploads and reports | CORS configured for app domain |
+| **Cloud Logging** | Structured log aggregation | Use JSON logging (how-to depends on your framework) |
 | **Cloud Monitoring** | Metrics, dashboards, alerts | Set up SLO-based alerts |
 | **Cloud Build** | Optional: fast builds on GCP infra | Used if GitHub Actions is too slow |
 | **VPC** | Private networking for SQL and Redis | Cloud Run connects via Serverless VPC Access |
@@ -108,9 +108,13 @@ The HRIS application runs on **GCP Cloud Run** — serverless containers that sc
 
 ## 5. Dockerfile
 
-The Dockerfile lives in the root of the repository. This is the production-ready template:
+The Dockerfile lives in the root of the repository.
+
+> **Note:** The example below is for a PHP/Laravel project. Adapt the base image and build commands for your project's runtime (e.g., Node.js, Python, Go).
 
 ```dockerfile
+# Example for a PHP/Laravel project — adapt for your stack
+
 # Build stage
 FROM php:8.3-fpm-alpine AS build
 
@@ -132,7 +136,7 @@ RUN docker-php-ext-install \
     zip \
     opcache
 
-# Composer
+# Composer (PHP dependency manager — substitute with your project's package manager)
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Install PHP dependencies (production only)
@@ -180,6 +184,8 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 ## 6. GitHub Actions CI/CD Workflow
 
+> **Note:** The `composer install`, `php artisan key:generate`, `php artisan migrate`, and `php artisan test` commands below are Laravel-specific. Substitute with your project's equivalent commands (e.g., `npm install` / `npm test`, `pip install` / `pytest`, etc.).
+
 Create `.github/workflows/deploy.yml`:
 
 ```yaml
@@ -192,10 +198,10 @@ on:
     branches: [develop]
 
 env:
-  PROJECT_ID: qtrust-hris
+  PROJECT_ID: qtrust-[project-code]
   REGION: us-central1
-  SERVICE_NAME: hris-app
-  REGISTRY: us-central1-docker.pkg.dev/qtrust-hris/hris-app/hris
+  SERVICE_NAME: [project-code]-app
+  REGISTRY: [REGION]-docker.pkg.dev/[GCP_PROJECT]/[project-code]/[project-code]
 
 jobs:
   test:
@@ -204,8 +210,8 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: hris_test
-          POSTGRES_USER: hris_user
+          POSTGRES_DB: [project-code]_test
+          POSTGRES_USER: [project-code]_user
           POSTGRES_PASSWORD: secret
         options: >-
           --health-cmd pg_isready
@@ -216,6 +222,7 @@ jobs:
         with:
           php-version: '8.3'
           extensions: pdo_pgsql
+      # Laravel-specific commands below — substitute for your project's framework:
       - run: composer install --no-interaction
       - run: cp .env.example .env.testing && php artisan key:generate --env=testing
       - run: php artisan migrate --env=testing
@@ -247,7 +254,7 @@ jobs:
             --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated \
-            --set-secrets="APP_KEY=hris-app-key:latest,DB_PASSWORD=hris-db-password:latest" \
+            --set-secrets="APP_KEY=[project-code]-app-key:latest,DB_PASSWORD=[project-code]-db-password:latest" \
             --update-env-vars="APP_ENV=${ENVIRONMENT}"
 ```
 
@@ -267,21 +274,21 @@ jobs:
 
 | Secret Name | Description |
 |---|---|
-| `hris-app-key` | Laravel APP_KEY |
-| `hris-db-host` | Cloud SQL private IP |
-| `hris-db-name` | Database name |
-| `hris-db-user` | Database user |
-| `hris-db-password` | Database password |
-| `hris-redis-host` | Memorystore Redis host |
-| `hris-storage-bucket` | Cloud Storage bucket name |
-| `hris-mail-password` | SMTP or Mailgun API key |
+| `[project-code]-app-key` | Application secret key |
+| `[project-code]-db-host` | Cloud SQL private IP |
+| `[project-code]-db-name` | Database name |
+| `[project-code]-db-user` | Database user |
+| `[project-code]-db-password` | Database password |
+| `[project-code]-redis-host` | Memorystore Redis host |
+| `[project-code]-storage-bucket` | Cloud Storage bucket name |
+| `[project-code]-mail-password` | SMTP or mail API key |
 
 ### Non-sensitive configuration
 Store in Cloud Run environment variables (visible in GCP Console, not sensitive):
 ```
 APP_ENV=production
 APP_DEBUG=false
-APP_URL=https://hris.qtrust.id
+APP_URL=https://[project-code].qtrust.id
 CACHE_DRIVER=redis
 QUEUE_CONNECTION=redis
 SESSION_DRIVER=redis
@@ -303,10 +310,10 @@ LOG_LEVEL=warning
 | Database CPU | Cloud SQL CPU > 80% for 10 min | Email |
 
 ### Structured Logging
-Configure Laravel to output JSON logs to stderr (Cloud Run captures stderr automatically):
+Configure the application to output JSON logs to stderr (Cloud Run captures stderr automatically). Use JSON logging — how-to depends on your framework:
 
 ```php
-// config/logging.php
+// Example for Laravel — config/logging.php
 'channels' => [
     'stderr' => [
         'driver'    => 'monolog',
@@ -327,17 +334,17 @@ Store Terraform files in the repository at `infrastructure/terraform/`.
 ```hcl
 # infrastructure/terraform/main.tf
 provider "google" {
-  project = "qtrust-hris"
+  project = "[GCP_PROJECT]"
   region  = "us-central1"
 }
 
-resource "google_cloud_run_v2_service" "hris" {
-  name     = "hris-app-production"
+resource "google_cloud_run_v2_service" "app" {
+  name     = "[project-code]-app-production"
   location = "us-central1"
 
   template {
     containers {
-      image = "us-central1-docker.pkg.dev/qtrust-hris/hris-app/hris:latest"
+      image = "[REGION]-docker.pkg.dev/[GCP_PROJECT]/[project-code]/[project-code]:latest"
       resources {
         limits = { cpu = "2", memory = "1Gi" }
       }
@@ -362,23 +369,23 @@ terraform apply
 ## 10. Working with Claude Desktop
 
 **Generate a Dockerfile:**
-> "Create a production-optimized multi-stage Dockerfile for a Laravel 13 application. It should use PHP 8.3 FPM Alpine, install PostgreSQL extension, run Vite build, use Nginx as the web server, and Supervisor to manage PHP-FPM and Nginx processes. The container must listen on port 8080 for Cloud Run compatibility and run as a non-root user."
+> "Example for Laravel — adapt for your stack: Create a production-optimized multi-stage Dockerfile for a Laravel 13 application. It should use PHP 8.3 FPM Alpine, install PostgreSQL extension, run Vite build, use Nginx as the web server, and Supervisor to manage PHP-FPM and Nginx processes. The container must listen on port 8080 for Cloud Run compatibility and run as a non-root user."
 
 **Generate a GitHub Actions workflow:**
-> "Write a GitHub Actions CI/CD workflow for a Laravel 13 app that: runs Pest tests against a PostgreSQL 16 service container, builds a Docker image, pushes to GCP Artifact Registry, and deploys to GCP Cloud Run. Use Workload Identity Federation for authentication instead of a service account key."
+> "Example for Laravel — adapt for your stack: Write a GitHub Actions CI/CD workflow for a Laravel 13 app that: runs Pest tests against a PostgreSQL 16 service container, builds a Docker image, pushes to GCP Artifact Registry, and deploys to GCP Cloud Run. Use Workload Identity Federation for authentication instead of a service account key."
 
 **Generate Terraform config:**
 > "Write Terraform configuration to provision: a GCP Cloud Run service, a Cloud SQL PostgreSQL 16 instance with private IP, a Memorystore Redis instance, and the required VPC Serverless Access Connector. All in us-central1."
 
 **Incident runbook:**
-> "Write an incident runbook for a scenario where the HRIS Cloud Run service is returning HTTP 503 errors. Include: diagnostic steps, common causes, resolution steps, and how to roll back to the previous deployment."
+> "Write an incident runbook for a scenario where the [project-code] [service-name] service is returning HTTP 503 errors. Include: diagnostic steps, common causes, resolution steps, and how to roll back to the previous deployment."
 
 ---
 
 ## 11. Deployment Checklist (Pre-Production)
 
 Before every production deployment, verify:
-- [ ] All tests pass in CI (`php artisan test` green)
+- [ ] All automated tests pass in CI
 - [ ] Docker image builds successfully and starts without errors locally
 - [ ] All secrets in GCP Secret Manager are up to date
 - [ ] Database migrations have been reviewed — no destructive operations without a rollback plan
@@ -391,7 +398,7 @@ Before every production deployment, verify:
 
 ## 12. First Week Checklist
 
-- [ ] GCP project access granted — verify you can access `qtrust-hris` project
+- [ ] GCP project access granted — verify you can access `qtrust-[project-code]` project
 - [ ] GCP IAM role assigned: `roles/run.admin`, `roles/cloudsql.admin`, `roles/secretmanager.admin`
 - [ ] GitHub Actions secrets configured: `GCP_SA_KEY` (or Workload Identity set up)
 - [ ] Local Docker environment tested: `docker build` and `docker run` work
@@ -408,6 +415,7 @@ Before every production deployment, verify:
 
 | Resource | Location |
 |---|---|
+| Project Configuration Sheet | Provided by your team lead |
 | Infra Notes | `by-team/devops/infra-notes.md` |
 | Environment Variables List | `by-team/devops/env-variables.md` |
 | Deployment Checklist | `by-team/devops/deployment-checklist.md` |

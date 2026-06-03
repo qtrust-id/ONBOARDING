@@ -13,7 +13,7 @@
 | Field | Value |
 |---|---|
 | **Project Name** | [Full project name] |
-| **Project Code** | [Short code, e.g., QTRUST-HRIS] |
+| **Project Code** | [Short code, e.g., QT-PORTAL, QT-SCT] |
 | **Description** | [One-sentence description of what this project delivers] |
 | **Business Owner** | [Name — Department] |
 | **IT Lead** | [Name] |

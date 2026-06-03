@@ -1,7 +1,7 @@
 # Onboarding Guide — Backend Engineer
 
 **Team:** Backend Engineering  
-**Role in HRIS:** Design, build, and maintain the server-side application — the data models, business logic, API endpoints, background jobs, and integrations that power the entire HRIS platform.
+**Role Overview:** Design, build, and maintain the server-side application — the data models, business logic, API endpoints, background jobs, and integrations that power the entire application.
 
 ---
 
@@ -9,7 +9,7 @@
 
 You are responsible for the core of the application: everything that persists data, enforces business rules, and serves information to the frontend and mobile clients. The quality of your data models, the correctness of your business logic, and the security of your API determine the overall reliability of the product.
 
-You work with **Laravel 13**, **PHP 8.3**, **PostgreSQL**, and **Redis**. The application is containerized with Docker and deployed to **GCP Cloud Run**. Claude Desktop is your pair programmer — use it aggressively to accelerate boilerplate-heavy tasks like model generation, resource classes, and test writing.
+Your tech stack is defined in the Project Configuration Sheet. The examples in this guide use **Laravel 13 / PHP 8.3 / PostgreSQL / Redis / GCP Cloud Run** as a reference implementation — substitute with your project's actual stack. Claude Desktop is your pair programmer — use it aggressively to accelerate boilerplate-heavy tasks like model generation, resource classes, and test writing.
 
 ---
 
@@ -19,9 +19,9 @@ You work with **Laravel 13**, **PHP 8.3**, **PostgreSQL**, and **Redis**. The ap
 - Implement Eloquent models with relationships, casts, and scopes
 - Build REST API endpoints: Form Requests, Controllers, API Resources, route definitions
 - Implement authorization using Laravel Policies and Gates
-- Write service classes for complex business logic (payroll calculation, attendance rules, etc.)
-- Create background jobs for asynchronous operations (payroll processing, bulk exports, email notifications)
-- Integrate third-party services (BPJS, tax calculation APIs, cloud storage)
+- Write service classes for complex business logic (rules specific to your project domain)
+- Create background jobs for asynchronous operations (bulk processing, exports, email notifications)
+- Integrate third-party services (payment gateways, external APIs, cloud storage)
 - Write unit and feature tests using Pest PHP
 - Review Frontend and Mobile API integration issues and resolve them promptly
 - Document all API changes in `docs/api/openapi.yaml`
@@ -42,6 +42,8 @@ You work with **Laravel 13**, **PHP 8.3**, **PostgreSQL**, and **Redis**. The ap
 | Pest PHP | 3.x | Test framework (preferred over PHPUnit directly) |
 | Spatie Packages | various | Permissions (spatie/laravel-permission), Media, Activity Log |
 
+> **Note:** The table above reflects the reference Laravel stack. Check your Project Configuration Sheet for the actual technologies used in your project.
+
 ---
 
 ## 4. Local Development Environment Setup
@@ -49,7 +51,7 @@ You work with **Laravel 13**, **PHP 8.3**, **PostgreSQL**, and **Redis**. The ap
 ### 4.1 Prerequisites
 
 ```bash
-# macOS
+# macOS — example for a PHP/Laravel project; adapt for your project's runtime
 brew install php@8.3 composer
 brew install --cask docker
 
@@ -59,13 +61,16 @@ composer --version
 docker --version
 ```
 
+> **Note:** The commands above are for a PHP/Laravel stack. If your project uses a different runtime (Node.js, Python, Go, etc.), substitute the appropriate package manager and version check commands.
+
 ### 4.2 Clone & Configure
 ```bash
-git clone https://github.com/qtrust/hris-app.git
-cd hris-app
+git clone [REPO_URL]  # URL from Project Config Sheet
+cd [project-directory]
 
 cp .env.example .env
-php artisan key:generate
+# Laravel: php artisan key:generate
+# Other frameworks: use the equivalent key/secret generation command for your stack
 ```
 
 Edit `.env` for local backend development:
@@ -77,8 +82,8 @@ APP_URL=http://localhost:8000
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
-DB_DATABASE=hris_dev
-DB_USERNAME=hris_user
+DB_DATABASE=[project-code]_dev
+DB_USERNAME=[project-code]_user
 DB_PASSWORD=secret
 
 REDIS_HOST=127.0.0.1
@@ -105,16 +110,20 @@ docker compose ps
 
 ### 4.4 Install & Initialize
 ```bash
+# Laravel example — substitute with your project's package manager and CLI commands
 composer install
 php artisan migrate --seed
 php artisan horizon        # in a separate terminal (queue worker)
 php artisan serve
 ```
 
-### 4.5 Telescope (local debugging only)
+> **Note:** `composer install`, `php artisan migrate`, and `php artisan serve` are Laravel-specific commands. Substitute the equivalent commands for your project's framework (e.g., `npm install` / `python manage.py migrate` / `go run .`).
+
+### 4.5 Local Debugging Tool
 ```bash
-# Access at: http://localhost:8000/telescope
-# Never deploy Telescope to production
+# Laravel example: Telescope accessible at http://localhost:8000/telescope
+# Refer to your project stack for the equivalent debugging/inspection tool
+# Never deploy local debugging tools to production
 ```
 
 ---
@@ -125,7 +134,7 @@ php artisan serve
 ```
 app/
 ├── Console/
-│   └── Commands/           ← Artisan commands (batch jobs, imports)
+│   └── Commands/           ← CLI commands (batch jobs, imports)
 ├── Exceptions/
 │   └── Handler.php
 ├── Http/
@@ -136,12 +145,9 @@ app/
 │   ├── Middleware/
 │   ├── Requests/           ← Form Request validation classes
 │   └── Resources/          ← API Resource (JSON response transformers)
-├── Models/                 ← Eloquent models
+├── Models/                 ← ORM models
 ├── Policies/               ← Authorization policies (one per model)
 ├── Services/               ← Business logic layer
-│   ├── AttendanceService.php
-│   ├── LeaveService.php
-│   ├── PayrollService.php
 │   └── ...
 ├── Jobs/                   ← Queued jobs
 ├── Notifications/          ← Email/push notifications
@@ -204,7 +210,7 @@ YYYY_MM_DD_HHMMSS_create_[table]_[related_table]_table.php  ← pivot
 - Foreign keys: `[model]_id` (e.g., `employee_id`, `department_id`)
 - Timestamps: always include `$table->timestamps()` and `$table->softDeletes()` on all main entities
 - Booleans: prefix with `is_` or `has_` (e.g., `is_active`, `has_overtime`)
-- Enums: use PHP-backed enums (e.g., `App\Enums\LeaveStatus`) + cast in model
+- Enums: use PHP-backed enums + cast in model
 
 ### Index Strategy
 Add indexes on:
@@ -234,7 +240,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
 // Success (200/201)
 {
   "data": { ... },
-  "message": "Leave request submitted successfully."
+  "message": "Request submitted successfully."
 }
 
 // Paginated list
@@ -257,7 +263,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
 
 // Not found (404)
 {
-  "message": "Employee not found."
+  "message": "Resource not found."
 }
 ```
 
@@ -308,28 +314,28 @@ it('rejects a leave request when the employee has insufficient balance', functio
 
 ## 9. Security Requirements
 
-- All routes under `/api/v1/` must be protected with `auth:sanctum` middleware
-- Every controller action must call `$this->authorize()` using a Policy
-- Never trust user input — always validate with Form Requests
-- Never expose sensitive fields (password, remember_token) in API Resources — use `$hidden` on models
-- Log all destructive actions (delete, bulk update) via `spatie/laravel-activitylog`
-- Rate-limit authentication endpoints: `RateLimiter::for('login', ...)`
+- All routes under `/api/v1/` must be protected with appropriate authentication middleware
+- Every controller action must enforce authorization (using Policies, Guards, or equivalent)
+- Never trust user input — always validate at the boundary
+- Never expose sensitive fields (passwords, tokens) in API responses
+- Log all destructive actions (delete, bulk update)
+- Rate-limit authentication endpoints
 
 ---
 
 ## 10. Working with Claude Desktop
 
 **Generate a full model + migration + factory + seeder:**
-> "Generate a Laravel 13 Eloquent model for a Leave table in an HRIS app. It must have: employee_id (FK), leave_type_id (FK), start_date, end_date, reason, status (enum: pending/approved/rejected/cancelled), approved_by (nullable FK to users), and timestamps + soft deletes. Also generate the migration, factory, and database seeder."
+> "Generate a [FRAMEWORK] model for a [Entity] table. Fields: [list all fields with types and constraints]. Include: migration, factory, and database seeder."
 
 **Generate a REST API endpoint:**
-> "Create a Laravel 13 API controller, Form Request, and API Resource for submitting a leave request. The endpoint is POST /api/v1/leaves. Validation: start_date must be in the future, end_date must be after start_date, leave_type_id must exist, reason is required with max 500 characters. Return a LeaveResource on success."
+> "Create a [FRAMEWORK] controller, request validator, and response serializer for [Action]. Endpoint: [METHOD] [/path]. Validation rules: [list rules]. Return [ResponseObject] on success."
 
-**Generate Pest tests:**
-> "Write Pest PHP feature tests for the POST /api/v1/leaves endpoint. Cover: successful submission (201), unauthenticated request (401), insufficient leave balance (422), overlapping dates (422), and date in the past (422)."
+**Generate tests:**
+> "Write [test framework] tests for the [endpoint]. Cover: [list scenarios — e.g., successful case (201), unauthenticated (401), validation failures (422), not found (404)]."
 
 **Design a service class:**
-> "Design a PayrollService class for a Laravel HRIS app. It must calculate: basic salary, overtime pay (1.5x for weekdays, 2x for weekends), BPJS Kesehatan (4% employer, 1% employee), BPJS Ketenagakerjaan (3.7% employer, 2% employee), and PPh 21 using Indonesia's PTKP and progressive tax brackets for 2025. Show the class structure with method signatures and PHPDoc."
+> "Design a [ServiceName] class for [use case]. Business rules: [list rules relevant to your domain]."
 
 ---
 
@@ -343,7 +349,7 @@ git checkout -b feature/[module]-[description]
 # Examples:
 # feature/employee-model-and-api
 # feature/leave-approval-service
-# fix/payroll-overtime-calculation
+# fix/[module]-[description]
 ```
 
 All PRs target `develop`. Require 1 reviewer. CI (tests) must pass.
@@ -354,8 +360,8 @@ All PRs target `develop`. Require 1 reviewer. CI (tests) must pass.
 
 - [ ] Repository cloned and `.env` configured
 - [ ] Docker services running, database migrated and seeded
-- [ ] `php artisan serve` running, login works at `http://localhost:8000`
-- [ ] Laravel Telescope accessible and showing requests
+- [ ] Development server running, app accessible at `http://localhost:8000`
+- [ ] Debugging/inspection tool accessible (Telescope, Django Debug Toolbar, etc. — per project stack) and showing requests
 - [ ] Claude Desktop installed, workspace folder connected
 - [ ] All existing PRDs read — understand data requirements
 - [ ] `docs/api/README.md` and `docs/api/openapi.yaml` reviewed
@@ -369,12 +375,13 @@ All PRs target `develop`. Require 1 reviewer. CI (tests) must pass.
 
 | Resource | Location |
 |---|---|
+| Project Configuration Sheet | Provided by your team lead |
 | API Specification | `docs/api/openapi.yaml` |
 | DB Schema Drafts | `by-team/backend/db-schema-drafts/` |
 | All PRDs | `docs/product/` |
 | Mobile API Contracts | `by-team/mobile/api-contracts.md` |
 | Git Conventions | `src-link/GITHUB.md` |
-| Laravel 13 Docs | [laravel.com/docs/13.x](https://laravel.com/docs/13.x) |
-| Pest PHP Docs | [pestphp.com/docs](https://pestphp.com/docs) |
-| Spatie Packages | [spatie.be/open-source](https://spatie.be/open-source) |
-| PHP 8.3 New Features | [php.net/releases/8.3](https://www.php.net/releases/8.3/) |
+| Laravel 13 Docs | [laravel.com/docs/13.x](https://laravel.com/docs/13.x) *(applies to a Laravel-based stack)* |
+| Pest PHP Docs | [pestphp.com/docs](https://pestphp.com/docs) *(applies to a Laravel-based stack)* |
+| Spatie Packages | [spatie.be/open-source](https://spatie.be/open-source) *(applies to a Laravel-based stack)* |
+| PHP 8.3 New Features | [php.net/releases/8.3](https://www.php.net/releases/8.3/) *(applies to a Laravel-based stack)* |

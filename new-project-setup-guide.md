@@ -86,8 +86,8 @@ Once completed, save the file as `[PROJECT_CODE]-project-config.md` and upload i
 
 | Field | Value / Guidance |
 |---|---|
-| Project Name | `[REQUIRED]` Full product name (e.g., "QTrust HRIS", "SupplyChain Tracker") |
-| Project Code | `[REQUIRED]` Short 3–6 character code used in repo names, folder names, and Cowork project name (e.g., HRIS, SCT) |
+| Project Name | `[REQUIRED]` Full product name (e.g., "QTrust Portal", "SupplyChain Tracker") |
+| Project Code | `[REQUIRED]` Short 3–6 character code used in repo names, folder names, and Cowork project name (e.g., PORTAL, SCT) |
 | Description | `[REQUIRED]` One paragraph — what the product does and who it is for |
 | Client / Stakeholder | `[REQUIRED]` Internal product or external client name |
 | Project Type | `[REQUIRED]` New Build / Enhancement / Migration / Research |
@@ -137,7 +137,7 @@ Once completed, save the file as `[PROJECT_CODE]-project-config.md` and upload i
 | CI/CD Tool | e.g., GitHub Actions |
 | Container Registry | e.g., GCR, ECR, ACR |
 | Environments | dev / staging / prod |
-| Domain / Subdomain | e.g., hris.qtrust.id, api.hris.qtrust.id |
+| Domain / Subdomain | e.g., [project-code].qtrust.id, api.[project-code].qtrust.id |
 
 ---
 
@@ -147,7 +147,7 @@ Once completed, save the file as `[PROJECT_CODE]-project-config.md` and upload i
 |---|---|
 | Figma Workspace Link | |
 | Design System | e.g., QTrust Base DS, project-specific, None yet |
-| Google Drive Folder Path | e.g., QTrust Shared Drive / HRIS |
+| Google Drive Folder Path | e.g., QTrust Shared Drive / [PROJECT_CODE] |
 | Documentation Language | English |
 
 ---
@@ -198,7 +198,7 @@ Once completed, save the file as `[PROJECT_CODE]-project-config.md` and upload i
 The Claude Cowork project is the AI workspace for the entire team. It connects Claude to the project's Google Drive folder, giving every team member a shared context — the same stack knowledge, the same document language preference, the same repo URL — without anyone having to re-explain the project at the start of each conversation.
 
 1. Open Claude Desktop → click **New Project**
-2. Name it: `[COMPANY_CODE]-[PROJECT_CODE]` (e.g., `QT-HRIS`, `QT-SCT`)
+2. Name it: `[COMPANY_CODE]-[PROJECT_CODE]` (e.g., `QT-PORTAL`, `QT-SCT`)
 3. Open Project Settings → **Instructions** → paste the template from [Section 14](#14-cowork-project-instructions-template), filled in with values from the Config Sheet
 4. Settings → **Workspace** → select the local Google Drive folder for this project (the folder synced via Google Drive Desktop on the IT Head's machine, and later on each team member's machine)
 5. If UIX Designer is on the team: verify Figma MCP is active — test with the prompt: `"List my Figma files"`
@@ -215,7 +215,7 @@ The Claude Cowork project is the AI workspace for the entire team. It connects C
 ### Repository Creation
 
 - Create under the **`qtrust-id`** GitHub organisation
-- Naming convention: `qtrust-id/[project-code]-app` (e.g., `qtrust-id/hris-app`, `qtrust-id/sct-app`)
+- Naming convention: `qtrust-id/[project-code]-app` (e.g., `qtrust-id/portal-app`, `qtrust-id/sct-app`)
 - Visibility: **Private**
 - Initialise with `README.md` and the appropriate `.gitignore` for the backend framework chosen in the Project Config Sheet
 - Add a repository description matching the one-line product description from the Config Sheet
@@ -298,7 +298,7 @@ Create a brief `README.md` inside each subfolder to explain its purpose. This he
 
 The Figma workspace is the single source of truth for all visual design decisions. UIX Designers work here; all other team members reference it as viewers.
 
-1. Create a new **Project** in the QTrust Figma organisation named `[PROJECT_NAME]` (e.g., "QTrust HRIS")
+1. Create a new **Project** in the QTrust Figma organisation named `[PROJECT_NAME]` (e.g., "QTrust Portal")
 2. Grant all UIX Designers an **Editor** seat on the project
 3. Grant all other team members **Viewer** access — they can inspect designs and copy values but cannot edit
 4. UIX Designer creates the 4 standard Figma files:

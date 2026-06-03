@@ -1,7 +1,7 @@
 # Onboarding Guide — Product Development
 
 **Team:** Product Development  
-**Role in HRIS:** Define what gets built, why it gets built, and validate that what is built solves the right problems.
+**Role Overview:** Define what gets built, why it gets built, and validate that what is built solves the right problems.
 
 ---
 
@@ -9,7 +9,7 @@
 
 You are the voice of the user and the business within the engineering team. Your work — PRDs, user stories, API specifications, and acceptance criteria — is the foundation everything else is built on. Without clear, well-reasoned product documentation, engineers build the wrong things and designers design for the wrong problems.
 
-This guide will walk you through everything you need to get started contributing to the HRIS project from day one.
+This guide will walk you through everything you need to get started contributing to the project from day one.
 
 ---
 
@@ -45,25 +45,25 @@ As a member of the Product Development team, you own the following:
 Complete these steps on your first day.
 
 ### 3.1 Google Drive
-- Request access to the shared **QTrust HRIS** folder from your team lead
+- Request access to the shared **project folder** from your team lead
 - Install **Google Drive Desktop** on your machine and sign in with your `@qtrust.id` Google Workspace account
-- Confirm the HRIS folder appears at: `Google Drive > Shared drives > QTrust > HRIS`
-- Your primary working directory is `HRIS/docs/product/` and `HRIS/by-team/product/`
+- Confirm the project folder appears at: `Google Drive > Shared drives > QTrust > [PROJECT_CODE]`
+- Your primary working directory is `[PROJECT_CODE]/docs/product/` and `[PROJECT_CODE]/by-team/product/`
 
 ### 3.2 GitHub
 - Create a GitHub account if you do not have one, using your `@qtrust.id` email
-- Request to be added to the `qtrust` GitHub organization with the **Product** role (read/comment access)
-- Familiarize yourself with the repository: `github.com/qtrust/hris-app`
+- Request to be added to the `qtrust-id` GitHub organization with the **Product** role (read/comment access)
+- Familiarize yourself with the repository: the project repository (URL from Project Config Sheet)
 - You will primarily read issues and create/comment on issues — you do not need to push code
 
 ### 3.3 Claude Desktop
 - Install Claude Desktop from [claude.ai/download](https://claude.ai/download)
 - Sign in with your QTrust premium account (credentials from your team lead)
-- Connect your Google Drive workspace folder: Settings → Workspace → point to your local `QTrust/HRIS/` path
+- Connect your Google Drive workspace folder: Settings → Workspace → point to your local `[PROJECT_CODE]/` path
 - Claude is your primary writing assistant. Use it to draft PRDs, user stories, competitive analysis, API specs, and meeting notes
 
 ### 3.4 Figma
-- Request view access to the HRIS Figma workspace (link in `by-team/uix/figma-links.md`)
+- Request view access to the project Figma workspace (link in `by-team/uix/figma-links.md`)
 - You do not need an editor seat; view-only access is sufficient for reviewing and commenting on designs
 
 ---
@@ -71,15 +71,15 @@ Complete these steps on your first day.
 ## 4. Project Structure You Own
 
 ```
-HRIS/
+[PROJECT_CODE]/
 ├── docs/
 │   ├── product/               ← Your primary output folder
-│   │   ├── PRD-employee.md
-│   │   ├── PRD-attendance.md
-│   │   ├── PRD-leave.md
-│   │   ├── PRD-payroll.md
-│   │   ├── PRD-performance.md
-│   │   ├── PRD-recruitment.md
+│   │   ├── PRD-[module-a].md
+│   │   ├── PRD-[module-b].md
+│   │   ├── PRD-[module-c].md
+│   │   ├── PRD-[module-d].md
+│   │   ├── PRD-[module-e].md
+│   │   ├── PRD-[module-f].md
 │   │   ├── user-stories/
 │   │   └── changelog.md
 │   └── api/                   ← Co-own with Backend
@@ -155,14 +155,14 @@ Use the Given/When/Then format consistently.
 
 **Good example:**
 ```
-As an HR Admin, I want to export the monthly attendance report as a PDF
-so that I can submit it to the finance team without reformatting.
+As a [User Role], I want to export the [Report Type] as a document
+so that I can submit it to the relevant team without reformatting.
 
 Acceptance Criteria:
-- Given I am logged in as HR Admin,
-  When I navigate to Attendance > Reports and click "Export PDF",
-  Then the system generates a PDF containing all employee attendance records
-  for the selected month, formatted with QTrust branding, within 5 seconds.
+- Given I am logged in as [User Role],
+  When I navigate to [MODULE_NAME] > Reports and click "Export",
+  Then the system generates a document containing all relevant records
+  for the selected period, formatted with QTrust branding, within 5 seconds.
 
 - Given the report contains more than 500 rows,
   When the export is triggered,
@@ -184,7 +184,7 @@ Acceptance Criteria:
    ↓ Get alignment from CTO and PM
 
 3. PRD Draft (Claude-assisted)
-   ↓ Use Claude: "Write a PRD for the Leave Management module of an HRIS app"
+   ↓ Use Claude: "Write a PRD for the [MODULE_NAME] of [application type]"
    ↓ Fill in business-specific details
    ↓ Save to docs/product/PRD-[module].md
 
@@ -227,16 +227,16 @@ Acceptance Criteria:
 Claude is your most powerful productivity tool on this project. Here are the most effective prompts for your role:
 
 **Drafting a PRD:**
-> "Write a comprehensive PRD for the Payroll module of an HRIS application. The system must calculate basic salary, overtime, BPJS deductions, and PPh 21 income tax. The company is based in Indonesia. Use the standard PRD template."
+> "Write a comprehensive PRD for the [MODULE_NAME] module of this application. The system must handle [domain-specific calculation]. Use the standard PRD template."
 
 **Writing user stories:**
 > "Convert these requirements into user stories with Given/When/Then acceptance criteria: [paste requirements]"
 
 **Competitive analysis:**
-> "Analyze the key features of [Mekari Talenta / Gadjian / SAP SuccessFactors] and identify gaps that a new HRIS product could address."
+> "Analyze the key features of [Competitor A / Competitor B / Competitor C] and identify gaps that a new product could address."
 
 **API contract draft:**
-> "Draft a high-level REST API contract for a Leave Management module. Include endpoints for applying, approving, rejecting, and cancelling leave requests."
+> "Draft a high-level REST API contract for a [MODULE_NAME] module. Include endpoints for the primary create, read, update, and delete operations."
 
 **Meeting notes:**
 > "Turn this meeting transcript into structured minutes with a decisions section and action items table: [paste transcript]"
@@ -259,7 +259,7 @@ As a Product team member, your GitHub usage is primarily issue-based rather than
 ## 11. First Week Checklist
 
 - [ ] Google Drive access confirmed and folder synced locally
-- [ ] GitHub account created and added to `qtrust` organization
+- [ ] GitHub account created and added to `qtrust-id` organization
 - [ ] Claude Desktop installed, signed in, workspace folder connected
 - [ ] Figma view access granted
 - [ ] Read all existing PRDs in `docs/product/`
