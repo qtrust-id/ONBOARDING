@@ -1,0 +1,347 @@
+# Onboarding Guide — QA / QC Engineer
+
+**Team:** Quality Assurance & Quality Control  
+**Role in HRIS:** Ensure that every feature shipped to users is correct, secure, accessible, and matches both the product requirements and the visual design. You are the last line of defense before code reaches production.
+
+---
+
+## 1. Welcome
+
+Quality is not a phase at the end of development — it is a mindset woven into every sprint. As a QA/QC Engineer, you work across the entire delivery cycle: reviewing acceptance criteria before development begins, testing during development, and validating before release. Your findings directly protect the users of the HRIS system — HR administrators, managers, and employees who rely on this software to manage their careers and compensation.
+
+You will write automated tests, conduct manual exploratory testing, manage bug reports, and coordinate User Acceptance Testing (UAT). Claude Desktop accelerates test writing and documentation.
+
+---
+
+## 2. Your Responsibilities
+
+**Test Planning**
+- Write test plans for every module, covering functional, boundary, and negative cases
+- Derive test cases directly from the acceptance criteria in GitHub Issues and PRDs
+- Identify and document edge cases that the development team may have overlooked
+
+**Automated Testing**
+- Write and maintain Pest PHP unit and feature tests for backend logic and API endpoints
+- Write Laravel Dusk browser tests for critical user flows (login, attendance submission, leave request, payslip download)
+- Integrate tests into the CI/CD pipeline — no code ships if tests fail
+
+**Manual Testing**
+- Perform exploratory testing on all completed features before sprint closure
+- Conduct visual QA — compare every implemented screen against the Figma mockup
+- Test cross-browser compatibility (Chrome, Firefox, Safari, Edge)
+- Test mobile web responsiveness
+
+**Bug Management**
+- File detailed, reproducible bug reports in GitHub Issues
+- Triage incoming bugs by severity and priority
+- Verify bug fixes before closing issues
+- Track bug metrics per sprint in `by-team/qa/bug-log.md`
+
+**UAT Coordination**
+- Prepare the UAT checklist (`by-team/qa/uat-checklist.md`) before each production release
+- Facilitate UAT sessions with real users or stakeholders
+- Document UAT results and sign off on releases
+
+---
+
+## 3. Tools & Access Setup
+
+### 3.1 Local Development Environment
+You need the application running locally to conduct API and browser-level testing.
+
+```bash
+git clone https://github.com/qtrust/hris-app.git
+cd hris-app
+cp .env.example .env.testing    # separate env for tests
+php artisan key:generate --env=testing
+docker compose up -d
+composer install
+npm install
+php artisan migrate --seed
+php artisan serve
+```
+
+### 3.2 Test Environment Variables (`.env.testing`)
+```env
+APP_ENV=testing
+DB_DATABASE=hris_test           # separate database for tests
+CACHE_DRIVER=array
+SESSION_DRIVER=array
+QUEUE_CONNECTION=sync           # run jobs synchronously in tests
+MAIL_MAILER=array               # capture emails, don't send
+```
+
+Create the test database:
+```bash
+php artisan migrate --env=testing --seed
+```
+
+### 3.3 Postman
+- Import the Postman collection from `docs/api/postman/`
+- Set up environment variables for `base_url`, `auth_token`
+- Use Postman to test API endpoints manually and document edge cases
+
+### 3.4 Claude Desktop
+- Install Claude Desktop and sign in with your QTrust premium account
+- Connect your local `QTrust/HRIS/` folder as the workspace
+- Use Claude to generate test cases from acceptance criteria, write Pest tests, and draft bug reports
+
+### 3.5 Figma (View Access)
+- Request view access to all HRIS Figma files (links in `by-team/uix/figma-links.md`)
+- You will use Figma as the reference for visual QA
+
+### 3.6 GitHub
+- Request access with at least **Write** permissions to create and manage Issues
+- Familiarize yourself with labels — you will use `type:bug`, `priority:*`, `module:*`, `status:ready-for-qa`
+
+---
+
+## 4. Testing Levels & Strategy
+
+```
+Level 1 — Unit Tests (automated)
+  ↓ Test individual classes: Services, Models, helpers
+  ↓ No database, no HTTP — pure logic
+  ↓ Written by: Backend Engineers + QA
+  ↓ Located in: tests/Unit/
+
+Level 2 — Feature / Integration Tests (automated)
+  ↓ Test full API request-response cycles
+  ↓ Uses the test database (RefreshDatabase)
+  ↓ Written by: Backend Engineers + QA
+  ↓ Located in: tests/Feature/Api/V1/
+
+Level 3 — Browser / E2E Tests (automated, selective)
+  ↓ Test critical UI flows end-to-end in a real browser
+  ↓ Uses Laravel Dusk
+  ↓ Written by: QA Engineers
+  ↓ Located in: tests/Browser/
+
+Level 4 — Manual Exploratory Testing
+  ↓ Unscripted exploration to find unexpected failures
+  ↓ Conducted by QA on staging environment
+  ↓ Findings become bug reports in GitHub Issues
+
+Level 5 — UAT (User Acceptance Testing)
+  ↓ Conducted with real users or business stakeholders
+  ↓ Validates that the product meets business expectations
+  ↓ Checklist-based, results documented in by-team/qa/
+```
+
+---
+
+## 5. Writing Pest Tests
+
+### Unit Test Example (Service Logic)
+```php
+// tests/Unit/Services/PayrollServiceTest.php
+use App\Services\PayrollService;
+
+it('calculates overtime at 1.5x for weekday overtime hours', function () {
+    $service = new PayrollService();
+    $basicDailySalary = 500_000; // IDR 500,000 per day
+    $overtimeHours = 3;
+
+    $result = $service->calculateOvertimePay($basicDailySalary, $overtimeHours, isWeekend: false);
+
+    // Formula: (basic_daily / 8) * 1.5 * overtime_hours
+    expect($result)->toBe(281_250);
+});
+
+it('calculates overtime at 2x for weekend overtime hours', function () {
+    $service = new PayrollService();
+    $result = (new PayrollService())->calculateOvertimePay(500_000, 2, isWeekend: true);
+    expect($result)->toBe(250_000);
+});
+```
+
+### Feature / API Test Example
+```php
+// tests/Feature/Api/V1/AttendanceTest.php
+it('records a check-in with GPS coordinates', function () {
+    $employee = User::factory()->employee()->create();
+
+    $response = $this->actingAs($employee)
+        ->postJson('/api/v1/attendance/check-in', [
+            'latitude'  => -6.2088,
+            'longitude' => 106.8456,
+            'photo'     => UploadedFile::fake()->image('selfie.jpg'),
+        ]);
+
+    $response->assertCreated()
+        ->assertJsonPath('data.status', 'checked_in');
+
+    $this->assertDatabaseHas('attendances', [
+        'employee_id' => $employee->id,
+        'status'      => 'checked_in',
+    ]);
+});
+
+it('rejects check-in if employee has already checked in today', function () {
+    $employee = User::factory()->employee()->create();
+    Attendance::factory()->checkedIn()->for($employee)->today()->create();
+
+    $this->actingAs($employee)
+        ->postJson('/api/v1/attendance/check-in', [...])
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors(['attendance']);
+});
+```
+
+### Laravel Dusk Browser Test Example
+```php
+// tests/Browser/LeaveRequestTest.php
+it('an employee can submit a leave request from the web UI', function () {
+    $this->browse(function (Browser $browser) {
+        $employee = User::factory()->employee()->create();
+
+        $browser->loginAs($employee)
+            ->visit('/leaves/create')
+            ->select('leave_type_id', '1')
+            ->type('start_date', '2026-07-01')
+            ->type('end_date', '2026-07-03')
+            ->type('reason', 'Family vacation')
+            ->press('Submit Request')
+            ->assertSee('Leave request submitted successfully')
+            ->assertUrlIs('/leaves');
+    });
+});
+```
+
+---
+
+## 6. Bug Report Standard
+
+Every bug filed in GitHub Issues must be detailed enough for any engineer to reproduce without asking follow-up questions.
+
+```markdown
+**Title:** [Module] Short description of the bug — imperative, specific
+
+**Labels:** type:bug · priority:[critical/high/medium/low] · module:[name] · team:[responsible team]
+
+---
+
+## Bug Description
+[Clear, one-paragraph description of what is wrong]
+
+## Environment
+- Environment: [local / staging / production]
+- Browser: [Chrome 125 / Safari 17 / etc.]
+- OS: [macOS 14 / Windows 11 / Android 14]
+- App version / commit: [if known]
+
+## Steps to Reproduce
+1. Log in as [role]
+2. Navigate to [page]
+3. [Specific action taken]
+4. [Next action]
+
+## Expected Behavior
+[What should happen according to the PRD / acceptance criteria / Figma]
+
+## Actual Behavior
+[What actually happens]
+
+## Visual Evidence
+[Screenshot or screen recording — mandatory for UI bugs]
+
+## Figma Reference
+[Link to the Figma screen this should match — for visual bugs]
+
+## Additional Notes
+[Stack trace, console errors, network requests — paste if available]
+```
+
+### Bug Severity Definitions
+| Priority | Definition | SLA (Fix Target) |
+|---|---|---|
+| `priority:critical` | System crash, data loss, security vulnerability, all users blocked | Same sprint |
+| `priority:high` | Core feature broken for most users, no workaround | Current sprint |
+| `priority:medium` | Feature works but behavior is wrong; workaround exists | Next sprint |
+| `priority:low` | Minor visual issue, cosmetic, edge case | Backlog |
+
+---
+
+## 7. Test Coverage Targets
+
+| Layer | Target | Tool |
+|---|---|---|
+| Service classes (business logic) | ≥ 85% | Pest + PHPUnit coverage |
+| API endpoints (happy path) | 100% | Pest Feature tests |
+| API endpoints (error paths) | Key errors covered | Pest Feature tests |
+| Critical UI flows | Covered | Laravel Dusk |
+| Manual regression suite | All modules before release | Manual + checklist |
+
+Run coverage report:
+```bash
+php artisan test --coverage --min=80
+```
+
+---
+
+## 8. Sprint QA Workflow
+
+```
+Before sprint starts:
+  ↓ Read sprint issues and their acceptance criteria
+  ↓ Write test plans in by-team/qa/test-plan-[module].md
+  ↓ Identify ambiguous criteria — raise questions in GitHub Issues
+
+During sprint:
+  ↓ Write automated tests alongside feature development (don't wait for completion)
+  ↓ Test features as soon as they appear on the staging branch
+
+End of sprint:
+  ↓ Execute manual regression test for all completed features
+  ↓ Run full automated test suite: php artisan test
+  ↓ Close verified issues; re-open with new bug report if broken
+  ↓ Write sprint QA report in reports/qa/sprint-[n]-qa-report.md
+```
+
+---
+
+## 9. Working with Claude Desktop
+
+**Generate test cases from acceptance criteria:**
+> "Convert these acceptance criteria into a comprehensive Pest PHP test suite. Cover happy paths, validation errors, authorization failures, and edge cases. Acceptance criteria: [paste from GitHub Issue]"
+
+**Draft a test plan:**
+> "Write a test plan for the Payroll module of an HRIS system. Cover: salary calculation, overtime, BPJS deductions, PPh 21, payslip generation, and bulk processing. For each area, list test cases with expected inputs and outputs."
+
+**Write a Dusk browser test:**
+> "Write a Laravel Dusk browser test for the full attendance flow: login as an employee, navigate to the check-in page, submit the check-in form, and verify the status changes to 'Checked In' on the dashboard."
+
+**Write a bug report:**
+> "Write a professional GitHub bug report for this issue: [describe the problem]. Include steps to reproduce, expected vs actual behavior, and severity assessment."
+
+---
+
+## 10. First Week Checklist
+
+- [ ] Repository cloned, test database created and seeded
+- [ ] `php artisan test` runs successfully (all existing tests pass)
+- [ ] Postman collection imported from `docs/api/postman/`
+- [ ] Figma view access confirmed — all design files accessible
+- [ ] Claude Desktop installed and workspace connected
+- [ ] All PRDs read and acceptance criteria reviewed
+- [ ] `by-team/qa/` folder reviewed — understand existing test assets
+- [ ] GitHub write access confirmed — can create Issues and apply labels
+- [ ] First test plan written for Sprint 0 features
+- [ ] Attended sprint planning
+
+---
+
+## 11. Key Resources
+
+| Resource | Location |
+|---|---|
+| Test Plans | `by-team/qa/test-plan-[module].md` |
+| Bug Log | `by-team/qa/bug-log.md` |
+| UAT Checklist | `by-team/qa/uat-checklist.md` |
+| Sprint QA Reports | `reports/qa/` |
+| API Specification | `docs/api/openapi.yaml` |
+| Figma Designs | `by-team/uix/figma-links.md` |
+| All PRDs | `docs/product/` |
+| Pest PHP Docs | [pestphp.com/docs](https://pestphp.com/docs) |
+| Laravel Dusk Docs | [laravel.com/docs/13.x/dusk](https://laravel.com/docs/13.x/dusk) |
+| Postman Docs | [learning.postman.com](https://learning.postman.com) |

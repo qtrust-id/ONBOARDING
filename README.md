@@ -1,0 +1,144 @@
+# QTrust Engineering — Onboarding Repository
+
+> **Organisation:** QTrust (PT Langgeng Sukses Abadi Tekhnologi)  
+> **Maintained by:** Engineering Team  
+> **Version:** 1.0 — June 2026
+
+This repository contains the standard onboarding documentation for all QTrust engineering teams. Every new project starts here — the guides are project-agnostic templates that work for any tech stack, any cloud provider, and any subset of teams.
+
+---
+
+## 🚀 Starting a New Project?
+
+**Read this first:** [`new-project-setup-guide.md`](new-project-setup-guide.md)
+
+It covers the complete 8-step setup process — from completing the Project Configuration Sheet to running the project kickoff — for IT Heads and Product Heads.
+
+---
+
+## 📋 Team Onboarding Guides
+
+Each guide is a self-contained onboarding document for a specific team role. Share the relevant guide with each new team member on Day 1.
+
+| # | Team | Guide | Key Tools |
+|---|---|---|---|
+| 1 | Product Development | [`teams/product-development.md`](teams/product-development.md) | Claude Desktop · GitHub · Google Drive |
+| 2 | UIX Designer | [`teams/uix-designer.md`](teams/uix-designer.md) | Figma · Claude + Figma MCP |
+| 3 | Project Manager | [`teams/project-manager.md`](teams/project-manager.md) | GitHub Issues · Milestones · Kanban |
+| 4 | Frontend Engineer | [`teams/frontend-engineer.md`](teams/frontend-engineer.md) | [Framework] · Vite · Tailwind |
+| 5 | Backend Engineer | [`teams/backend-engineer.md`](teams/backend-engineer.md) | [Framework] · PostgreSQL · Redis |
+| 6 | Image Vision Engineer | [`teams/image-vision-engineer.md`](teams/image-vision-engineer.md) | PyTorch · MLflow · FastAPI |
+| 7 | QA / QC | [`teams/qa-qc.md`](teams/qa-qc.md) | Pest PHP · Postman · GitHub Issues |
+| 8 | DevOps | [`teams/devops.md`](teams/devops.md) | Docker · GCP/AWS/Azure · GitHub Actions |
+| 9 | Mobile Apps Engineer | [`teams/mobile-engineer.md`](teams/mobile-engineer.md) | Flutter · Android Studio · Xcode |
+
+---
+
+## 📁 Templates
+
+Ready-to-use templates for common project documents.
+
+| Template | Purpose |
+|---|---|
+| [`templates/project-config-sheet.md`](templates/project-config-sheet.md) | Fill this out when starting any new project — defines the stack, team, and timeline |
+| [`templates/prd-template.md`](templates/prd-template.md) | Product Requirements Document template for any module or feature |
+| [`templates/cowork-instructions.md`](templates/cowork-instructions.md) | Claude Cowork project instructions template — paste into Project Settings |
+
+---
+
+## 🔄 Complete Team Workflow
+
+All 9 teams work in sequence across 9 phases:
+
+```
+Phase 1: Discovery      → Product Development + Project Manager
+Phase 2: Design         → UIX Designer
+Phase 3: Sprint Planning → Project Manager + all teams
+Phase 4: AI Model Dev   → Image Vision Engineer → Backend (model API)
+Phase 5: Backend Dev    → Backend Engineer
+Phase 6: Frontend Dev   → Frontend Engineer
+Phase 7: Mobile Dev     → Mobile Apps Engineer
+Phase 8: QA & Testing   → QA / QC (all teams support)
+Phase 9: Deployment     → DevOps (all teams support)
+```
+
+Key handoffs:
+- **PRD approved** → UIX Designer + PM receive it
+- **Mockups approved** → Frontend + Mobile receive them
+- **Model `/predict` API ready** → Backend integrates it
+- **REST API complete** → Frontend + Mobile integrate it
+- **QA sign-off** → DevOps deploys to production
+
+---
+
+## 📌 How to Use This Repository
+
+### For IT Head / Product Head
+1. Read [`new-project-setup-guide.md`](new-project-setup-guide.md) end-to-end
+2. Complete [`templates/project-config-sheet.md`](templates/project-config-sheet.md) for your new project
+3. Copy the Cowork project instructions from [`templates/cowork-instructions.md`](templates/cowork-instructions.md)
+4. Distribute the relevant team guides from `teams/` to each team member
+
+### For Team Members
+1. Receive your team guide from the IT Head or PM on Day 1
+2. Read the **Project Configuration Sheet** for your specific project (stored in Google Drive)
+3. Complete the **First Week Checklist** at the end of your guide
+4. Use Claude Desktop as your co-pilot throughout the project
+
+### For Project Managers
+1. Use [`templates/prd-template.md`](templates/prd-template.md) to request PRDs from Product Development
+2. Follow the GitHub setup instructions in [`teams/project-manager.md`](teams/project-manager.md)
+3. Distribute onboarding guides as described in [`new-project-setup-guide.md`](new-project-setup-guide.md) — Step 7
+
+---
+
+## 🛠 Core Principles
+
+| Principle | Description |
+|---|---|
+| **Process is consistent** | Every project follows the same 8 setup steps |
+| **Technology is flexible** | Stack, cloud provider, and team composition are chosen per project |
+| **Claude as co-pilot** | Every team member uses Claude Desktop with a premium QTrust account |
+| **Docs in Markdown** | All documentation in GitHub-flavored Markdown, pushed to GitHub |
+| **English throughout** | All documents, code comments, and commit messages in English |
+| **Secrets never in code** | Use the cloud provider's secrets manager for all credentials |
+
+---
+
+## 📂 Repository Structure
+
+```
+ONBOARDING/
+├── README.md                      ← You are here
+├── new-project-setup-guide.md     ← Start here for new projects
+├── teams/
+│   ├── product-development.md
+│   ├── uix-designer.md
+│   ├── project-manager.md
+│   ├── frontend-engineer.md
+│   ├── backend-engineer.md
+│   ├── image-vision-engineer.md
+│   ├── qa-qc.md
+│   ├── devops.md
+│   └── mobile-engineer.md
+└── templates/
+    ├── project-config-sheet.md
+    ├── prd-template.md
+    └── cowork-instructions.md
+```
+
+---
+
+## ✏️ Contributing / Updating
+
+These guides are living documents. When a process changes, a new tool is adopted, or a new team is added:
+
+1. Create a branch: `docs/update-[team-or-section]`
+2. Edit the relevant `.md` file
+3. Open a PR with a clear description of what changed and why
+4. Get approval from the IT Head or Engineering Lead
+5. Merge to `main`
+
+---
+
+*QTrust (PT Langgeng Sukses Abadi Tekhnologi) · https://github.com/qtrust-id/ONBOARDING*
