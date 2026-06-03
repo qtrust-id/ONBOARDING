@@ -66,6 +66,7 @@ Every team member works inside Claude Desktop with MCP integrations that connect
 | Claude Desktop | AI co-pilot + MCP hub | [`tools/claude-desktop.md`](tools/claude-desktop.md) |
 | GitHub | Code, issues, CI/CD | [`tools/github.md`](tools/github.md) |
 | Google Drive | Shared documentation | [`tools/google-drive.md`](tools/google-drive.md) |
+| Google Calendar | Sprint ceremonies + meeting scheduling | [`tools/google-calendar.md`](tools/google-calendar.md) |
 | Slack | Team communication + alerts | [`tools/slack.md`](tools/slack.md) |
 | Figma | UI/UX design | [`tools/figma.md`](tools/figma.md) |
 | Fireflies | Meeting transcripts | [`tools/fireflies.md`](tools/fireflies.md) |

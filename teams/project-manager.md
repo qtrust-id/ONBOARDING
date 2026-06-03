@@ -287,12 +287,13 @@ Questions / Decisions needed:
 
 See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup order, and activation instructions.
 
-**Your required tools:** Claude Desktop · GitHub (maintainer) · Linear · Google Drive · Slack · Fireflies · Figma (viewer)
+**Your required tools:** Claude Desktop · GitHub (maintainer) · Google Drive · Google Calendar · Linear · Slack · Fireflies · Figma (viewer)
 
 | Tool | Setup Guide | Priority |
 |---|---|---|
 | Claude Desktop | [`tools/claude-desktop.md`](../tools/claude-desktop.md) | Day 1 |
 | Google Drive | [`tools/google-drive.md`](../tools/google-drive.md) | Day 1 |
+| Google Calendar | [`tools/google-calendar.md`](../tools/google-calendar.md) | Day 1 |
 | GitHub | [`tools/github.md`](../tools/github.md) | Day 1 |
 | Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
 | Figma | [`tools/figma.md`](../tools/figma.md) | Day 1 |

@@ -10,6 +10,7 @@
 Every team member at QTrust works inside **Claude Desktop** as their primary AI co-pilot. Claude's power multiplies when it is connected to your tools via **MCP (Model Context Protocol)** integrations. With the right tools connected, Claude can:
 
 - Pull your sprint issues from Linear and GitHub without you leaving the conversation
+- Schedule sprint ceremonies in Google Calendar, which Fireflies auto-joins and transcribes
 - Summarise meeting transcripts from Fireflies and surface blockers from Slack
 - Query production errors from Sentry and infrastructure metrics from Datadog
 - Read Figma designs and generate code that matches them precisely
@@ -25,6 +26,7 @@ Every team member at QTrust works inside **Claude Desktop** as their primary AI 
 | **Claude Desktop** | AI co-pilot + MCP hub | [`claude-desktop.md`](claude-desktop.md) |
 | **GitHub** | Code repository, issues, PRs, CI/CD | [`github.md`](github.md) |
 | **Google Drive** | Shared documentation workspace | [`google-drive.md`](google-drive.md) |
+| **Google Calendar** | Sprint ceremonies, meeting scheduling | [`google-calendar.md`](google-calendar.md) |
 | **Slack** | Team communication, alerts, standups | [`slack.md`](slack.md) |
 | **Figma** | UI/UX design and design system | [`figma.md`](figma.md) |
 | **Fireflies** | Meeting transcription and AI summaries | [`fireflies.md`](fireflies.md) |
@@ -43,6 +45,7 @@ Every team member at QTrust works inside **Claude Desktop** as their primary AI 
 | **Claude Desktop** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **GitHub** | ✅ | ✅ | 👁 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **Google Drive** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Google Calendar** | ✅ | 🔶 | 🔶 | ✅ | 🔶 | 🔶 | 🔶 | 🔶 | 🔶 | 🔶 |
 | **Slack** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **Figma** | 👁 | 👁 | ✅ | 👁 | 👁 | — | — | 👁 | — | 👁 |
 | **Fireflies** | ✅ | ✅ | 🔶 | ✅ | 🔶 | 🔶 | 🔶 | 🔶 | 🔶 | 🔶 |
@@ -62,6 +65,7 @@ Connect tools in this priority order. The first four are universal and should be
 2. **Google Drive** — install Drive Desktop, connect workspace folder in Claude
 3. **GitHub** — create account, accept org invitation, connect MCP
 4. **Slack** — join workspace, join project channels, connect MCP
+5. **Google Calendar** — connect MCP, join shared project calendar
 
 ### Day 1 — Role-Specific
 
@@ -91,6 +95,7 @@ Connect these on Day 1 based on your role:
 - [ ] Claude Desktop — all projects accessible
 - [ ] GitHub — Owner role in `qtrust-id` org
 - [ ] Google Drive — all project folders accessible
+- [ ] Google Calendar — MCP connected, all project calendars visible
 - [ ] Slack — all project channels visible
 - [ ] Figma — Admin access to QTrust org
 - [ ] Fireflies — workspace admin, auto-join enabled
@@ -117,10 +122,11 @@ Connect these on Day 1 based on your role:
 ### Project Manager
 - [ ] Claude Desktop
 - [ ] GitHub — **Maintainer** role (can manage labels, milestones, Kanban)
-- [ ] Linear — Member with full issue management access
 - [ ] Google Drive — `by-team/pm/` and `docs/meetings/` accessible
+- [ ] Google Calendar — MCP connected, shared project calendar created and shared with team
+- [ ] Linear — Member with full issue management access
 - [ ] Slack — all project channels
-- [ ] Fireflies — required, auto-join enabled
+- [ ] Fireflies — required, auto-join enabled, `fred@fireflies.ai` added to all recurring ceremonies
 - [ ] Figma — Viewer
 
 ### Frontend Engineer
@@ -180,12 +186,13 @@ Once all tools are connected, use these prompts every morning for full project v
 
 ```
 "Give me a CTO morning brief across all active QTrust projects:
-1. Linear: sprint progress (% done) and blocked issues per project
-2. GitHub: PRs waiting > 2 days for review
-3. Sentry: new production errors since yesterday
-4. Datadog: any monitors currently in Alert state
-5. Fireflies: key decisions or action items from yesterday's meetings
-6. Slack: any escalations or critical messages in #incidents or #[project]-alerts"
+1. Google Calendar: what meetings and ceremonies are scheduled today?
+2. Linear: sprint progress (% done) and blocked issues per project
+3. GitHub: PRs waiting > 2 days for review
+4. Sentry: new production errors since yesterday
+5. Datadog: any monitors currently in Alert state
+6. Fireflies: key decisions or action items from yesterday's meetings
+7. Slack: any escalations or critical messages in #incidents or #[project]-alerts"
 ```
 
 ```
