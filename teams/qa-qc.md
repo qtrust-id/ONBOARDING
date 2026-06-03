@@ -349,3 +349,22 @@ End of sprint:
 | Pest PHP Docs | [pestphp.com/docs](https://pestphp.com/docs) *(Laravel projects)* |
 | Laravel Dusk Docs | [laravel.com/docs/13.x/dusk](https://laravel.com/docs/13.x/dusk) *(Laravel projects)* |
 | Postman Docs | [learning.postman.com](https://learning.postman.com) |
+
+---
+
+## Required Tools
+
+See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup order, and activation instructions.
+
+**Your required tools:** Claude Desktop · GitHub (write) · Google Drive · Slack · Figma (viewer) · Sentry · Linear (read)
+
+| Tool | Setup Guide | Priority |
+|---|---|---|
+| Claude Desktop | [`tools/claude-desktop.md`](../tools/claude-desktop.md) | Day 1 |
+| Google Drive | [`tools/google-drive.md`](../tools/google-drive.md) | Day 1 |
+| GitHub | [`tools/github.md`](../tools/github.md) | Day 1 |
+| Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
+| Figma | [`tools/figma.md`](../tools/figma.md) | Day 1 |
+| Sentry | [`tools/sentry.md`](../tools/sentry.md) | Before first staging deploy |
+
+> Connect tools in the order listed. The first four (Claude Desktop, Google Drive, GitHub, Slack) are required on Day 1 for every team member.

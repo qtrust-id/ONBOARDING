@@ -431,3 +431,22 @@ Store signing certificates and provisioning profiles in GitHub Actions Secrets, 
 | Apple HIG | [developer.apple.com/design/human-interface-guidelines](https://developer.apple.com/design/human-interface-guidelines) |
 | Firebase FCM | [firebase.google.com/docs/cloud-messaging](https://firebase.google.com/docs/cloud-messaging) |
 | React Navigation | [reactnavigation.org](https://reactnavigation.org) |
+
+---
+
+## Required Tools
+
+See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup order, and activation instructions.
+
+**Your required tools:** Claude Desktop · GitHub (write) · Google Drive · Slack · Figma (viewer) · Sentry
+
+| Tool | Setup Guide | Priority |
+|---|---|---|
+| Claude Desktop | [`tools/claude-desktop.md`](../tools/claude-desktop.md) | Day 1 |
+| Google Drive | [`tools/google-drive.md`](../tools/google-drive.md) | Day 1 |
+| GitHub | [`tools/github.md`](../tools/github.md) | Day 1 |
+| Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
+| Figma | [`tools/figma.md`](../tools/figma.md) | Day 1 |
+| Sentry | [`tools/sentry.md`](../tools/sentry.md) | Before first staging deploy |
+
+> Connect tools in the order listed. The first four (Claude Desktop, Google Drive, GitHub, Slack) are required on Day 1 for every team member.

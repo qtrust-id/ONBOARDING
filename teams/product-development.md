@@ -283,3 +283,21 @@ As a Product team member, your GitHub usage is primarily issue-based rather than
 | Figma Designs | `by-team/uix/figma-links.md` |
 | GitHub Repository | `src-link/GITHUB.md` |
 | Onboarding Hub | `docs/onboarding/README.md` |
+
+---
+
+## Required Tools
+
+See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup order, and activation instructions.
+
+**Your required tools:** Claude Desktop · GitHub (read) · Google Drive · Slack · Figma (viewer) · Fireflies
+
+| Tool | Setup Guide | Priority |
+|---|---|---|
+| Claude Desktop | [`tools/claude-desktop.md`](../tools/claude-desktop.md) | Day 1 |
+| Google Drive | [`tools/google-drive.md`](../tools/google-drive.md) | Day 1 |
+| GitHub | [`tools/github.md`](../tools/github.md) | Day 1 |
+| Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
+| Fireflies | [`tools/fireflies.md`](../tools/fireflies.md) | Before first meeting |
+
+> Connect tools in the order listed. The first four (Claude Desktop, Google Drive, GitHub, Slack) are required on Day 1 for every team member.

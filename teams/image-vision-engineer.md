@@ -396,3 +396,21 @@ Add these variables to `.env.example` with placeholder values so other team memb
 - [ ] Dataset Card drafted for the training dataset
 - [ ] Integration contract (API schema) agreed with Backend Engineer
 - [ ] Attended sprint planning and tasks estimated
+
+---
+
+## Required Tools
+
+See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup order, and activation instructions.
+
+**Your required tools:** Claude Desktop · GitHub (write) · Google Drive · Slack · Sentry
+
+| Tool | Setup Guide | Priority |
+|---|---|---|
+| Claude Desktop | [`tools/claude-desktop.md`](../tools/claude-desktop.md) | Day 1 |
+| Google Drive | [`tools/google-drive.md`](../tools/google-drive.md) | Day 1 |
+| GitHub | [`tools/github.md`](../tools/github.md) | Day 1 |
+| Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
+| Sentry | [`tools/sentry.md`](../tools/sentry.md) | Before first staging deploy |
+
+> Connect tools in the order listed. The first four (Claude Desktop, Google Drive, GitHub, Slack) are required on Day 1 for every team member.

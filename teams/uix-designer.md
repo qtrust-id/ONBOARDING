@@ -282,3 +282,21 @@ Mobile screens live in the `[PROJECT_NAME] — Mobile` Figma file. Follow platfo
 | Material Design 3 | [m3.material.io](https://m3.material.io) |
 | Apple HIG | [developer.apple.com/design/human-interface-guidelines](https://developer.apple.com/design/human-interface-guidelines) |
 | WCAG 2.1 | [w3.org/TR/WCAG21](https://www.w3.org/TR/WCAG21/) |
+
+---
+
+## Required Tools
+
+See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup order, and activation instructions.
+
+**Your required tools:** Claude Desktop · Figma (editor — requires paid seat) · Google Drive · Slack · GitHub (viewer) · Fireflies
+
+| Tool | Setup Guide | Priority |
+|---|---|---|
+| Claude Desktop | [`tools/claude-desktop.md`](../tools/claude-desktop.md) | Day 1 |
+| Google Drive | [`tools/google-drive.md`](../tools/google-drive.md) | Day 1 |
+| GitHub | [`tools/github.md`](../tools/github.md) | Day 1 |
+| Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
+| Figma | [`tools/figma.md`](../tools/figma.md) | Day 1 |
+
+> Connect tools in the order listed. The first four (Claude Desktop, Google Drive, GitHub, Slack) are required on Day 1 for every team member.

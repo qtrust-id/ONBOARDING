@@ -55,6 +55,28 @@ Ready-to-use templates for common project documents.
 
 ---
 
+## 🛠 Tool Setup Guides
+
+Every team member works inside Claude Desktop with MCP integrations that connect directly to your tools. See the complete setup guide:
+
+**[`tools/README.md`](tools/README.md)** — Tool matrix, who needs what, setup order, and per-role checklists.
+
+| Tool | Purpose | Guide |
+|---|---|---|
+| Claude Desktop | AI co-pilot + MCP hub | [`tools/claude-desktop.md`](tools/claude-desktop.md) |
+| GitHub | Code, issues, CI/CD | [`tools/github.md`](tools/github.md) |
+| Google Drive | Shared documentation | [`tools/google-drive.md`](tools/google-drive.md) |
+| Slack | Team communication + alerts | [`tools/slack.md`](tools/slack.md) |
+| Figma | UI/UX design | [`tools/figma.md`](tools/figma.md) |
+| Fireflies | Meeting transcripts | [`tools/fireflies.md`](tools/fireflies.md) |
+| Linear | Sprint management + roadmap | [`tools/linear.md`](tools/linear.md) |
+| Sentry | Production error tracking | [`tools/sentry.md`](tools/sentry.md) |
+| Datadog | Infrastructure & APM monitoring | [`tools/datadog.md`](tools/datadog.md) |
+
+> **Day 1 minimum for everyone:** Claude Desktop → Google Drive → GitHub → Slack. Then add role-specific tools per the matrix in `tools/README.md`.
+
+---
+
 ## 🔄 Complete Team Workflow
 
 All 9 teams work in sequence across 9 phases:

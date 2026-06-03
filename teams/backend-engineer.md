@@ -385,3 +385,22 @@ All PRs target `develop`. Require 1 reviewer. CI (tests) must pass.
 | Pest PHP Docs | [pestphp.com/docs](https://pestphp.com/docs) *(applies to a Laravel-based stack)* |
 | Spatie Packages | [spatie.be/open-source](https://spatie.be/open-source) *(applies to a Laravel-based stack)* |
 | PHP 8.3 New Features | [php.net/releases/8.3](https://www.php.net/releases/8.3/) *(applies to a Laravel-based stack)* |
+
+---
+
+## Required Tools
+
+See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup order, and activation instructions.
+
+**Your required tools:** Claude Desktop · GitHub (write) · Google Drive · Slack · Sentry · Datadog
+
+| Tool | Setup Guide | Priority |
+|---|---|---|
+| Claude Desktop | [`tools/claude-desktop.md`](../tools/claude-desktop.md) | Day 1 |
+| Google Drive | [`tools/google-drive.md`](../tools/google-drive.md) | Day 1 |
+| GitHub | [`tools/github.md`](../tools/github.md) | Day 1 |
+| Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
+| Sentry | [`tools/sentry.md`](../tools/sentry.md) | Before first staging deploy |
+| Datadog | [`tools/datadog.md`](../tools/datadog.md) | Before infra provisioning |
+
+> Connect tools in the order listed. The first four (Claude Desktop, Google Drive, GitHub, Slack) are required on Day 1 for every team member.

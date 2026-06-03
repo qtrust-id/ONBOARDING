@@ -426,3 +426,22 @@ Before every production deployment, verify:
 | GitHub Actions Docs | [docs.github.com/actions](https://docs.github.com/en/actions) |
 | Terraform GCP Provider | [registry.terraform.io/providers/hashicorp/google](https://registry.terraform.io/providers/hashicorp/google/latest/docs) |
 | Docker Best Practices | [docs.docker.com/develop/develop-images/dockerfile_best-practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/) |
+
+---
+
+## Required Tools
+
+See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup order, and activation instructions.
+
+**Your required tools:** Claude Desktop · GitHub (write) · Google Drive · Slack · Sentry (admin) · Datadog (admin) · Linear (read)
+
+| Tool | Setup Guide | Priority |
+|---|---|---|
+| Claude Desktop | [`tools/claude-desktop.md`](../tools/claude-desktop.md) | Day 1 |
+| Google Drive | [`tools/google-drive.md`](../tools/google-drive.md) | Day 1 |
+| GitHub | [`tools/github.md`](../tools/github.md) | Day 1 |
+| Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
+| Sentry | [`tools/sentry.md`](../tools/sentry.md) | Before first staging deploy |
+| Datadog | [`tools/datadog.md`](../tools/datadog.md) | Before infra provisioning |
+
+> Connect tools in the order listed. The first four (Claude Desktop, Google Drive, GitHub, Slack) are required on Day 1 for every team member.
