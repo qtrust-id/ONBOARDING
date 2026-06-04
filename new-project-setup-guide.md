@@ -661,7 +661,9 @@ Use this checklist to track progress through the full project setup process. Eve
 
 - [ ] Cloud project / account created and billing configured
 - [ ] Staging environment provisioned: compute + database + cache
-- [ ] CI/CD pipeline deploying automatically to dev on push to `develop`
+- [ ] CI/CD pipeline deploying automatically to **staging** on merge to `develop`
+- [ ] Production pipeline configured as a gated deploy from `main`
+- [ ] GitHub Environments created: `staging` (no reviewers) and `production` with a **Required reviewers** protection rule (IT Head / Tech Lead) — this enforces the manual approval gate on production deploys (Settings → Environments → `production` → Required reviewers)
 - [ ] All environment variable names listed in `by-team/devops/` (values in secrets manager only)
 - [ ] All secrets stored in the cloud provider's secrets manager
 - [ ] Basic health-check endpoint returning HTTP 200
