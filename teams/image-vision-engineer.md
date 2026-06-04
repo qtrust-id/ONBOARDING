@@ -351,6 +351,8 @@ feature/vision-[task]-[description]
 - `feature/vision-classification-product-auth`
 - `feature/vision-ocr-label-reader`
 
+> **Environments:** the serving container follows the same 3-tier flow as every other service. PRs target `develop` (auto-deploys the `/predict` endpoint to **staging**, where Backend and QA validate it); production is a gated deploy promoted from `main`. Reference model artifacts per environment via the `MODEL_PATH` env var — never bake weights into the image. Full flow: [`../environments-and-promotion.md`](../environments-and-promotion.md).
+
 ### Commit Convention
 
 | Prefix | Use For |

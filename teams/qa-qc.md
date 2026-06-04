@@ -109,6 +109,8 @@ php artisan migrate --env=testing --seed
 
 ## 4. Testing Levels & Strategy
 
+> **Staging is your environment.** QTrust runs a 3-tier flow — Local → Staging → Production ([`../environments-and-promotion.md`](../environments-and-promotion.md)). Features auto-deploy to **staging** when merged to `develop`; staging is the official environment for your exploratory testing, regression suites, UAT, and performance/SLA checks. Your sign-off on staging — no open critical/high bugs — is the gate that allows promotion to production. You do not test on production; you smoke-test there after release.
+
 ```
 Level 1 — Unit Tests (automated)
   ↓ Test individual classes: Services, Models, helpers

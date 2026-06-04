@@ -356,6 +356,8 @@ git checkout -b feature/[module]-[description]
 
 All PRs target `develop`. Require 1 reviewer. CI (tests) must pass.
 
+> **Environments:** merging to `develop` auto-deploys to **staging** — verify your feature there before marking the issue *Ready for QA*. Production is a gated deploy promoted from `main` (manual approval), never directly. Keep `.env.example` current; real staging/production values live in the secrets manager. Full flow: [`../environments-and-promotion.md`](../environments-and-promotion.md).
+
 ---
 
 ## 12. First Week Checklist

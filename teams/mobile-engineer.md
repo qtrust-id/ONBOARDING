@@ -371,6 +371,8 @@ git checkout -b feature/[platform]-[module]-[description]
 
 PRs target `develop`. Require 1 reviewer. CI must build successfully for the relevant platform.
 
+> **Environments:** point local/dev builds at the **Development** API, test builds (Play Internal / TestFlight) at the **Staging** API, and release builds at the **Production** API — the three base URLs in Section 4.1 map directly to the 3-tier model. Verify on a staging build before QA; production release follows the gated `main` promotion. Full flow: [`../environments-and-promotion.md`](../environments-and-promotion.md).
+
 ---
 
 ## 10. Working with Claude Desktop

@@ -22,9 +22,10 @@ The application runs on **[DEPLOYMENT_TARGET]** (see Project Config Sheet). The 
 
 **CI/CD Pipeline**
 - Build and maintain GitHub Actions workflows for test, build, and deploy
-- Ensure every push to `develop` is automatically deployed to the development environment
-- Ensure every merge to `main` triggers a production deployment after all checks pass
+- Ensure every merge to `develop` is automatically deployed to the **staging** environment
+- Ensure every merge to `main` triggers a **gated** production deployment — held for manual approval (GitHub Environment protection rule) after all checks pass
 - Maintain deployment speed — target total pipeline time under 8 minutes
+- Follow the 3-tier model (Local → Staging → Production) defined in [`../environments-and-promotion.md`](../environments-and-promotion.md)
 
 **GCP Infrastructure**
 - Provision and manage all GCP services used by the application (Cloud Run, Cloud SQL, Memorystore, Artifact Registry, Secret Manager, Cloud Storage)
@@ -35,7 +36,7 @@ The application runs on **[DEPLOYMENT_TARGET]** (see Project Config Sheet). The 
 **Secrets & Configuration Management**
 - Store all application secrets in GCP Secret Manager
 - Ensure the application pulls secrets at runtime — never bake them into images
-- Manage environment-specific configuration (development, staging, production)
+- Manage environment-specific configuration (local, staging, production)
 
 **Monitoring & Observability**
 - Own QTrust's observability stack: **Datadog** (primary — APM, infrastructure metrics, log management), **Sentry** (application error and crash tracking), with the cloud provider's native tools (Cloud Logging / Cloud Monitoring) as the baseline layer beneath them
@@ -68,7 +69,7 @@ The application runs on **[DEPLOYMENT_TARGET]** (see Project Config Sheet). The 
                           ▼
 ┌─────────────────────────────────────────────────────────────┐
 │  GCP Cloud Run (us-central1)                                 │
-│  • Min instances: 1 (prod) / 0 (dev, staging)               │
+│  • Min instances: 1 (prod) / 0 (staging)                    │
 │  • Max instances: 10                                         │
 │  • CPU: 2 vCPU, Memory: 1 GiB                               │
 │  • Concurrency: 80                                           │
@@ -230,7 +231,7 @@ jobs:
       - run: php artisan migrate --env=testing
       - run: php artisan test --env=testing
 
-  deploy:
+  build:
     needs: test
     if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -241,24 +242,60 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
       - uses: google-github-actions/setup-gcloud@v2
       - run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
-
       - name: Build and push Docker image
         run: |
           IMAGE="${{ env.REGISTRY }}:${{ github.sha }}"
           docker build -t $IMAGE .
           docker push $IMAGE
 
-      - name: Deploy to Cloud Run
+  # develop → STAGING (automatic)
+  deploy-staging:
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Deploy to Cloud Run (staging)
         run: |
-          ENVIRONMENT=$([[ "${{ github.ref }}" == "refs/heads/main" ]] && echo "production" || echo "development")
-          gcloud run deploy ${{ env.SERVICE_NAME }}-${ENVIRONMENT} \
+          gcloud run deploy ${{ env.SERVICE_NAME }}-staging \
             --image ${{ env.REGISTRY }}:${{ github.sha }} \
             --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated \
+            --min-instances 0 \
             --set-secrets="APP_KEY=[project-code]-app-key:latest,DB_PASSWORD=[project-code]-db-password:latest" \
-            --update-env-vars="APP_ENV=${ENVIRONMENT}"
+            --update-env-vars="APP_ENV=staging,APP_DEBUG=false"
+
+  # main → PRODUCTION (gated: requires manual approval)
+  deploy-production:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production   # ← protection rule on this GitHub Environment enforces manual approval
+    steps:
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Deploy to Cloud Run (production)
+        run: |
+          gcloud run deploy ${{ env.SERVICE_NAME }}-production \
+            --image ${{ env.REGISTRY }}:${{ github.sha }} \
+            --region ${{ env.REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --min-instances 1 \
+            --set-secrets="APP_KEY=[project-code]-app-key:latest,DB_PASSWORD=[project-code]-db-password:latest" \
+            --update-env-vars="APP_ENV=production,APP_DEBUG=false"
 ```
+
+> **🔒 The production gate is a GitHub Environment protection rule, not pipeline code.** In the repo: **Settings → Environments → `production` → Required reviewers** — add the IT Head / Tech Lead. When a merge to `main` reaches the `deploy-production` job, GitHub pauses it and waits for an approver to click **Approve**, then it deploys. This is what makes production a *gated* deploy while staging stays fully automatic. Define a matching `staging` environment (no required reviewers) so staging deploys proceed without interruption.
+
+The full 3-tier model, branch mapping, and promotion gates are documented in [`../environments-and-promotion.md`](../environments-and-promotion.md).
 
 ---
 
@@ -425,7 +462,7 @@ Before every production deployment, verify:
 - [ ] Datadog and Sentry alerts routed to `#[project-code]-alerts` in Slack
 - [ ] `by-team/devops/infra-notes.md` reviewed
 - [ ] Existing CI/CD pipeline reviewed and understood
-- [ ] First deployment to development environment completed
+- [ ] First deployment to the staging environment completed
 
 ---
 

@@ -33,7 +33,7 @@ On this project, you work primarily in **Figma** and collaborate closely with Pr
 - Respond to implementation questions from engineers promptly
 
 **Quality**
-- Conduct design QA — compare implemented UI against your Figma mockups
+- Conduct design QA on the **staging** build — compare the implemented UI against your Figma mockups before it is promoted to production (3-tier flow: [`../environments-and-promotion.md`](../environments-and-promotion.md))
 - Ensure all designs meet WCAG 2.1 AA accessibility standards
 - Keep Figma files organized, named consistently, and free of unused components
 

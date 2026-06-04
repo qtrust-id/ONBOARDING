@@ -35,7 +35,7 @@ As a member of the Product Development team, you own the following:
 
 **Validation**
 - Review completed features against acceptance criteria before QA testing begins
-- Conduct or facilitate User Acceptance Testing (UAT) before production releases
+- Conduct or facilitate User Acceptance Testing (UAT) on the **staging** environment before any production release — sign-off on staging is the gate to release (see [`../environments-and-promotion.md`](../environments-and-promotion.md))
 - Gather post-launch feedback and feed learnings back into future requirements
 
 ---

@@ -257,6 +257,8 @@ test([module]): add E2E test for [flow]
 - Request review from at least one other Frontend Engineer or the Tech Lead
 - CI must pass before merging
 
+> **Environments:** merging to `develop` auto-deploys to **staging** — verify your views there (and confirm against Figma) before marking the issue *Ready for QA*. Production is a gated deploy promoted from `main` with approval, never directly. Full flow: [`../environments-and-promotion.md`](../environments-and-promotion.md).
+
 ---
 
 ## 8. Reading Figma Designs

@@ -23,6 +23,8 @@ This repository contains the standard onboarding documentation for all QTrust en
 
 It covers the complete 8-step setup process — from completing the Project Configuration Sheet to running the project kickoff — for IT Heads and Product Heads.
 
+**How code ships:** [`environments-and-promotion.md`](environments-and-promotion.md) — the canonical Local → Staging → Production workflow every team follows, including the branch ↔ environment mapping and the promotion gates.
+
 ---
 
 ## 📋 Team Onboarding Guides
@@ -143,6 +145,7 @@ Key handoffs:
 ONBOARDING/
 ├── README.md                          ← You are here
 ├── new-project-setup-guide.md         ← Start here for new projects
+├── environments-and-promotion.md      ← Local → Staging → Production workflow (all teams)
 ├── assets/
 │   ├── qtrust-team-workflow.png       ← Workflow diagram (1856×1120 px)
 │   └── qtrust-team-workflow.svg       ← Workflow diagram source (vector)

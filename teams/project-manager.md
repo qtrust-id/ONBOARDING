@@ -231,11 +231,13 @@ As PM, your job is to identify blockers and resolve them — not to simply recor
 A story is **Done** when all of the following are true:
 - [ ] Code is written and passes all automated tests
 - [ ] PR is reviewed and approved by at least one other engineer
-- [ ] Merged to the `develop` branch
-- [ ] QA has tested against acceptance criteria — no critical bugs open
+- [ ] Merged to `develop` and auto-deployed to the **staging** environment
+- [ ] QA has tested on staging against acceptance criteria — no critical/high bugs open
 - [ ] Feature matches the Figma design (UIX sign-off)
 - [ ] Relevant documentation is updated
 - [ ] GitHub Issue is closed
+
+> Production release happens separately, by promoting `develop` → `main` with approval once a sprint's work is signed off on staging. See [`../environments-and-promotion.md`](../environments-and-promotion.md).
 
 ---
 
@@ -328,6 +330,7 @@ Questions / Decisions needed:
 | All PRDs | `docs/product/` |
 | GitHub Repository | `src-link/GITHUB.md` |
 | Branch Strategy | `src-link/GITHUB.md` |
+| Environments & Promotion | [`environments-and-promotion.md`](../environments-and-promotion.md) (this repo) |
 
 ---
 

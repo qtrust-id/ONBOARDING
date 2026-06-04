@@ -50,7 +50,7 @@ This guide is maintained in the QTrust Engineering ONBOARDING repository and app
 | 2. Cowork Setup | Create Cowork project + connect folder | IT Head | Active Cowork project |
 | 3. Repo & Docs | Create GitHub repo + Google Drive structure | IT Head / DevOps | Repo + folder structure live |
 | 4. Design | Create Figma workspace + initial files | IT Head / UIX Lead | Figma files linked |
-| 5. Infrastructure | Provision dev environment | DevOps | Dev environment live |
+| 5. Infrastructure | Provision staging environment | DevOps | Staging environment live |
 | 6. Onboarding | Distribute onboarding docs, grant access | IT Head / PM | All team members ready |
 | 7. Kickoff | Kickoff meeting + Sprint 0 planning | PM | Sprint 0 started |
 
@@ -231,7 +231,7 @@ The Claude Cowork project is the AI workspace for the entire team. It connects C
 | Branch | Purpose | Rules |
 |---|---|---|
 | `main` | Production — always deployable | No direct push. Merge only via PR from `release/*` |
-| `develop` | Integration branch | All features merge here. Auto-deploys to dev environment. |
+| `develop` | Integration branch | All features merge here. Auto-deploys to the **staging** environment. |
 | `feature/*` | New features | Branch from `develop`. Naming: `feature/[module]-[description]` |
 | `fix/*` | Bug fixes | Branch from `develop` (or `main` for hotfixes). Naming: `fix/[issue-number]-[description]` |
 | `release/*` | Release candidate | Created from `develop` → merged to `main` when stable |
@@ -323,7 +323,7 @@ The Figma workspace is the single source of truth for all visual design decision
 
 Infrastructure setup depends on the cloud provider recorded in the Project Configuration Sheet. This step is owned and executed by the DevOps Engineer. The IT Head approves the architecture before provisioning begins.
 
-The goal of this step is to have a working **development environment** live before the team's first development sprint. Staging and production environments are provisioned later, closer to their respective deployment phases.
+QTrust uses a 3-tier model — **Local → Staging → Production** — defined in full in [`environments-and-promotion.md`](environments-and-promotion.md). Local development runs on each engineer's machine; the first **shared cloud environment** is **staging**, to which `develop` auto-deploys. The goal of this step is to have a working **staging environment** live before the team's first development sprint. **Production** is provisioned later, closer to launch — but its gated deployment pipeline is configured early (see Step 6 detail and `devops.md`).
 
 ### Cloud Services Reference
 
@@ -340,11 +340,12 @@ The goal of this step is to have a working **development environment** live befo
 
 > **⚠️ Infrastructure as Code:** All cloud resources must be provisioned via Terraform (or the IaC tool specified in the Project Config Sheet). Never create resources manually in the cloud console. All IaC files are stored in the `infrastructure/` directory in the GitHub repository and version-controlled like application code.
 
-**Minimum dev environment for Sprint 1:**
+**Minimum staging environment for Sprint 1:**
 
 - Container or compute instance running the backend application
 - Database with schema migrations applied
-- CI/CD pipeline triggered on every push to `develop`, deploying automatically to the dev environment
+- CI/CD pipeline triggered on every merge to `develop`, deploying automatically to the **staging** environment
+- The **production** pipeline configured as a gated deploy from `main` (manual approval) — even before production traffic exists, so the first release is routine
 - All environment variables stored in the cloud secrets manager — no `.env` files committed to the repository
 - Basic health-check endpoint returning HTTP 200
 - Observability provisioned (see below)
@@ -427,8 +428,8 @@ Sprint 0 is not a development sprint. It is the setup sprint. No product feature
 - [ ] GitHub repository live with correct branches, labels, and milestones
 - [ ] Google Drive folder structure created with README files in each subfolder
 - [ ] Figma design system file started — at minimum colour tokens and typography scale defined
-- [ ] Dev environment running for all engineers who need it
-- [ ] CI/CD pipeline deploying automatically to dev environment on push to `develop`
+- [ ] Local development environment running for all engineers who need it
+- [ ] CI/CD pipeline deploying automatically to the **staging** environment on merge to `develop`
 - [ ] First PRD written for the highest-priority module
 - [ ] Sprint 1 backlog created: GitHub Issues exist, are estimated, labelled, and assigned
 
@@ -659,14 +660,14 @@ Use this checklist to track progress through the full project setup process. Eve
 ### Infrastructure
 
 - [ ] Cloud project / account created and billing configured
-- [ ] Dev environment provisioned: compute + database + cache
+- [ ] Staging environment provisioned: compute + database + cache
 - [ ] CI/CD pipeline deploying automatically to dev on push to `develop`
 - [ ] All environment variable names listed in `by-team/devops/` (values in secrets manager only)
 - [ ] All secrets stored in the cloud provider's secrets manager
 - [ ] Basic health-check endpoint returning HTTP 200
 - [ ] Sentry projects created per service, DSNs stored in the secrets manager
 - [ ] Datadog agent provisioned and per-project dashboards created
-- [ ] Monitoring and alerting configured for the dev environment, with Sentry and Datadog alerts routed to `#[project-code]-alerts` in Slack
+- [ ] Monitoring and alerting configured for the staging environment, with Sentry and Datadog alerts routed to `#[project-code]-alerts` in Slack
 
 ### Project Management & Meetings
 
