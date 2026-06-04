@@ -141,7 +141,7 @@ Phase 7: Deployment
 - Document the API schema in `docs/api/`
 - Hand off the endpoint URL and API schema to the Backend Engineer
 - Coordinate with DevOps for production deployment — provide Docker image tag and resource requirements
-- Monitor inference latency and error rate for the first 48 hours after launch
+- Monitor inference latency and error rate for the first 48 hours after launch: track serving errors and inference failures in the `[project-code]-ai-serving` Sentry project ([`tools/sentry.md`](../tools/sentry.md)), and watch inference latency (p95), throughput, and memory in Datadog ([`tools/datadog.md`](../tools/datadog.md)) — connect both MCPs in Claude Desktop
 
 ---
 
@@ -395,6 +395,7 @@ Add these variables to `.env.example` with placeholder values so other team memb
 - [ ] Model architecture proposed and reviewed with IT Head and Product team
 - [ ] Dataset Card drafted for the training dataset
 - [ ] Integration contract (API schema) agreed with Backend Engineer
+- [ ] Sentry MCP connected for `[project-code]-ai-serving`; Datadog MCP connected for inference metrics
 - [ ] Attended sprint planning and tasks estimated
 
 ---

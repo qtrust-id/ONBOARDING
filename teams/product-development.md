@@ -238,8 +238,8 @@ Claude is your most powerful productivity tool on this project. Here are the mos
 **API contract draft:**
 > "Draft a high-level REST API contract for a [MODULE_NAME] module. Include endpoints for the primary create, read, update, and delete operations."
 
-**Meeting notes:**
-> "Turn this meeting transcript into structured minutes with a decisions section and action items table: [paste transcript]"
+**Meeting notes (Fireflies MCP):**
+> "Get the Fireflies transcript of the [meeting] on [date] and turn it into structured minutes with a decisions section and an action items table." (Fireflies auto-transcribes project meetings — see [`tools/fireflies.md`](../tools/fireflies.md) — so you rarely need to paste a transcript manually.)
 
 Always review Claude's output critically. Claude drafts; you decide.
 

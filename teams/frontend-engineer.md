@@ -25,6 +25,7 @@ Claude Desktop is your pair programmer and code generator.
 - Write and maintain frontend-related tests (browser-level E2E tests when relevant — see Section 9 for tooling notes)
 - Participate in design reviews to flag implementation constraints early
 - Conduct visual QA — compare your implementation against the Figma source
+- Integrate the Sentry SDK into the web app and triage the JavaScript errors, network failures, and component crashes it reports; confirm fixes reduce the error rate (see [`tools/sentry.md`](../tools/sentry.md)) — connect the Sentry MCP in Claude Desktop
 
 ---
 
@@ -310,6 +311,7 @@ You can also ask Claude to read the Figma design directly:
 - [ ] Figma view access granted — all design files reviewed
 - [ ] `by-team/frontend/component-specs.md` read
 - [ ] `designs/design-system/README.md` read — understand all tokens
+- [ ] Sentry SDK integrated (DSN from Secret Manager) and Sentry MCP connected in Claude Desktop
 - [ ] First GitHub Issue assigned and branch created
 - [ ] Attended sprint planning for Sprint 0
 

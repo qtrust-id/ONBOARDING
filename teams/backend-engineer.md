@@ -25,6 +25,8 @@ Your tech stack is defined in the Project Configuration Sheet. The examples in t
 - Write unit and feature tests using Pest PHP
 - Review Frontend and Mobile API integration issues and resolve them promptly
 - Document all API changes in `docs/api/openapi.yaml`
+- Integrate the Sentry SDK into the backend service and triage server-side errors it reports; verify error rates drop after deploying a fix (see [`tools/sentry.md`](../tools/sentry.md))
+- Use Datadog to debug API issues and track database/query performance via logs and APM metrics (see [`tools/datadog.md`](../tools/datadog.md)); connect both MCPs in Claude Desktop
 
 ---
 
@@ -366,6 +368,7 @@ All PRs target `develop`. Require 1 reviewer. CI (tests) must pass.
 - [ ] All existing PRDs read — understand data requirements
 - [ ] `docs/api/README.md` and `docs/api/openapi.yaml` reviewed
 - [ ] `by-team/backend/README.md` read
+- [ ] Sentry SDK integrated (DSN from Secret Manager) and Sentry + Datadog MCPs connected in Claude Desktop
 - [ ] First GitHub Issue assigned — start with a model + migration task
 - [ ] Attended sprint planning for Sprint 0
 

@@ -34,8 +34,9 @@ You will write automated tests, conduct manual exploratory testing, manage bug r
 **Bug Management**
 - File detailed, reproducible bug reports in GitHub Issues
 - Triage incoming bugs by severity and priority
-- Verify bug fixes before closing issues
-- Track bug metrics per sprint in `by-team/qa/bug-log.md`
+- Verify bug fixes before closing issues — use Sentry to confirm a release introduced no new errors and that a fixed error has stopped occurring (see [`tools/sentry.md`](../tools/sentry.md))
+- Track bug metrics per sprint in `by-team/qa/bug-log.md`, and track bug/issue status in Linear (read access) alongside the GitHub Issues (see [`tools/linear.md`](../tools/linear.md))
+- During load and performance testing, query Datadog to confirm the service met its latency and error-rate SLAs (see [`tools/datadog.md`](../tools/datadog.md))
 
 **UAT Coordination**
 - Prepare the UAT checklist (`by-team/qa/uat-checklist.md`) before each production release
@@ -93,6 +94,16 @@ php artisan migrate --env=testing --seed
 ### 3.6 GitHub
 - Request access with at least **Write** permissions to create and manage Issues
 - Familiarize yourself with labels — you will use `type:bug`, `priority:*`, `module:*`, `status:ready-for-qa`
+
+### 3.7 Sentry
+- Request access to all project Sentry projects (backend, frontend, mobile, ai-serving)
+- Connect the Sentry MCP in Claude Desktop — use it to spot new errors introduced by a release and to confirm fixes (see [`tools/sentry.md`](../tools/sentry.md))
+
+### 3.8 Linear (Read)
+- Request **read** access to the QTrust Linear workspace to track bug and issue status against the sprint cycle (see [`tools/linear.md`](../tools/linear.md))
+
+### 3.9 Datadog (Recommended)
+- Request access to the project dashboards to validate performance SLAs during load testing; connect the Datadog MCP in Claude Desktop (see [`tools/datadog.md`](../tools/datadog.md))
 
 ---
 
@@ -318,6 +329,12 @@ End of sprint:
 **Write a bug report:**
 > "Write a professional GitHub bug report for this issue: [describe the problem]. Include steps to reproduce, expected vs actual behavior, and severity assessment."
 
+**Check for regressions after a release (Sentry MCP):**
+> "After my test run on staging, are there any new Sentry errors in `[project-code]-backend` or `[project-code]-frontend` that weren't there before the last deployment?"
+
+**Validate a performance SLA (Datadog MCP):**
+> "I just ran a load test against staging from [start] to [end]. Query Datadog for `[project-code]-backend` during that window — did p95 response time stay below 500ms, and were there any errors?"
+
 ---
 
 ## 10. First Week Checklist
@@ -330,6 +347,7 @@ End of sprint:
 - [ ] All PRDs read and acceptance criteria reviewed
 - [ ] `by-team/qa/` folder reviewed — understand existing test assets
 - [ ] GitHub write access confirmed — can create Issues and apply labels
+- [ ] Sentry access confirmed and MCP connected; Linear read access confirmed; Datadog dashboards accessible
 - [ ] First test plan written for Sprint 0 features
 - [ ] Attended sprint planning
 
@@ -356,7 +374,7 @@ End of sprint:
 
 See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup order, and activation instructions.
 
-**Your required tools:** Claude Desktop · GitHub (write) · Google Drive · Slack · Figma (viewer) · Sentry · Linear (read)
+**Your required tools:** Claude Desktop · GitHub (write) · Google Drive · Slack · Figma (viewer) · Sentry · Linear (read) · Datadog (recommended)
 
 | Tool | Setup Guide | Priority |
 |---|---|---|
@@ -366,5 +384,7 @@ See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup 
 | Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
 | Figma | [`tools/figma.md`](../tools/figma.md) | Day 1 |
 | Sentry | [`tools/sentry.md`](../tools/sentry.md) | Before first staging deploy |
+| Linear | [`tools/linear.md`](../tools/linear.md) | Before Sprint 1 (read access) |
+| Datadog | [`tools/datadog.md`](../tools/datadog.md) | Before performance testing (recommended) |
 
 > Connect tools in the order listed. The first four (Claude Desktop, Google Drive, GitHub, Slack) are required on Day 1 for every team member.

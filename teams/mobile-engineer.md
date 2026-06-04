@@ -26,6 +26,7 @@ All mobile apps consume the same **REST API** as the web application. The API ba
 - Collaborate with the Backend team on API contracts — define required endpoints before development begins
 - Maintain and update `by-team/mobile/api-contracts.md` whenever new endpoints are needed
 - Submit apps to Google Play (internal track) and Apple TestFlight for QA testing
+- Integrate the Sentry SDK into the app and triage crash reports (Android ANRs, iOS crashes, Flutter errors) it surfaces per platform project `[project-code]-mobile-android` / `-ios` (see [`tools/sentry.md`](../tools/sentry.md)) — connect the Sentry MCP in Claude Desktop
 
 ---
 
@@ -410,6 +411,7 @@ Store signing certificates and provisioning profiles in GitHub Actions Secrets, 
 - [ ] `by-team/mobile/ux-notes.md` and `by-team/mobile/api-contracts.md` read thoroughly
 - [ ] `docs/api/openapi.yaml` reviewed — understand all available endpoints
 - [ ] Claude Desktop installed and workspace folder connected
+- [ ] Sentry SDK integrated for your platform (DSN from Secret Manager) and Sentry MCP connected in Claude Desktop
 - [ ] First GitHub Issue assigned in `[project-code]-mobile` repository
 - [ ] Attended sprint planning
 - [ ] Introduced yourself to Backend team — align on API contract priorities

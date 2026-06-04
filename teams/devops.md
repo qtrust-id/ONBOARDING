@@ -38,9 +38,11 @@ The application runs on **[DEPLOYMENT_TARGET]** (see Project Config Sheet). The 
 - Manage environment-specific configuration (development, staging, production)
 
 **Monitoring & Observability**
-- Configure Cloud Logging to capture all application and server logs
-- Set up Cloud Monitoring dashboards for CPU, memory, request latency, and error rate
-- Create alerting policies that notify the team of anomalies (error spikes, high latency, failed deployments)
+- Own QTrust's observability stack: **Datadog** (primary — APM, infrastructure metrics, log management), **Sentry** (application error and crash tracking), with the cloud provider's native tools (Cloud Logging / Cloud Monitoring) as the baseline layer beneath them
+- Provision the Datadog agent on all services via infrastructure-as-code, and create the per-project Datadog dashboards (Overview, Infrastructure, Database, AI Model) — see [`tools/datadog.md`](../tools/datadog.md)
+- Create the Sentry projects for each deployable service (`[project-code]-backend`, `-frontend`, `-mobile-*`, `-ai-serving`) during infrastructure setup, and store each DSN in Secret Manager — see [`tools/sentry.md`](../tools/sentry.md)
+- Configure alerting in both Datadog and Sentry to fire to `#[project-code]-alerts` in Slack (error-rate spikes, latency, service down, new fatal errors)
+- Connect the Datadog and Sentry MCPs in Claude Desktop so you can correlate deployments with metric and error changes from a conversation
 - Document runbooks for common incident responses in `by-team/devops/infra-notes.md`
 
 **Security**
@@ -300,7 +302,20 @@ LOG_LEVEL=warning
 
 ## 8. Monitoring Setup
 
-### Cloud Monitoring Alerts to Configure
+QTrust's observability has three layers, and you own all three:
+
+| Layer | Tool | What it covers |
+|---|---|---|
+| **Observability (primary)** | **Datadog** | APM (p50/p95/p99 latency, throughput), infrastructure metrics, log management, deployment markers, custom dashboards |
+| **Error & crash tracking** | **Sentry** | Grouped application errors and crashes per service, release health, affected-user counts |
+| **Cloud-native baseline** | **Cloud Logging / Cloud Monitoring** | Raw log capture and provider-level metrics that feed Datadog; fallback if Datadog is unavailable |
+
+Set up the Datadog dashboards and Sentry projects during infrastructure provisioning (Step 6 of the New Project Setup Guide), and route all alerts to `#[project-code]-alerts` in Slack. Full setup detail lives in [`tools/datadog.md`](../tools/datadog.md) and [`tools/sentry.md`](../tools/sentry.md).
+
+### Alerts to Configure
+
+Implement these in **Datadog** (preferred — or Cloud Monitoring as the baseline equivalent). Error-specific alerts (new fatal errors, a resolved issue re-occurring, errors affecting > 10 users) are configured in **Sentry**.
+
 | Alert | Condition | Notification |
 |---|---|---|
 | High error rate | HTTP 5xx > 1% over 5 min | Email + Slack |
@@ -405,6 +420,9 @@ Before every production deployment, verify:
 - [ ] GCP CLI installed: `gcloud auth login` works
 - [ ] Terraform installed and initialized against the GCP project
 - [ ] Claude Desktop installed and workspace folder connected
+- [ ] Datadog organisation access (admin) confirmed; agent provisioned via IaC; Datadog MCP connected
+- [ ] Sentry organisation access (admin) confirmed; per-service Sentry projects created with DSNs in Secret Manager; Sentry MCP connected
+- [ ] Datadog and Sentry alerts routed to `#[project-code]-alerts` in Slack
 - [ ] `by-team/devops/infra-notes.md` reviewed
 - [ ] Existing CI/CD pipeline reviewed and understood
 - [ ] First deployment to development environment completed
@@ -443,5 +461,6 @@ See **[`tools/README.md`](../tools/README.md)** for the full tool matrix, setup 
 | Slack | [`tools/slack.md`](../tools/slack.md) | Day 1 |
 | Sentry | [`tools/sentry.md`](../tools/sentry.md) | Before first staging deploy |
 | Datadog | [`tools/datadog.md`](../tools/datadog.md) | Before infra provisioning |
+| Linear | [`tools/linear.md`](../tools/linear.md) | Before Sprint 1 (read access) |
 
 > Connect tools in the order listed. The first four (Claude Desktop, Google Drive, GitHub, Slack) are required on Day 1 for every team member.

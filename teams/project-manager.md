@@ -62,15 +62,33 @@ This guide covers your tools, processes, sprint cadence, and how to use Claude D
   - `docs/meetings/` — all meeting notes
   - `reports/sprint/` — retrospectives and velocity reports
 
-### 3.4 Figma (View Only)
+### 3.4 Linear
+- Linear is QTrust's **primary sprint and project management platform** — request **Member** access to the QTrust Linear workspace from the IT Head
+- You own the project's Linear team (`[PROJECT_CODE]`): cycles (sprints), backlog, and roadmap
+- Connect the Linear MCP in Claude Desktop so you can create issues, track velocity, and surface blockers directly from a conversation (see [`tools/linear.md`](../tools/linear.md))
+- See Section 4.4 for how Linear and GitHub Issues divide responsibilities
+
+### 3.5 Google Calendar
+- Connect the Google Calendar MCP in Claude Desktop (see [`tools/google-calendar.md`](../tools/google-calendar.md))
+- Ask the IT Head to create the shared `[PROJECT_CODE] — Team` calendar and share it with the whole team
+- You schedule **all** sprint ceremonies on this shared calendar — Claude can create the full recurring set in one prompt (see Section 8)
+
+### 3.6 Fireflies
+- Connect the Fireflies MCP and enable **auto-join** for your `@qtrust.id` calendar (see [`tools/fireflies.md`](../tools/fireflies.md))
+- Add `fred@fireflies.ai` to every recurring ceremony so standups, planning, reviews, and retros are transcribed automatically
+- After each meeting, use Claude to extract decisions, action items, and blockers from the Fireflies transcript instead of taking notes manually
+
+### 3.7 Figma (View Only)
 - Request view access to the project Figma workspace
 - You use Figma to understand design progress and verify that designs are available before frontend sprints begin
 
 ---
 
-## 4. GitHub Setup
+## 4. GitHub & Linear Setup
 
-You are responsible for the full GitHub project management setup. Complete this before Sprint 1.
+You are responsible for the full project management setup across both GitHub and Linear. Complete this before Sprint 1.
+
+> **Two tools, two purposes.** QTrust uses **both** Linear and GitHub Issues — they are not redundant. GitHub Issues stay tightly coupled to code (commits, PRs, CI, branch references) and are the source of truth for engineering work. Linear is the source of truth for **project health** — cycles, velocity, roadmap, and the leadership view. As PM you keep both in sync: technical issues live in GitHub, while the sprint plan, priorities, and reporting live in Linear. See Section 4.4 and [`tools/linear.md`](../tools/linear.md).
 
 ### 4.1 Labels to Create
 Create the following labels in the repository:
@@ -128,6 +146,19 @@ Create a GitHub Project with the following columns:
 5. **Ready for QA** — merged to develop, awaiting QA testing
 6. **Done** — QA passed, merged to main or sprint-complete
 
+> The GitHub Projects Kanban gives engineers a code-centric board. Linear cycles (Section 4.4) give you and leadership the sprint, velocity, and roadmap view. Mirror status between them: the Linear statuses map directly to these columns.
+
+### 4.4 Linear Cycles & Roadmap
+
+In the QTrust Linear workspace, create a team named `[PROJECT_CODE]` and set it up before Sprint 1:
+
+- **Cycles** — one Linear cycle per sprint (`Sprint 0 — Setup`, `Sprint 1 — [Module A]`, …), matching the GitHub Milestones
+- **Backlog** — accepted work not yet committed to a cycle
+- **Roadmap** — the multi-sprint view you share with the CTO and stakeholders
+- **Issue status flow:** `Backlog → Todo → In Progress → In Review → Done` (mirrors the Kanban columns)
+
+Use Claude with the Linear MCP to create a whole sprint's issues from approved user stories in one prompt (see Section 8). Keep GitHub Issues for the technical detail and link them from the corresponding Linear issue.
+
 ---
 
 ## 5. Issue Format Standard
@@ -162,6 +193,8 @@ Story Points: [1 / 2 / 3 / 5 / 8 / 13]
 
 ## 6. Sprint Workflow
 
+> **Schedule once, capture automatically.** At the start of each sprint, schedule every ceremony below on the shared `[PROJECT_CODE] — Team` Google Calendar (Claude can create the full recurring set in one prompt — see Section 8) and ensure `fred@fireflies.ai` is invited to each. Fireflies then transcribes every ceremony, so your notes, action items, and blocker tracking come from the transcript rather than manual minute-taking.
+
 ### Sprint Planning (Day 1 of Sprint)
 1. Review the sprint backlog — ensure all issues are correctly estimated and have designs attached (if needed)
 2. Team commits to a sprint goal
@@ -174,7 +207,7 @@ Format:
 - What are you working on today?
 - Are you blocked by anything?
 
-As PM, your job is to identify blockers and resolve them — not to simply record them.
+As PM, your job is to identify blockers and resolve them — not to simply record them. After each standup, ask Claude to pull the Fireflies transcript and extract every mention of "blocked", "blocker", or "waiting on", grouped by owner — this surfaces stuck work without you transcribing the call.
 
 ### Mid-Sprint Grooming (Day 5 of Sprint)
 - Review backlog with Product Development and Tech Leads
@@ -223,6 +256,18 @@ A story is **Done** when all of the following are true:
 **Status report:**
 > "Write a weekly status update email to stakeholders. Tone: professional, concise. Status: [describe progress, blockers, next steps]"
 
+**Create a sprint's issues in Linear (Linear MCP):**
+> "Create Linear issues for Sprint [N] in the [PROJECT_CODE] team based on these user stories: [paste]. For each issue: title, description, story-point estimate, labels, and assignee if known. Place them in the current cycle."
+
+**Sprint health check (Linear MCP):**
+> "In Linear, show me sprint progress (% done) for the [PROJECT_CODE] current cycle, any issues marked blocked, and any issue that hasn't changed status in 3+ days."
+
+**Schedule all ceremonies at once (Google Calendar MCP):**
+> "Schedule all Sprint [N] ceremonies on the [PROJECT_CODE] — Team calendar from [start] to [end]: daily standup (Mon–Fri 09:30–09:45), sprint planning, backlog grooming, sprint review, and retro. Invite [team emails] and `fred@fireflies.ai`, and add an agenda description to each."
+
+**Extract action items from a meeting (Fireflies MCP):**
+> "Get the Fireflies transcript of the sprint planning on [date]. Extract all action items with the responsible person and any mentioned deadlines, and list the agreed sprint goal."
+
 ---
 
 ## 9. Stakeholder Communication
@@ -258,6 +303,9 @@ Questions / Decisions needed:
 - [ ] All labels created in the repository
 - [ ] All milestones created with due dates
 - [ ] GitHub Projects Kanban board set up
+- [ ] Linear team created with cycles matching the sprint milestones; Linear MCP connected
+- [ ] Shared `[PROJECT_CODE] — Team` Google Calendar created; all Sprint 1 ceremonies scheduled; Calendar MCP connected
+- [ ] Fireflies auto-join enabled and `fred@fireflies.ai` invited to all recurring ceremonies
 - [ ] Claude Desktop installed and workspace folder connected
 - [ ] Google Drive folder synced locally
 - [ ] All existing PRDs read — understand scope
