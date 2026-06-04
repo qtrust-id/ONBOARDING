@@ -25,6 +25,8 @@ It covers the complete 8-step setup process — from completing the Project Conf
 
 **How code ships:** [`environments-and-promotion.md`](environments-and-promotion.md) — the canonical Local → Staging → Production workflow every team follows, including the branch ↔ environment mapping and the promotion gates.
 
+**For leadership:** [`executive-business-layer.md`](executive-business-layer.md) — how the engineering workflow rolls up into business outcomes for the CEO and top management, plus the [`Monthly Business Review template`](templates/monthly-business-review-template.md).
+
 ---
 
 ## 📋 Team Onboarding Guides
@@ -54,6 +56,7 @@ Ready-to-use templates for common project documents.
 | [`templates/project-config-sheet.md`](templates/project-config-sheet.md) | Fill this out when starting any new project — defines the stack, team, and timeline |
 | [`templates/prd-template.md`](templates/prd-template.md) | Product Requirements Document template for any module or feature |
 | [`templates/cowork-instructions.md`](templates/cowork-instructions.md) | Claude Cowork project instructions template — paste into Project Settings |
+| [`templates/monthly-business-review-template.md`](templates/monthly-business-review-template.md) | Monthly Business Review brief for the CEO / top management — the strategic-layer output |
 
 ---
 
@@ -146,6 +149,7 @@ ONBOARDING/
 ├── README.md                          ← You are here
 ├── new-project-setup-guide.md         ← Start here for new projects
 ├── environments-and-promotion.md      ← Local → Staging → Production workflow (all teams)
+├── executive-business-layer.md        ← Business-outcome layer for CEO / top management
 ├── assets/
 │   ├── qtrust-team-workflow.png       ← Workflow diagram (1856×1120 px)
 │   └── qtrust-team-workflow.svg       ← Workflow diagram source (vector)
@@ -162,7 +166,8 @@ ONBOARDING/
 └── templates/
     ├── project-config-sheet.md
     ├── prd-template.md
-    └── cowork-instructions.md
+    ├── cowork-instructions.md
+    └── monthly-business-review-template.md
 ```
 
 ---
