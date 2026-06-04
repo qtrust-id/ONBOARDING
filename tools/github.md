@@ -101,13 +101,27 @@ Replace `[PROJECT_CODE]` with the code from your Project Configuration Sheet (e.
 
 ## 6. Connecting the GitHub MCP in Claude Desktop
 
-1. Open Claude Desktop → **Settings** (gear icon) → **Integrations**.
-2. Find **GitHub** in the list and click **Connect**.
-3. You will be redirected to GitHub.com to authorise the connection.
-4. When prompted, grant access to the **`qtrust-id` organisation** (not just your personal repos).
-5. Return to Claude Desktop — the integration should display as **Connected**.
+> **Note:** GitHub is **not** in Claude's one-click connector directory. Instead, GitHub publishes an **official MCP server** that you add manually as a custom connector. Pick one of the options below.
 
-> If the `qtrust-id` organisation does not appear during the authorisation step, the IT Head must first enable third-party OAuth app access for the organisation. Contact the IT Head.
+### Option A — Official remote MCP server (recommended)
+
+1. Open Claude Desktop → **Settings → Connectors → Add custom connector**.
+2. Choose **remote MCP** and enter the official GitHub MCP server URL:
+   ```
+   https://api.githubcopilot.com/mcp/
+   ```
+3. Authenticate with your GitHub account (OAuth) and grant access to the **`qtrust-id` organisation** (not just personal repos).
+4. Return to Claude Desktop — the connector should display as **Connected**.
+
+### Option B — Local MCP server (self-hosted)
+
+Run GitHub's official [`github/github-mcp-server`](https://github.com/github/github-mcp-server) via Docker with a **fine-grained PAT** (`GITHUB_PERSONAL_ACCESS_TOKEN`), then register it as a local/stdio MCP in your Claude Desktop config. Choose this when you want a tightly-scoped, self-hosted token.
+
+### Fallback — `gh` CLI / git
+
+If you can't (or prefer not to) connect an MCP, the **GitHub CLI (`gh`)** and `git` cover creating and managing issues, PRs, branches, and reading CI status — no MCP required. Claude can compose and run `gh` commands for you.
+
+> If the `qtrust-id` organisation does not appear during OAuth, the IT Head must first approve the GitHub App / enable third-party OAuth access for the organisation. Contact the IT Head.
 
 ---
 
@@ -208,9 +222,9 @@ git checkout -b feature/42-login-module
 - [ ] Organisation invitation accepted — `qtrust-id` visible on github.com
 - [ ] SSH key generated and added to GitHub (or PAT configured)
 - [ ] Project repository cloned to local machine
-- [ ] GitHub MCP connected in Claude Desktop
+- [ ] GitHub MCP added as a custom connector (official remote server) — or `gh` CLI configured as fallback
 - [ ] Verification test passed — can list issues via Claude
 
 ---
 
-*Last updated: 2026-06-03 — QTrust IT*
+*Last updated: 2026-06-04 — QTrust IT*
