@@ -45,7 +45,7 @@ This guide covers your tools, processes, sprint cadence, and how to use Claude D
 
 ### 3.1 GitHub
 - Create or log in to your GitHub account using your `@qtrust.id` email
-- Request **Maintainer** role in the `qtrust` organization — you need permission to create and manage Issues, Milestones, and Labels
+- Request **Maintainer** role in the `qtrust-id` organization — you need permission to create and manage Issues, Milestones, and Labels
 - Bookmark the project repository (URL from Project Config Sheet)
 - Familiarize yourself with the Issues board, the Projects tab (Kanban), and the Milestones section
 

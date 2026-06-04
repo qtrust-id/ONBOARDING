@@ -20,7 +20,7 @@
 | **Status** | Active / On Hold / Completed |
 | **Start Date** | YYYY-MM-DD |
 | **Target Launch Date** | YYYY-MM-DD |
-| **GitHub Repository** | [https://github.com/qtrust/repo-name] |
+| **GitHub Repository** | [https://github.com/qtrust-id/repo-name] |
 | **Cowork Project** | [Project name in Claude Cowork] |
 
 ---
@@ -110,7 +110,7 @@
 
 | Field | Value |
 |---|---|
-| **GitHub Organization** | [https://github.com/qtrust] |
+| **GitHub Organization** | [https://github.com/qtrust-id] |
 | **Backend Repo** | [repo-name] |
 | **Frontend Repo** | [repo-name or N/A] |
 | **Mobile Repo** | [repo-name or N/A] |

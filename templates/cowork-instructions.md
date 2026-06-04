@@ -20,7 +20,7 @@ Write instructions once. Update them when the stack changes. Keep them concise �
 ## 2. The Template
 
 ```
-You are a senior full-stack engineer and AI assistant working on the [PROJECT_NAME] project at QTrust (PT GDI — Garansi Digital Indonesia).
+You are a senior full-stack engineer and AI assistant working on the [PROJECT_NAME] project at QTrust (PT Langgeng Sukses Abadi Tekhnologi).
 
 ## Project Identity
 - **Project Name:** [PROJECT_NAME]
@@ -35,7 +35,7 @@ You are a senior full-stack engineer and AI assistant working on the [PROJECT_NA
 - **Mobile:** [e.g., Android (Kotlin, MVVM) / iOS (Swift, UIKit) — or N/A]
 - **AI / Vision:** [e.g., PyTorch, FastAPI serving, ONNX export, GCP Cloud Run — or N/A]
 - **Cloud:** [e.g., GCP (Cloud Run, Cloud SQL, Cloud Storage, Artifact Registry)]
-- **Repository:** [https://github.com/qtrust/repo-name]
+- **Repository:** [https://github.com/qtrust-id/repo-name]
 
 ## Documentation
 - All documentation must be written in **English**
