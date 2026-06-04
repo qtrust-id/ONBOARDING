@@ -336,6 +336,8 @@ Claude Desktop is your AI pair programmer. Connect your project repository as a 
 - **Model Card:**
   > "Generate a Model Card for a [model type, e.g., barcode detection] model. Accuracy: [metrics, e.g., mAP=0.91]. Dataset: [description]. Intended use: [use case]. Known limitations: [issues you found in evaluation]."
 
+> **⚡ Usage tip:** Pulling large datasets, long logs, or whole notebooks into context is token-heavy and can exhaust your daily quota. **Scope your reads** (sample rows, specific log windows), **summarise large outputs** instead of pasting them whole, and use **Sonnet/Haiku** for routine tasks — reserve Opus for hard problems. Full guidance: [Managing Token Usage & Quota](../tools/README.md#managing-token-usage--quota).
+
 ---
 
 ## 11. Git Workflow

@@ -205,6 +205,37 @@ Once all tools are connected, use these prompts every morning for full project v
 
 ---
 
+## Managing Token Usage & Quota
+
+Some workflows consume far more of your Claude usage budget than others. Knowing which — and working efficiently — keeps the whole team productive within plan limits and avoids hitting the daily quota wall.
+
+### Heaviest workloads
+
+- **Design-to-code from Figma** — reading a full Figma file, and especially pulling **screenshots**, loads very large payloads into context. A single unscoped read can consume tens of thousands of tokens.
+- **Large data reads** — pulling an entire dataset, long logs, or a big document in one go.
+- **Long agentic loops** — many back-and-forth tool calls in one conversation compound usage.
+
+Teams most affected: **UIX Designer** (design generation), **Frontend** and **Mobile** (design-to-code), and **Image Vision** (large datasets/logs).
+
+### Seat strategy (for admins / IT Head)
+
+- **Mix seat types on Team:** give heavy users (UIX, Frontend) a **Premium** seat (~5× the Standard quota) and keep everyone else on **Standard**. Team supports mixing seat types in one workspace.
+- **Enterprise** bills usage at API rates with admin-set spend limits — it removes the daily-quota wall entirely and is worth considering when design-to-code volume is high or variable.
+- **Calibrate during the pilot:** see who actually hits limits, then upgrade only those seats rather than over-provisioning everyone.
+
+### Efficiency techniques (everyone)
+
+- **Read specific nodes/frames, not whole files.** In Figma Dev Mode, target a node-id rather than the entire file.
+- **Avoid screenshots when metadata or code context is enough** — images are the most token-expensive input.
+- **Reuse, don't regenerate.** Once Claude has produced a component, iterate on the code rather than re-reading the design from scratch.
+- **Pick the right model.** Use Sonnet/Haiku for routine tasks; reserve Opus for genuinely hard problems.
+- **Keep conversations scoped.** Start a fresh conversation per task instead of carrying a huge context across many tasks.
+- **Batch hand-offs.** Read a set of related frames or files once, do the work, then move on — rather than re-opening the source repeatedly.
+
+> For very heavy, repetitive automation (e.g., bulk design-to-code), the Claude API (pay-per-token) avoids per-seat daily limits entirely.
+
+---
+
 ## Troubleshooting
 
 | Problem | Solution |

@@ -290,6 +290,8 @@ You can also ask Claude to read the Figma design directly:
 **Write an E2E test (Laravel Dusk — Laravel-specific; substitute with the appropriate E2E tool for your project's framework):**
 > "Write a Laravel Dusk test that: logs in as [User Role], navigates to the [Feature] page, searches for '[query]', and asserts that the results are filtered correctly."
 
+> **⚡ Usage tip:** Design-to-code from Figma is one of the heaviest token workloads. Point Claude at a **specific Figma frame/node** rather than the whole file, **skip screenshots** when Dev Mode values suffice, and **iterate on the generated code** instead of re-reading the design each time. Heavy users should request a **Premium** seat. Full guidance: [Managing Token Usage & Quota](../tools/README.md#managing-token-usage--quota).
+
 ---
 
 ## 10. Collaboration With Other Teams

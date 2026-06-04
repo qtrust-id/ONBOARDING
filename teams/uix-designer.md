@@ -256,6 +256,8 @@ Mobile screens live in the `[PROJECT_NAME] — Mobile` Figma file. Follow platfo
 **Recall design review feedback (Fireflies MCP):**
 > "Get the Fireflies summary of the design review on [date] and list every piece of feedback and decision about [feature/screen], with who raised it." (Fireflies transcribes design reviews — see [`tools/fireflies.md`](../tools/fireflies.md).)
 
+> **⚡ Usage tip:** Reading Figma via MCP is token-heavy and can exhaust your daily quota fast. Read **specific frames/nodes** (not whole files), **avoid pulling screenshots** when metadata or Dev Mode values are enough, and **reuse** generated output instead of regenerating. Heavy Figma users should request a **Premium** seat. Full guidance: [Managing Token Usage & Quota](../tools/README.md#managing-token-usage--quota).
+
 ---
 
 ## 10. First Week Checklist
