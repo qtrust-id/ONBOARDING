@@ -203,8 +203,14 @@ The Claude Cowork project is the AI workspace for the entire team. It connects C
 4. Settings → **Workspace** → select the local Google Drive folder for this project (the folder synced via Google Drive Desktop on the IT Head's machine, and later on each team member's machine)
 5. If UIX Designer is on the team: verify Figma MCP is active — test with the prompt: `"List my Figma files"`
 6. Verify GitHub MCP: test with `"List issues in qtrust-id/[repo-name]"`
-7. Add all team members to the Cowork project; confirm they accept the invitation
-8. Post the Config Sheet file path in the project instructions so every conversation has easy reference
+7. Connect the remaining MCPs relevant to this project so Claude can act across the whole tool stack (see [`tools/README.md`](tools/README.md) for the matrix of which roles need which). Verify each with a quick prompt:
+   - **Linear** (sprint management): `"List open issues in the [PROJECT_CODE] Linear team"`
+   - **Google Calendar** (ceremony scheduling): `"What meetings do I have this week?"`
+   - **Fireflies** (meeting transcripts): `"Fetch my recent Fireflies meetings"`
+   - **Sentry** (error tracking, once projects exist): `"List open issues in the [project-code]-backend Sentry project"`
+   - **Datadog** (observability, once provisioned): `"List all active Datadog monitors and their status"`
+8. Add all team members to the Cowork project; confirm they accept the invitation
+9. Post the Config Sheet file path in the project instructions so every conversation has easy reference
 
 > **💡 Tip:** Good project instructions mean Claude already knows the stack, repo URL, and document language before the first message — eliminating repeated context-setting across every team conversation. Invest 10 minutes in the instructions and save hours across the project.
 
@@ -341,6 +347,15 @@ The goal of this step is to have a working **development environment** live befo
 - CI/CD pipeline triggered on every push to `develop`, deploying automatically to the dev environment
 - All environment variables stored in the cloud secrets manager — no `.env` files committed to the repository
 - Basic health-check endpoint returning HTTP 200
+- Observability provisioned (see below)
+
+### Observability — Sentry & Datadog
+
+DevOps sets up the QTrust observability stack as part of this step:
+
+- **Sentry** — create one Sentry project per deployable service (`[project-code]-backend`, `-frontend`, `-mobile-android`, `-mobile-ios`, `-ai-serving` — only those in scope). Store each DSN in the cloud secrets manager; engineers integrate the SDK in their service. See [`tools/sentry.md`](tools/sentry.md).
+- **Datadog** — provision the Datadog agent via Terraform on all services and create the per-project dashboards (Overview, Infrastructure, Database, AI Model). See [`tools/datadog.md`](tools/datadog.md).
+- **Alerts** — route both Sentry and Datadog alerts to `#[project-code]-alerts` in Slack (error spikes, high latency, service down, new fatal errors). The cloud provider's native monitoring (Cloud Monitoring / Cloud Logging) remains the baseline layer beneath them.
 
 ---
 
@@ -356,12 +371,12 @@ QTrust maintains 9 standard onboarding guides — one per team role — in this 
 |---|---|---|---|
 | Product Development | `teams/product-development.md` | Day 1 | Share Config Sheet + any existing research, competitive analysis, or stakeholder briefs |
 | UIX Designer | `teams/uix-designer.md` | Day 1 | Grant Figma Editor seat. Verify Figma MCP is active in Cowork. |
-| Project Manager | `teams/project-manager.md` | Day 1 | Grant GitHub Maintainer role. Set up labels, milestones, and Kanban board. |
+| Project Manager | `teams/project-manager.md` | Day 1 | Grant GitHub Maintainer role + Linear Member. Set up labels, milestones, Kanban board, and Linear cycles. Create the shared Google Calendar; enable Fireflies auto-join. |
 | Frontend Engineer | `teams/frontend-engineer.md` | After repo is ready | Confirm dev environment runs locally. Share API base URL. |
 | Backend Engineer | `teams/backend-engineer.md` | After repo is ready | Confirm DB migrations run cleanly. Share DB credentials via secrets manager access. |
 | Image Vision Engineer | `teams/image-vision-engineer.md` | After repo is ready | Confirm ML environment is set up. Confirm dataset access is granted. |
 | QA / QC | `teams/qa-qc.md` | Before Sprint 1 | Confirm test suite runs. Postman collection imported. Staging environment available. |
-| DevOps | `teams/devops.md` | Before infrastructure provisioning | Confirm cloud project access + CI/CD secrets configured. |
+| DevOps | `teams/devops.md` | Before infrastructure provisioning | Confirm cloud project access + CI/CD secrets configured. Grant Sentry + Datadog admin; create Sentry projects and Datadog dashboards. |
 | Mobile Apps Engineer | `teams/mobile-engineer.md` | After repo is ready | Confirm chosen platform (React Native / Flutter / Native). App builds on emulator. |
 
 ### Access Checklist Before Distributing Guides
@@ -369,10 +384,17 @@ QTrust maintains 9 standard onboarding guides — one per team role — in this 
 - [ ] QTrust premium Claude account provisioned for this team member
 - [ ] Google Drive project folder — Editor access granted
 - [ ] `qtrust-id` GitHub organisation — appropriate role assigned (Write for engineers, Triage for QA, Maintainer for PM)
+- [ ] Slack — added to project channels (including `#[project-code]-alerts` for engineers/DevOps)
 - [ ] Claude Cowork project — invitation sent and accepted
 - [ ] Figma access granted (if UIX Designer or team member who needs to inspect designs)
 - [ ] ML platform access granted (if Image Vision Engineer)
 - [ ] Cloud console access granted to DevOps with least-privilege IAM roles
+- [ ] Linear — Member for PM/leads, read for QA and engineers (per the matrix in `tools/README.md`)
+- [ ] Google Calendar + Fireflies — required for PM and CTO; recommended for everyone attending meetings
+- [ ] Sentry — access to the relevant service projects (Backend, Frontend, Mobile, Image Vision, QA; admin for DevOps)
+- [ ] Datadog — access for Backend and DevOps (admin); recommended for Image Vision and QA
+
+> Use the per-role tool matrix and checklists in [`tools/README.md`](tools/README.md) as the authoritative reference for exactly which tools each role needs and at what access level.
 
 ---
 
@@ -602,6 +624,7 @@ Use this checklist to track progress through the full project setup process. Eve
 - [ ] Workspace folder connected to the local Google Drive sync path
 - [ ] Figma MCP verified and working (if UIX Designer is on the team)
 - [ ] GitHub MCP verified and working
+- [ ] Project-relevant MCPs connected and verified per the matrix in `tools/README.md` (Linear, Google Calendar, Fireflies, and — once provisioned — Sentry and Datadog)
 - [ ] All team members added to the Cowork project and have accepted the invitation
 
 ### GitHub
@@ -641,12 +664,21 @@ Use this checklist to track progress through the full project setup process. Eve
 - [ ] All environment variable names listed in `by-team/devops/` (values in secrets manager only)
 - [ ] All secrets stored in the cloud provider's secrets manager
 - [ ] Basic health-check endpoint returning HTTP 200
-- [ ] Monitoring and alerting configured for the dev environment
+- [ ] Sentry projects created per service, DSNs stored in the secrets manager
+- [ ] Datadog agent provisioned and per-project dashboards created
+- [ ] Monitoring and alerting configured for the dev environment, with Sentry and Datadog alerts routed to `#[project-code]-alerts` in Slack
+
+### Project Management & Meetings
+
+- [ ] Linear team created with cycles mapped to the sprint milestones
+- [ ] Shared `[PROJECT_CODE] — Team` Google Calendar created and shared with the team
+- [ ] Sprint 1 ceremonies scheduled; `fred@fireflies.ai` invited to all recurring ceremonies
 
 ### Team Onboarding
 
 - [ ] All team members have QTrust premium Claude accounts provisioned
 - [ ] All team members received the correct onboarding guide for their role
+- [ ] All team members granted their role's tool access per the matrix in `tools/README.md`
 - [ ] All team members have confirmed they have read the Project Configuration Sheet
 - [ ] All team members confirmed their local development environment is working
 
