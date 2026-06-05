@@ -101,27 +101,60 @@ Replace `[PROJECT_CODE]` with the code from your Project Configuration Sheet (e.
 
 ## 6. Connecting the GitHub MCP in Claude Desktop
 
-> **Note:** GitHub is **not** in Claude's one-click connector directory. Instead, GitHub publishes an **official MCP server** that you add manually as a custom connector. Pick one of the options below.
+GitHub is **not** in Claude's one-click connector directory, and its remote MCP server **cannot** be added as a custom connector in Claude Desktop yet (it requires OAuth through a registered GitHub App, which Claude Desktop doesn't support). The reliable method — and the one QTrust uses — is to run GitHub's **official MCP server locally via Docker, authenticated with a Personal Access Token (PAT)**.
 
-### Option A — Official remote MCP server (recommended)
+You only do this once. Follow the steps in order — no prior MCP experience needed. Based on the [official GitHub guide](https://github.com/github/github-mcp-server/blob/main/docs/installation-guides/install-claude.md).
 
-1. Open Claude Desktop → **Settings → Connectors → Add custom connector**.
-2. Choose **remote MCP** and enter the official GitHub MCP server URL:
-   ```
-   https://api.githubcopilot.com/mcp/
-   ```
-3. Authenticate with your GitHub account (OAuth) and grant access to the **`qtrust-id` organisation** (not just personal repos).
-4. Return to Claude Desktop — the connector should display as **Connected**.
+### Prerequisites
 
-### Option B — Local MCP server (self-hosted)
+- Claude Desktop (latest version)
+- **Docker Desktop** installed and **running**
+- A **GitHub Personal Access Token** (created in Step 1)
 
-Run GitHub's official [`github/github-mcp-server`](https://github.com/github/github-mcp-server) via Docker with a **fine-grained PAT** (`GITHUB_PERSONAL_ACCESS_TOKEN`), then register it as a local/stdio MCP in your Claude Desktop config. Choose this when you want a tightly-scoped, self-hosted token.
+### Step 1 — Create a Personal Access Token (PAT)
 
-### Fallback — `gh` CLI / git
+1. Go to **github.com → Settings → Developer settings → Personal access tokens**.
+2. Simplest: create a **classic** token and tick the **`repo`** scope.
+   - (Or a **fine-grained** token scoped to the `qtrust-id` org with: Contents R/W, Issues R/W, Pull requests R/W, Metadata R.)
+3. **Copy the token now** — GitHub shows it only once. Treat it like a password.
 
-If you can't (or prefer not to) connect an MCP, the **GitHub CLI (`gh`)** and `git` cover creating and managing issues, PRs, branches, and reading CI status — no MCP required. Claude can compose and run `gh` commands for you.
+### Step 2 — Open the Claude Desktop config file
 
-> If the `qtrust-id` organisation does not appear during OAuth, the IT Head must first approve the GitHub App / enable third-party OAuth access for the organisation. Contact the IT Head.
+In Claude Desktop: **Settings → Developer → Edit Config**. This opens `claude_desktop_config.json`. (Or open it directly:)
+
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux:** `~/.config/Claude/claude_desktop_config.json`
+
+### Step 3 — Add the GitHub MCP server
+
+Paste this block. If `mcpServers` already exists, add only the inner `github` entry. Replace `YOUR_GITHUB_PAT` with the token from Step 1:
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"],
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_PAT" }
+    }
+  }
+}
+```
+
+### Step 4 — Save and restart
+
+Save the file and **fully quit and reopen Claude Desktop**. On first launch Docker pulls the image once (give it a moment).
+
+### Step 5 — Verify
+
+Run the prompts in Section 7. If Claude can list your issues, the MCP is working.
+
+### No Docker? — `gh` CLI fallback
+
+The **GitHub CLI (`gh`)** + `git` cover creating and managing issues, PRs, branches, and CI status without any MCP. Run `gh auth login` once; Claude can then compose `gh` commands for you.
+
+> **Troubleshooting:** *"Authentication failed"* → the PAT lacks the `repo` scope or has expired. *"Server not starting / no GitHub tools"* → Docker Desktop isn't running, or the JSON has a syntax error (check commas and brackets). Logs on macOS: `cat ~/Library/Logs/Claude/mcp-server-*.log`.
 
 ---
 
@@ -222,7 +255,7 @@ git checkout -b feature/42-login-module
 - [ ] Organisation invitation accepted — `qtrust-id` visible on github.com
 - [ ] SSH key generated and added to GitHub (or PAT configured)
 - [ ] Project repository cloned to local machine
-- [ ] GitHub MCP added as a custom connector (official remote server) — or `gh` CLI configured as fallback
+- [ ] GitHub MCP running locally (Docker + PAT via `claude_desktop_config.json`) — or `gh` CLI configured as fallback
 - [ ] Verification test passed — can list issues via Claude
 
 ---

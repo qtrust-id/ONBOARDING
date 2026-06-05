@@ -202,7 +202,7 @@ The Claude Cowork project is the AI workspace for the entire team. It connects C
 3. Open Project Settings → **Instructions** → paste the template from [Section 14](#14-cowork-project-instructions-template), filled in with values from the Config Sheet
 4. Settings → **Workspace** → select the local Google Drive folder for this project (the folder synced via Google Drive Desktop on the IT Head's machine, and later on each team member's machine)
 5. If UIX Designer is on the team: verify Figma MCP is active — test with the prompt: `"List my Figma files"`
-6. Add and verify the GitHub MCP — GitHub is **not** in the one-click directory, so add its official server as a **custom connector** (`https://api.githubcopilot.com/mcp/`); see [`tools/github.md`](tools/github.md). Test with `"List issues in qtrust-id/[repo-name]"`
+6. Add and verify the GitHub MCP — GitHub is **not** in the one-click directory; run its official server **locally via Docker + a Personal Access Token** (the remote OAuth connector isn't supported in Claude Desktop). Full steps in [`tools/github.md`](tools/github.md). Test with `"List issues in qtrust-id/[repo-name]"`
 7. Connect the remaining MCPs relevant to this project so Claude can act across the whole tool stack (see [`tools/README.md`](tools/README.md) for the matrix of which roles need which). Verify each with a quick prompt:
    - **Linear** (sprint management): `"List open issues in the [PROJECT_CODE] Linear team"`
    - **Google Calendar** (ceremony scheduling): `"What meetings do I have this week?"`
