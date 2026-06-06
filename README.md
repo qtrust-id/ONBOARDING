@@ -15,6 +15,16 @@ This repository contains the standard onboarding documentation for all QTrust en
 > 9 teams · 9 phases · from Product Discovery to Production Deployment.  
 > Source file: [`assets/qtrust-team-workflow.svg`](assets/qtrust-team-workflow.svg)
 
+### 🔗 Live process-flow diagrams (FigJam)
+
+Interactive, editable versions of the end-to-end workflow — synthesised from this repository. Open in FigJam to explore, comment, or adapt:
+
+| Diagram | Best for | Link |
+|---|---|---|
+| **End-to-end flow** | The full sequence + handoffs + environment gates at a glance | [Open in FigJam](https://www.figma.com/board/2tZ2DdRIrsbVxj42xTbKzE) |
+| **Swimlane by team** | Seeing exactly what each of the 9 teams owns and hands off | [Open in FigJam](https://www.figma.com/board/1D5I6WZoI2dPm8ibeEAiFX) |
+| **Detailed by phase** | The concrete steps, artifacts, and gates inside each phase | [Open in FigJam](https://www.figma.com/board/b4wAh7jsmFpFZxBnPNoK1R) |
+
 ---
 
 ## 🚀 Starting a New Project?
