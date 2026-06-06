@@ -66,6 +66,7 @@ Ready-to-use templates for common project documents.
 | [`templates/project-config-sheet.md`](templates/project-config-sheet.md) | Fill this out when starting any new project — defines the stack, team, and timeline |
 | [`templates/prd-template.md`](templates/prd-template.md) | Product Requirements Document template for any module or feature |
 | [`templates/cowork-instructions.md`](templates/cowork-instructions.md) | Claude Cowork project instructions template — paste into Project Settings |
+| [`templates/product-dev-prd-prompt.md`](templates/product-dev-prd-prompt.md) | Sample Cowork prompt for Product Development to draft per-module PRDs |
 | [`templates/monthly-business-review-template.md`](templates/monthly-business-review-template.md) | Monthly Business Review brief for the CEO / top management — the strategic-layer output |
 
 ---

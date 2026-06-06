@@ -243,6 +243,8 @@ Claude is your most powerful productivity tool on this project. Here are the mos
 
 Always review Claude's output critically. Claude drafts; you decide.
 
+> **Ready-to-run sample:** For a complete, copy-paste Cowork prompt that drafts a full set of per-module PRDs in one run (plus the matching project instructions), see [`../templates/product-dev-prd-prompt.md`](../templates/product-dev-prd-prompt.md).
+
 ---
 
 ## 10. Git & GitHub Usage
