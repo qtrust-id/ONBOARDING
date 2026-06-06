@@ -218,6 +218,8 @@ The Claude Cowork project is the AI workspace for the entire team. It connects C
 
 ## 5. Step 3 — Set Up the GitHub Repository
 
+> **💡 Sample prompt:** For a ready-to-run way to perform this step (and Step 4) entirely in Claude Code using the `gh` CLI — recommended while the GitHub MCP is unreliable in Cowork — see [`templates/it-head-claude-code-init-prompt.md`](templates/it-head-claude-code-init-prompt.md). It creates the repository foundation shells, branch protection, the document structure, and a per-role handoff document, all within the IT Head's scope.
+
 ### Repository Creation
 
 - Create under the **`qtrust-id`** GitHub organisation
