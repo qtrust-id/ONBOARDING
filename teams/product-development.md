@@ -243,7 +243,9 @@ Claude is your most powerful productivity tool on this project. Here are the mos
 
 Always review Claude's output critically. Claude drafts; you decide.
 
-> **Ready-to-run sample:** For a complete, copy-paste Cowork prompt that drafts a full set of per-module PRDs in one run (plus the matching project instructions), see [`../templates/product-dev-prd-prompt.md`](../templates/product-dev-prd-prompt.md).
+> **Ready-to-run samples:**
+> - Drafting PRDs — a copy-paste Cowork prompt that drafts a full set of per-module PRDs in one run (plus the matching project instructions): [`../templates/product-dev-prd-prompt.md`](../templates/product-dev-prd-prompt.md).
+> - Handing off to UIX — a copy-paste prompt that turns an approved PRD into a designer-ready design brief: [`../templates/product-dev-design-brief-prompt.md`](../templates/product-dev-design-brief-prompt.md).
 
 ---
 
