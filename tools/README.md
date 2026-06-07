@@ -28,7 +28,8 @@ Every team member at QTrust works inside **Claude Desktop** as their primary AI 
 | **Google Drive** | Shared documentation workspace | [`google-drive.md`](google-drive.md) |
 | **Google Calendar** | Sprint ceremonies, meeting scheduling | [`google-calendar.md`](google-calendar.md) |
 | **Slack** | Team communication, alerts, standups | [`slack.md`](slack.md) |
-| **Figma** | UI/UX design and design system | [`figma.md`](figma.md) |
+| **Figma** | UI/UX design (mobile via kits) | [`figma.md`](figma.md) |
+| **Design Kits** | Preline (web) / Material 3 / iOS 26 + QTrust Brand Layer | [`design-kits.md`](design-kits.md) |
 | **Fireflies** | Meeting transcription and AI summaries | [`fireflies.md`](fireflies.md) |
 | **Linear** | Sprint management, roadmap, velocity | [`linear.md`](linear.md) |
 | **Sentry** | Production error and crash tracking | [`sentry.md`](sentry.md) |
@@ -114,6 +115,7 @@ Connect these on Day 1 based on your role:
 ### UIX Designer
 - [ ] Claude Desktop + Figma MCP verified
 - [ ] Figma — **Editor seat** confirmed (contact IT Head)
+- [ ] Design kits enabled — `QTrust — Preline (Web)`, `QTrust — Material 3`, `QTrust — iOS 26`, `QTrust — Brand Layer` libraries on (all free; see [`design-kits.md`](design-kits.md))
 - [ ] Google Drive — `designs/` folders accessible
 - [ ] Slack — joined `#design-feedback`
 - [ ] GitHub — Viewer, can comment on `team:uix` issues
@@ -135,6 +137,7 @@ Connect these on Day 1 based on your role:
 - [ ] Google Drive
 - [ ] Slack
 - [ ] Figma — Viewer + Dev Mode access
+- [ ] **Preline UI** installed in the web app (`npm i preline`) — implements web 1:1 from the Preline kit (see [`design-kits.md`](design-kits.md))
 - [ ] Sentry — access to `[project-code]-frontend` project
 
 ### Backend Engineer

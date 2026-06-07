@@ -21,9 +21,9 @@ On this project, you work primarily in **Figma** and collaborate closely with Pr
 - Document design decisions and their rationale in `by-team/uix/design-decisions.md`
 
 **Visual Design**
-- Build and maintain the project Design System (colors, typography, spacing, components)
+- Adopt and maintain the **QTrust Brand Layer** on top of the three standard kits (**Preline UI** for web / Material 3 / iOS 26) — see [`../tools/design-kits.md`](../tools/design-kits.md). Do **not** build a bespoke component library.
 - Create low-fidelity wireframes for all screens before moving to high-fidelity
-- Produce high-fidelity mockups for all modules: web and mobile
+- Produce high-fidelity mockups on **every** platform by **instancing the Figma kits** (web = Preline UI; Android = Material 3; iOS = iOS 26)
 - Ensure designs are responsive (desktop-first web, native patterns for mobile)
 
 **Handoff & Collaboration**
@@ -73,65 +73,50 @@ On this project, you work primarily in **Figma** and collaborate closely with Pr
 
 ---
 
-## 4. Design System
+## 4. Design System — three standard kits + a QTrust Brand Layer
 
-The design system is the single most important foundation you will build. Everything else — wireframes, mockups, mobile screens — must use design system components. Build it before creating any feature screens.
+**We do not build a bespoke component library.** QTrust standardises on three industry-standard kits and maintains only a thin **brand layer** on top. Full setup, licensing, and governance live in **[`../tools/design-kits.md`](../tools/design-kits.md)** — read it before you start. Summary:
+
+| Platform | Kit (components come from here) | Format |
+|---|---|---|
+| **Web** | **Preline UI** — free Tailwind CSS kit | **Figma library + Tailwind code** (both free) |
+| **Android** | **Material 3 Design Kit** | Figma community library |
+| **iOS** | **iOS & iPadOS 26 UI Kit** | Figma community library |
+| **All** | **QTrust Brand Layer** (color/type/status/radius) | Figma variables + code theme |
+
+> **Figma-first on every platform.** Web now has a real Figma kit (Preline UI), so you design web in Figma like mobile — no more "design-in-code only". Preline also ships matching Tailwind code, so Frontend implements it 1:1 in Blade/Livewire. _Tailwind Plus is an optional secondary block source only — see `tools/design-kits.md` §6._
+
+### How you work with the kits
+- Enable the published `QTrust — Preline (Web)`, `QTrust — Material 3`, `QTrust — iOS 26`, and `QTrust — Brand Layer` libraries in the project's design files, then build screens by **instancing kit components** — do not redraw them, do not rebuild the kit.
+- Apply the Brand Layer for color/accent only, and never fight platform conventions (iOS keeps SF Pro + system controls; Android keeps Material 3 + Roboto; web uses Preline recolored to the QTrust palette).
 
 ### Figma File Structure
 ```
-[File] [PROJECT_NAME] — Design System
-  ├── Page: Cover
-  ├── Page: Foundations
-  │   ├── Color Palette (tokens)
-  │   ├── Typography Scale
-  │   ├── Spacing & Grid
-  │   ├── Shadows & Borders
-  │   └── Icons
-  ├── Page: Components
-  │   ├── Buttons
-  │   ├── Form Elements (Input, Select, Checkbox, Radio, Datepicker)
-  │   ├── Navigation (Sidebar, Breadcrumb, Tabs)
-  │   ├── Data Display (Table, Badge, Card, List)
-  │   ├── Feedback (Toast, Modal, Alert, Empty State)
-  │   └── Layout (Page Shell, Section, Grid)
-  └── Page: Patterns
-      ├── Forms (Create, Edit)
-      ├── Tables with Filters
-      └── Approval Flows
+[File] QTrust — Preline (Web)          ← duplicated kit, published library (org-level)
+[File] QTrust — Material 3 (Android)   ← duplicated kit, published library (org-level)
+[File] QTrust — iOS 26 (iOS)           ← duplicated kit, published library (org-level)
+[File] QTrust — Brand Layer            ← brand tokens, published library (org-level)
 
-[File] [PROJECT_NAME] — Wireframes
-  ├── Page: Auth (Login, Forgot Password)
-  ├── Page: Dashboard
-  ├── Page: [MODULE_NAME]
-  ├── Page: [MODULE_NAME]
-  ├── Page: [MODULE_NAME]
-  ├── Page: [MODULE_NAME]
-  ├── Page: [MODULE_NAME]
-  ├── Page: [MODULE_NAME]
-  └── Page: Settings
-
-[File] [PROJECT_NAME] — Hi-Fi Mockups (Web)
-  └── [Mirror of wireframe pages, high fidelity]
-
-[File] [PROJECT_NAME] — Mobile (iOS + Android)
-  ├── Page: Android — [screen name]
-  └── Page: iOS — [screen name]
+[File] [PROJECT_NAME] — Wireframes     ← low-fi for web + mobile (one page per module)
+[File] [PROJECT_NAME] — Web            ← hi-fi web, instancing Preline UI
+[File] [PROJECT_NAME] — Mobile         ← hi-fi mobile (Android + iOS), instancing the kits
+  ├── Page: Android — [module]
+  └── Page: iOS — [module]
 ```
 
-### Design Tokens (pre-defined in `designs/design-system/README.md`)
+### QTrust Brand Tokens (the only thing we maintain — full table in `tools/design-kits.md` §4)
 
-| Token | Value | Usage |
+| Token | Value | Note |
 |---|---|---|
-| `color-primary` | #1E40AF | Primary actions, active states |
-| `color-secondary` | #0F766E | Secondary actions |
-| `color-success` | #16A34A | Approved, active, positive |
-| `color-warning` | #D97706 | Pending, caution |
-| `color-danger` | #DC2626 | Error, rejected, destructive |
-| `color-bg` | #F3F4F6 | Page background |
-| `color-surface` | #FFFFFF | Card, modal background |
-| `font-sans` | Inter | All text |
-| `radius-md` | 8px | Cards, modals |
-| `radius-sm` | 4px | Buttons, inputs |
+| `brand-primary` | #1E40AF | Primary actions / accent / M3 Primary / iOS tint |
+| `brand-secondary` | #0F766E | Secondary |
+| `success` / `success-text` | #16A34A / **#15803D** | Fill vs **AA-safe text** (fill fails AA as text) |
+| `warning` / `warning-text` | #D97706 / **#B45309** | Fill vs **AA-safe text** |
+| `danger` | #DC2626 | Error / rejected / destructive |
+| `neutral-grey` | — | Cancelled / inactive status |
+| `bg` / `surface` | #F3F4F6 / #FFFFFF | Page / card background |
+| Type | Inter / Roboto / SF Pro | Web / Android / iOS |
+| `radius-sm` / `radius-md` | 4px / 8px | Inputs/buttons / cards/modals |
 
 ---
 
@@ -184,7 +169,7 @@ The design system is the single most important foundation you will build. Everyt
 ### Figma Naming Conventions
 | Element | Convention | Example |
 |---|---|---|
-| Files | `[PROJECT_NAME] — [Category]` | `[PROJECT_NAME] — Hi-Fi Mockups` |
+| Files | `[PROJECT_NAME] — [Category]` | `[PROJECT_NAME] — Mobile` |
 | Pages | `[Module] — [Status]` | `[MODULE_NAME] — WIP` |
 | Frames | `[Screen]/[State]` | `CheckIn/Default`, `CheckIn/Loading` |
 | Components | `PascalCase` | `StatusBadge`, `RequestCard` |
@@ -244,8 +229,11 @@ Mobile screens live in the `[PROJECT_NAME] — Mobile` Figma file. Follow platfo
 **Generate initial wireframes via Figma MCP:**
 > "Create a wireframe in Figma for the [Module] of [application type]. Include screens for: overview, submission form, history list, and approval inbox. Use a clean, corporate style."
 
-**Generate a design system component:**
-> "Add a Status Badge component to the project design system Figma file. It should have variants for: Approved (green), Pending (yellow), Rejected (red), and Cancelled (grey)."
+**Build a web screen by instancing Preline UI:**
+> "In the [PROJECT_NAME] — Web file, build the [screen] by instancing components from the QTrust — Preline (Web) library and applying the QTrust Brand Layer (primary #1E40AF). Don't redraw components."
+
+**Build a mobile screen by instancing the kits:**
+> "In the [PROJECT_NAME] — Mobile file, on the 'Android — [module]' page, build the [screen] by instancing Material 3 components from the QTrust — Material 3 library and applying the QTrust Brand Layer (primary #1E40AF). Don't redraw components."
 
 **Read Figma designs for handoff:**
 > "Read the Figma frame at [URL] and describe the layout, components, and spacing in detail so I can write handoff notes."
@@ -279,7 +267,11 @@ Mobile screens live in the `[PROJECT_NAME] — Mobile` Figma file. Follow platfo
 | Resource | Location |
 |---|---|
 | Figma File Links | `by-team/uix/figma-links.md` |
-| Design System Tokens | `designs/design-system/README.md` |
+| **Design Kits & Brand Layer** | [`../tools/design-kits.md`](../tools/design-kits.md) — Preline (web) / Material 3 / iOS 26 + QTrust tokens |
+| **Preline UI (Figma — web, primary)** | [figma.com/community/file/1179068859697769656](https://www.figma.com/community/file/1179068859697769656/preline-ui-figma) · [preline.co](https://preline.co) |
+| Material 3 Design Kit (Figma) | [figma.com/community/file/1035203688168086460](https://www.figma.com/community/file/1035203688168086460/material-3-design-kit) |
+| iOS & iPadOS 26 UI Kit (Figma) | [figma.com/community/file/1527721578857867021](https://www.figma.com/community/file/1527721578857867021/ios-and-ipados-26) |
+| Tailwind Plus (optional block source) | [tailwindcss.com/plus/ui-blocks/application-ui](https://tailwindcss.com/plus/ui-blocks/application-ui) |
 | Mobile UX Notes | `by-team/mobile/ux-notes.md` |
 | All PRDs (requirements) | `docs/product/` |
 | Handoff Notes | `by-team/uix/handoff-notes/` |

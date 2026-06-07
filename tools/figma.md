@@ -46,18 +46,25 @@ This makes UIX Designers significantly faster and allows Frontend/Mobile Enginee
 
 ---
 
-## 4. Project Files You Will Find
+## 4. Design Kits & Project Files
 
-When added to the QTrust organisation, you will see a project named `[PROJECT_NAME]` containing:
+QTrust standardises on three design kits + a brand layer rather than a hand-built design system. **Read [`design-kits.md`](design-kits.md) for the full model, licensing, and setup.** Key point for Figma users:
+
+| Platform | Kit | In Figma? |
+|---|---|---|
+| Web | **Preline UI** (published QTrust library) | ✅ instance components |
+| Android | **Material 3 Design Kit** (published QTrust library) | ✅ instance components |
+| iOS | **iOS & iPadOS 26 UI Kit** (published QTrust library) | ✅ instance components |
+
+The org-level published libraries (`QTrust — Preline (Web)`, `QTrust — Material 3`, `QTrust — iOS 26`, `QTrust — Brand Layer`) are enabled inside each project's design files. When added to the QTrust organisation you will see a project named `[PROJECT_NAME]` containing:
 
 | File | Contents | Who Edits |
 |---|---|---|
-| `[PROJECT_NAME] — Design System` | Color tokens, typography, components | UIX Designer |
-| `[PROJECT_NAME] — Wireframes` | Low-fidelity user flows and screen layouts | UIX Designer |
-| `[PROJECT_NAME] — Hi-Fi Mockups` | High-fidelity screens with all states | UIX Designer |
-| `[PROJECT_NAME] — Mobile` | iOS and Android-specific screens | UIX Designer |
+| `[PROJECT_NAME] — Wireframes` | Low-fidelity user flows and screen layouts (web + mobile) | UIX Designer |
+| `[PROJECT_NAME] — Web` | Hi-fi web screens, instancing Preline UI | UIX Designer |
+| `[PROJECT_NAME] — Mobile` | iOS and Android hi-fi screens, instancing the kits | UIX Designer |
 
-File links are documented in `by-team/uix/figma-links.md` in the project Google Drive folder.
+> **No `— Design System` file** — components live in the kit libraries. Preline UI ships matching Tailwind code, so web designs map 1:1 to implementation. File links are documented in `by-team/uix/figma-links.md`. (Tailwind Plus is an optional secondary block source — see [`design-kits.md`](design-kits.md) §6.)
 
 ---
 
@@ -95,12 +102,21 @@ Create a frame for the [screen name] screen. Include: [describe key UI elements]
 Use a clean, professional style consistent with the existing design system."
 ```
 
-**UIX Designer — Add component to design system:**
+**UIX Designer — Build a web screen by instancing Preline UI:**
 
 ```
-"Add a Status Badge component to the [PROJECT_NAME] — Design System file.
-Variants: Approved (green), Pending (amber), Rejected (red), Cancelled (grey).
-Follow the existing naming convention in the file."
+"In the [PROJECT_NAME] — Web file, build the [screen] by instancing components from
+the QTrust — Preline (Web) library. Apply the QTrust Brand Layer (primary #1E40AF)
+for colour/accent only. Don't redraw components. See tools/design-kits.md."
+```
+
+**UIX Designer — Build a mobile screen by instancing the kits:**
+
+```
+"In the [PROJECT_NAME] — Mobile file, on the 'Android — [module]' page, build the
+[screen] by instancing Material 3 components from the QTrust — Material 3 library.
+Apply the QTrust Brand Layer (primary #1E40AF) for colour/accent only. Don't redraw
+components, and keep Material 3 conventions (TopAppBar, bottom nav, FAB, Roboto)."
 ```
 
 **Frontend/Mobile Engineer — Read design for implementation:**
