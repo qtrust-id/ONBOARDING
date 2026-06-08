@@ -43,7 +43,7 @@ All four required kits are **free**. Preline replaces the earlier "web = Tailwin
    - Preline UI Figma → rename `QTrust — Preline (Web)`
    - Material 3 Design Kit → `QTrust — Material 3 (Android)`
    - iOS & iPadOS 26 UI Kit → `QTrust — iOS 26 (iOS)`
-   Publishing is **mandatory** — it lets project files *instance* components/variables and avoids the Figma-MCP "freshly created page/component doesn't persist" issue.
+   Publishing is **mandatory** — it lets every project file *instance* the kit components/variables and receive updates, rather than copying them per file.
 2. **Create & publish `QTrust — Brand Layer`** (Figma file): a `qtrust/brand` variable collection (colors incl. the AA-safe status-text variants, radius) + Inter type styles, layered on top of the kits. Preline ships Figma variables/30 palettes — point its primary palette at the QTrust brand.
 3. **Install Preline in the web codebase** (`hris-app`): `npm i preline`, add Preline to the Tailwind config/`@plugin`, and set the QTrust tokens in the Tailwind theme (`@theme` / CSS variables) so code matches the Brand Layer.
 4. **Enable the libraries** in each project's design files (Wireframes + per-platform), so nothing is rebuilt per project.
@@ -89,8 +89,9 @@ Carry over the accessibility-audited tokens (the success/warning **text** varian
 
 ## 6. Working with Claude / Figma MCP
 
-- **Prefer instancing published-library components** over MCP-generating from scratch — more reliable and avoids the non-persistence issue. **Build on existing pages.**
-- **Web design→code is now direct:** because Preline ships matching code, Claude can turn a Preline-based Figma screen (or a Preline component name) into Blade/Livewire markup with QTrust tokens.
+- **Prefer instancing published-library components** over generating components from scratch — instances inherit kit + Brand Layer updates and keep files consistent.
+- **Verify your work was saved** after a Claude/MCP editing session (reopen the page, confirm frames are present) before handoff — standard hygiene for any automated editing tool.
+- **Web design→code is direct:** because Preline ships matching code, Claude can turn a Preline-based Figma screen (or a Preline component name) into Blade/Livewire markup with QTrust tokens.
 - **Tailwind Plus (optional):** if a needed pattern only exists in Tailwind Plus, use the render harness in `TailwindPlus/_figma-harness/` to preview/import it — but treat it as a one-off; Preline is the standard.
 - **Quota:** kits are large. Read **specific nodes**, avoid screenshots, reuse. Heavy users → **Premium** seat ([`README.md` ▸ Managing Token Usage & Quota](README.md#managing-token-usage--quota)).
 
