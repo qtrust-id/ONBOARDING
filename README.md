@@ -66,8 +66,10 @@ Ready-to-use templates for common project documents.
 | [`templates/project-config-sheet.md`](templates/project-config-sheet.md) | Fill this out when starting any new project — defines the stack, team, and timeline |
 | [`templates/prd-template.md`](templates/prd-template.md) | Product Requirements Document template for any module or feature |
 | [`templates/cowork-instructions.md`](templates/cowork-instructions.md) | Claude Cowork project instructions template — paste into Project Settings |
+| [`templates/it-head-claude-code-init-prompt.md`](templates/it-head-claude-code-init-prompt.md) | Sample Claude Code prompt for the IT Head to initialise the project foundation (repos, docs, handoffs) via `gh` |
 | [`templates/product-dev-prd-prompt.md`](templates/product-dev-prd-prompt.md) | Sample Cowork prompt for Product Development to draft per-module PRDs |
 | [`templates/product-dev-design-brief-prompt.md`](templates/product-dev-design-brief-prompt.md) | Sample Cowork prompt for Product Development to turn an approved PRD into a UIX design brief |
+| [`templates/project-manager-sprint-planning-prompt.md`](templates/project-manager-sprint-planning-prompt.md) | Sample Cowork prompt for the Project Manager to turn approved PRDs into a roadmap, issue backlog, Linear cycles, and scheduled ceremonies |
 | [`templates/monthly-business-review-template.md`](templates/monthly-business-review-template.md) | Monthly Business Review brief for the CEO / top management — the strategic-layer output |
 
 ---
@@ -179,6 +181,10 @@ ONBOARDING/
     ├── project-config-sheet.md
     ├── prd-template.md
     ├── cowork-instructions.md
+    ├── it-head-claude-code-init-prompt.md
+    ├── product-dev-prd-prompt.md
+    ├── product-dev-design-brief-prompt.md
+    ├── project-manager-sprint-planning-prompt.md
     └── monthly-business-review-template.md
 ```
 
